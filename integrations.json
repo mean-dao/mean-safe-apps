@@ -1,0 +1,18 @@
+{
+  "assets": "assets",
+  "definitions": "definitions",
+  "integrations": [
+    {
+      "id": "FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j",
+      "name": "Mean Multisig",
+      "logo": "logo.svg",
+      "definition": "mean-multisig-idl.json"
+    },
+    {
+      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+      "name": "Money Streaming Program",
+      "logo": "logo.svg",
+      "definition": "msp-idl.json"
+    }
+  ]
+}
