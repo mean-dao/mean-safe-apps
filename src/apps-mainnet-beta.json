@@ -1,0 +1,16 @@
+{
+  "integrations": [
+    {
+      "id": "FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j",
+      "name": "Mean Multisig",
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-integrations/main/assets/FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j/logo.svg?token=GHSAT0AAAAAABMJDSBTRBX4UORDVDSKX32KYTS7KOA",
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-integrations/main/definitions/mean-multisig-idl.json?token=GHSAT0AAAAAABMJDSBS4KIB4WNGAJCW7HG2YTS7MHQ"
+    },
+    {
+      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+      "name": "Money Streaming Program",
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-integrations/main/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg?token=GHSAT0AAAAAABMJDSBTRBX4UORDVDSKX32KYTS7KOA",
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-integrations/main/definitions/msp-idl.json?token=GHSAT0AAAAAABMJDSBTRGBQK4EGDEIFVNBSYTS7PXA"
+    }
+  ]
+}

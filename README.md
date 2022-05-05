@@ -1,1 +1,1 @@
-# mean-multisig-integrations
+# mean-multisig-apps
