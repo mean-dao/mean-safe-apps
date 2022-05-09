@@ -1,373 +1,184 @@
 {
   "apps": [
     {
-      "id": "FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j",
-      "network": 101,
-      "name": "Mean Multisig",
-      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j/logo.svg",
-      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/mean-multisig-idl.json",
-      "instructions": [
-        {
-          "name": "editMultisig",
-          "label": "Edit Multisig",
-          "accounts": [
-            {
-              "label": "Proposer",
-              "name": "proposer"
-            },
-            {
-              "label": "Multisig",
-              "name": "multisig"
-            },
-            {
-              "label": "Multisig OPS",
-              "name": "multisigOpsAccount"
-            },
-            {
-              "label": "System Program",
-              "name": "systemProgram"
-            }
-          ],
-          "args": [
-            {
-              "label": "Owners",
-              "name": "owners",
-              "type": "Array"
-            },
-            {
-              "label": "Threshold",
-              "name": "threshold",
-              "type": "Number"
-            },
-            {
-              "name": "nonce",
-              "type": "Small"
-            },
-            {
-              "label": "Label",
-              "name": "label",
-              "type": "String"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j",
-      "name": "Mean Multisig",
-      "network": 102,
-      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j/logo.svg",
-      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/mean-multisig-idl.json",
-      "instructions": [
-        {
-          "name": "editMultisig",
-          "label": "Edit Multisig",
-          "accounts": [
-            {
-              "label": "Proposer",
-              "name": "proposer"
-            },
-            {
-              "label": "Multisig",
-              "name": "multisig"
-            },
-            {
-              "label": "Multisig OPS",
-              "name": "multisigOpsAccount"
-            },
-            {
-              "label": "System Program",
-              "name": "systemProgram"
-            }
-          ],
-          "args": [
-            {
-              "label": "Owners",
-              "name": "owners",
-              "type": "Array"
-            },
-            {
-              "label": "Threshold",
-              "name": "threshold",
-              "type": "Number"
-            },
-            {
-              "name": "nonce",
-              "type": "Small"
-            },
-            {
-              "label": "Label",
-              "name": "label",
-              "type": "String"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j",
-      "name": "Mean Multisig",
-      "network": 103,
-      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j/logo.svg",
-      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/mean-multisig-idl.json",
-      "instructions": [
-        {
-          "name": "editMultisig",
-          "label": "Edit Multisig",
-          "accounts": [
-            {
-              "label": "Proposer",
-              "name": "proposer"
-            },
-            {
-              "label": "Multisig",
-              "name": "multisig"
-            },
-            {
-              "label": "Multisig OPS",
-              "name": "multisigOpsAccount"
-            },
-            {
-              "label": "System Program",
-              "name": "systemProgram"
-            }
-          ],
-          "args": [
-            {
-              "label": "Owners",
-              "name": "owners",
-              "type": "Array"
-            },
-            {
-              "label": "Threshold",
-              "name": "threshold",
-              "type": "Number"
-            },
-            {
-              "label": "",
-              "name": "nonce",
-              "type": "Small"
-            },
-            {
-              "label": "Label",
-              "name": "label",
-              "type": "String"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
-      "name": "Money Streaming Program",
+      "id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "name": "Propose Withdrawal",
       "network": 101,
       "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
       "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/msp-idl.json",
-      "instructions": [
-        {
-          "name": "createTreasury",
-          "label": "Create Treasury",
-          "accounts": [
-            {
-              "name": "payer",
-              "label": "Payer"
-            },
-            {
-              "name": "initializer",
-              "label": "Initializer"
-            },
-            {
-              "name": "treasurer",
-              "label": "Treasurer"
-            },
-            {
-              "name": "treasury",
-              "label": "Treasury"
-            },
-            {
-              "name": "treasuryToken",
-              "label": "Treasury Token"
-            },
-            {
-              "name": "associatedToken",
-              "label": "Treasury Token Mint"
-            },
-            {
-              "name": "beneficiary",
-              "label": "Beneficiary"
-            },
-            {
-              "name": "stream",
-              "label": "Stream"
-            },
-            {
-              "name": "feeTreasury",
-              "label": "MSP OPSt"
-            },
-            {
-              "name": "feeTreasuryToken",
-              "label": "MSP OPS Token"
-            },
-            {
-              "name": "associatedTokenProgram",
-              "label": "Associated Token Program"
-            },
-            {
-              "name": "tokenProgram",
-              "label": "Token Program"
-            },
-            {
-              "name": "systemProgram",
-              "label": "System Program"
-            },
-            {
-              "name": "rent",
-              "label": "Rent"
-            }
-          ],
-          "args": [
-            {
-              "name": "slot",
-              "label": "",
-              "type": "Big"
-            },
-            {
-              "name": "treasuryBump",
-              "label": "",
-              "type": "Small"
-            },
-            {
-              "name": "treasuryMintBump",
-              "label": "",
-              "type": "Small"
-            },
-            {
-              "name": "name",
-              "label": "Name",
-              "type": "String"
-            },
-            {
-              "name": "treasuryType",
-              "label": "Type",
-              "type": "Enum"
-            },
-            {
-              "name": "autoClose",
-              "label": "Auto Close",
-              "type": "Boolean"
-            },
-            {
-              "name": "solFeePayedByTreasury",
-              "label": "Sol Fee Payed By Treasury",
-              "type": "Boolean"
-            }
-          ]
-        }
+      "uiElements": [
       ]
     },
     {
-      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
-      "name": "Money Streaming Program",
+      "id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "name": "Propose Withdrawal",
       "network": 102,
       "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
       "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/msp-idl.json",
-      "instructions": [
+      "uiElements": [
+      ]
+    },
+    {
+      "id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "name": "Propose Withdrawal",
+      "network": 103,
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/msp-idl.json",
+      "uiElements": [
+      ]
+    },
+    {
+      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+      "name": "Money Streaming",
+      "network": 101,
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/msp-idl.json",
+      "uiElements": [
         {
           "name": "createTreasury",
           "label": "Create Treasury",
+          "help": "Creates a new treasury",
           "accounts": [
             {
               "name": "payer",
-              "label": "Payer"
-            },
-            {
-              "name": "initializer",
-              "label": "Initializer"
+              "label": "Payer",
+              "help": "The payer of the transaction",
+              "type": "inputText",
+              "value": "",
+              "visibility": "hide"
             },
             {
               "name": "treasurer",
-              "label": "Treasurer"
+              "label": "Treasurer",
+              "help": "The owner of the treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "hide"
             },
             {
               "name": "treasury",
-              "label": "Treasury"
+              "label": "Treasury",
+              "help": "The treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "hide"
+            },
+            {
+              "name": "treasuryMint",
+              "label": "Treasury Mint",
+              "help": "The mint of the Treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "treasuryToken",
-              "label": "Treasury Token"
+              "label": "Treasury Token",
+              "help": "The Token account of the Treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "associatedToken",
-              "label": "Treasury Token Mint"
-            },
-            {
-              "name": "beneficiary",
-              "label": "Beneficiary"
-            },
-            {
-              "name": "stream",
-              "label": "Stream"
+              "label": "Treasury Token Mint",
+              "help": "The mint of the Treasury Token account",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "feeTreasury",
-              "label": "MSP OPSt"
+              "label": "MSP OPS",
+              "help": "The Mean OPS account",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "feeTreasuryToken",
-              "label": "MSP OPS Token"
+              "label": "MSP OPS Token",
+              "help": "The Mean OPS Token account",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "associatedTokenProgram",
-              "label": "Associated Token Program"
+              "label": "Associated Token Program",
+              "help": "The Associated Token Program account",
+              "type": "knownValue",
+              "value": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+              "visibility": "readOnly"
             },
             {
               "name": "tokenProgram",
-              "label": "Token Program"
+              "label": "Token Program",
+              "help": "The Token Program account",
+              "type": "knownValue",
+              "value": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "visibility": "readOnly"
             },
             {
               "name": "systemProgram",
-              "label": "System Program"
+              "label": "System Program",
+              "help": "The System Program account",
+              "type": "knownValue",
+              "value": "11111111111111111111111111111111",
+              "visibility": "readOnly"
             },
             {
               "name": "rent",
-              "label": "Rent"
+              "label": "Rent",
+              "help": "The Rent Exempt Sysvar account",
+              "type": "knownValue",
+              "value": "SysvarRent111111111111111111111111111111111",
+              "visibility": "readOnly"
             }
           ],
           "args": [
             {
               "name": "slot",
-              "label": "",
-              "type": "Big"
-            },
-            {
-              "name": "treasuryBump",
-              "label": "",
-              "type": "Small"
-            },
-            {
-              "name": "treasuryMintBump",
-              "label": "",
-              "type": "Small"
+              "label": "Slot",
+              "help": "The network current slot",
+              "type": "slot",
+              "value": "",
+              "visibility": "hide"
             },
             {
               "name": "name",
               "label": "Name",
-              "type": "String"
+              "help": "The name of the Treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "treasuryType",
-              "label": "Type",
-              "type": "Enum"
+              "label": "Treasury Type",
+              "help": "The Treasury type (Open/Lock)",
+              "type": "option",
+              "value": [
+                { "key": 0, "value": "Open" },
+                { "key": 1, "value": "Lock" }
+              ],
+              "visibility": "show"
             },
             {
               "name": "autoClose",
-              "label": "Auto Close",
-              "type": "Boolean"
+              "label": "Autoclose",
+              "help": "Sets if the Treasury will be automatically close after closing its last Stream",
+              "type": "yesOrNo",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "solFeePayedByTreasury",
-              "label": "Sol Fee Payed By Treasury",
-              "type": "Boolean"
+              "label": "Fee payed by Treasury",
+              "help": "Sets if the beneficiary fees are going to be payed by the Treasury",
+              "type": "yesOrNo",
+              "value": "",
+              "visibility": "show"
             }
           ]
         }
@@ -375,107 +186,313 @@
     },
     {
       "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
-      "name": "Money Streaming Program",
-      "network": 103,
+      "name": "Money Streaming",
+      "network": 102,
       "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
       "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/msp-idl.json",
-      "instructions": [
+      "uiElements": [
         {
           "name": "createTreasury",
           "label": "Create Treasury",
+          "help": "Creates a new treasury",
           "accounts": [
             {
               "name": "payer",
-              "label": "Payer"
-            },
-            {
-              "name": "initializer",
-              "label": "Initializer"
+              "label": "Payer",
+              "help": "The payer of the transaction",
+              "type": "inputText",
+              "value": "",
+              "visibility": "hide"
             },
             {
               "name": "treasurer",
-              "label": "Treasurer"
+              "label": "Treasurer",
+              "help": "The owner of the treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "hide"
             },
             {
               "name": "treasury",
-              "label": "Treasury"
+              "label": "Treasury",
+              "help": "The treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "hide"
+            },
+            {
+              "name": "treasuryMint",
+              "label": "Treasury Mint",
+              "help": "The mint of the Treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "treasuryToken",
-              "label": "Treasury Token"
+              "label": "Treasury Token",
+              "help": "The Token account of the Treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "associatedToken",
-              "label": "Treasury Token Mint"
-            },
-            {
-              "name": "beneficiary",
-              "label": "Beneficiary"
-            },
-            {
-              "name": "stream",
-              "label": "Stream"
+              "label": "Treasury Token Mint",
+              "help": "The mint of the Treasury Token account",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "feeTreasury",
-              "label": "MSP OPSt"
+              "label": "MSP OPS",
+              "help": "The Mean OPS account",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "feeTreasuryToken",
-              "label": "MSP OPS Token"
+              "label": "MSP OPS Token",
+              "help": "The Mean OPS Token account",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "associatedTokenProgram",
-              "label": "Associated Token Program"
+              "label": "Associated Token Program",
+              "help": "The Associated Token Program account",
+              "type": "knownValue",
+              "value": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+              "visibility": "readOnly"
             },
             {
               "name": "tokenProgram",
-              "label": "Token Program"
+              "label": "Token Program",
+              "help": "The Token Program account",
+              "type": "knownValue",
+              "value": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "visibility": "readOnly"
             },
             {
               "name": "systemProgram",
-              "label": "System Program"
+              "label": "System Program",
+              "help": "The System Program account",
+              "type": "knownValue",
+              "value": "11111111111111111111111111111111",
+              "visibility": "readOnly"
             },
             {
               "name": "rent",
-              "label": "Rent"
+              "label": "Rent",
+              "help": "The Rent Exempt Sysvar account",
+              "type": "knownValue",
+              "value": "SysvarRent111111111111111111111111111111111",
+              "visibility": "readOnly"
             }
           ],
           "args": [
             {
               "name": "slot",
-              "label": "",
-              "type": "Big"
-            },
-            {
-              "name": "treasuryBump",
-              "label": "",
-              "type": "Small"
-            },
-            {
-              "name": "treasuryMintBump",
-              "label": "",
-              "type": "Small"
+              "label": "Slot",
+              "help": "The network current slot",
+              "type": "slot",
+              "value": "",
+              "visibility": "hide"
             },
             {
               "name": "name",
               "label": "Name",
-              "type": "String"
+              "help": "The name of the Treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "treasuryType",
-              "label": "Type",
-              "type": "Enum"
+              "label": "Treasury Type",
+              "help": "The Treasury type (Open/Lock)",
+              "type": "option",
+              "value": [
+                { "key": 0, "value": "Open" },
+                { "key": 1, "value": "Lock" }
+              ],
+              "visibility": "show"
             },
             {
               "name": "autoClose",
-              "label": "Auto Close",
-              "type": "Boolean"
+              "label": "Autoclose",
+              "help": "Sets if the Treasury will be automatically close after closing its last Stream",
+              "type": "yesOrNo",
+              "value": "",
+              "visibility": "show"
             },
             {
               "name": "solFeePayedByTreasury",
-              "label": "Sol Fee Payed By Treasury",
-              "type": "Boolean"
+              "label": "Fee payed by Treasury",
+              "help": "Sets if the beneficiary fees are going to be payed by the Treasury",
+              "type": "yesOrNo",
+              "value": "",
+              "visibility": "show"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+      "name": "Money Streaming",
+      "network": 103,
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/msp-idl.json",
+      "uiElements": [
+        {
+          "name": "createTreasury",
+          "label": "Create Treasury",
+          "help": "Creates a new treasury",
+          "accounts": [
+            {
+              "name": "payer",
+              "label": "Payer",
+              "help": "The payer of the transaction",
+              "type": "inputText",
+              "value": "",
+              "visibility": "hide"
+            },
+            {
+              "name": "treasurer",
+              "label": "Treasurer",
+              "help": "The owner of the treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "hide"
+            },
+            {
+              "name": "treasury",
+              "label": "Treasury",
+              "help": "The treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "hide"
+            },
+            {
+              "name": "treasuryMint",
+              "label": "Treasury Mint",
+              "help": "The mint of the Treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
+            },
+            {
+              "name": "treasuryToken",
+              "label": "Treasury Token",
+              "help": "The Token account of the Treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
+            },
+            {
+              "name": "associatedToken",
+              "label": "Treasury Token Mint",
+              "help": "The mint of the Treasury Token account",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
+            },
+            {
+              "name": "feeTreasury",
+              "label": "MSP OPS",
+              "help": "The Mean OPS account",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
+            },
+            {
+              "name": "feeTreasuryToken",
+              "label": "MSP OPS Token",
+              "help": "The Mean OPS Token account",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
+            },
+            {
+              "name": "associatedTokenProgram",
+              "label": "Associated Token Program",
+              "help": "The Associated Token Program account",
+              "type": "knownValue",
+              "value": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+              "visibility": "readOnly"
+            },
+            {
+              "name": "tokenProgram",
+              "label": "Token Program",
+              "help": "The Token Program account",
+              "type": "knownValue",
+              "value": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "visibility": "readOnly"
+            },
+            {
+              "name": "systemProgram",
+              "label": "System Program",
+              "help": "The System Program account",
+              "type": "knownValue",
+              "value": "11111111111111111111111111111111",
+              "visibility": "readOnly"
+            },
+            {
+              "name": "rent",
+              "label": "Rent",
+              "help": "The Rent Exempt Sysvar account",
+              "type": "knownValue",
+              "value": "SysvarRent111111111111111111111111111111111",
+              "visibility": "readOnly"
+            }
+          ],
+          "args": [
+            {
+              "name": "slot",
+              "label": "Slot",
+              "help": "The network current slot",
+              "type": "slot",
+              "value": "",
+              "visibility": "hide"
+            },
+            {
+              "name": "name",
+              "label": "Name",
+              "help": "The name of the Treasury",
+              "type": "inputText",
+              "value": "",
+              "visibility": "show"
+            },
+            {
+              "name": "treasuryType",
+              "label": "Treasury Type",
+              "help": "The Treasury type (Open/Lock)",
+              "type": "option",
+              "value": [
+                { "key": 0, "value": "Open" },
+                { "key": 1, "value": "Lock" }
+              ],
+              "visibility": "show"
+            },
+            {
+              "name": "autoClose",
+              "label": "Autoclose",
+              "help": "Sets if the Treasury will be automatically close after closing its last Stream",
+              "type": "yesOrNo",
+              "value": "",
+              "visibility": "show"
+            },
+            {
+              "name": "solFeePayedByTreasury",
+              "label": "Fee payed by Treasury",
+              "help": "Sets if the beneficiary fees are going to be payed by the Treasury",
+              "type": "yesOrNo",
+              "value": "",
+              "visibility": "show"
             }
           ]
         }

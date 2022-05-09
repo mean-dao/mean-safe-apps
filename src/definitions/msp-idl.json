@@ -1,5 +1,5 @@
 {
-  "version": "2.2.1",
+  "version": "2.4.0",
   "name": "msp",
   "instructions": [
     {
@@ -65,14 +65,6 @@
         {
           "name": "slot",
           "type": "u64"
-        },
-        {
-          "name": "treasuryBump",
-          "type": "u8"
-        },
-        {
-          "name": "treasuryMintBump",
-          "type": "u8"
         },
         {
           "name": "name",
@@ -790,7 +782,7 @@
   ],
   "accounts": [
     {
-      "name": "Stream",
+      "name": "stream",
       "type": {
         "kind": "struct",
         "fields": [
@@ -805,7 +797,10 @@
           {
             "name": "name",
             "type": {
-              "array": ["u8", 32]
+              "array": [
+                "u8",
+                32
+              ]
             }
           },
           {
@@ -912,7 +907,7 @@
       }
     },
     {
-      "name": "Treasury",
+      "name": "treasury",
       "type": {
         "kind": "struct",
         "fields": [
@@ -935,7 +930,10 @@
           {
             "name": "name",
             "type": {
-              "array": ["u8", 32]
+              "array": [
+                "u8",
+                32
+              ]
             }
           },
           {
@@ -1054,7 +1052,10 @@
         {
           "name": "name",
           "type": {
-            "array": ["u8", 32]
+            "array": [
+              "u8",
+              32
+            ]
           },
           "index": false
         },
