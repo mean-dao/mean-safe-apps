@@ -65,7 +65,7 @@ export type Account = {
 }
 
 export type Arg = {
-  position: number;
+  index: number;
   name: string;
   dataType: any;
   dataValue: any;
@@ -170,7 +170,7 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
         }
       }
       // args
-      let argPosition = 0
+      let argIndex = 0
       for (let uiArg of uiIx.args) {
         let dataElem = dataIx.args.filter((acc: any) => acc.name === uiArg.name)[0];
         if (dataElem) {
@@ -182,12 +182,12 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
             value: uiArg.value,
             visibility: uiArg.visibility,
             dataElement: {
-              position: argPosition,
+              index: argIndex,
               name: dataElem.name,
               dataType: dataElem.type
             } as Arg
           } as UiElement);
-          argPosition ++;
+          argIndex ++;
         }
       }
       uiConfigs.push(ix);
