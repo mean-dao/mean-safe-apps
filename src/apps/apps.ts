@@ -61,12 +61,14 @@ export type Account = {
   name: string;
   isSigner: boolean;
   isWritable: boolean;
+  dataValue: string;
 }
 
 export type Arg = {
   position: number;
   name: string;
   dataType: any;
+  dataValue: any;
 }
 
 export type DataElement = Account | Arg;
