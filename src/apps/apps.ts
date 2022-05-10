@@ -110,6 +110,7 @@ export class AppsProvider {
     definitionUrl: string
   ): Promise<AppConfig | null> => {
     try {
+      if (!uiUrl || !definitionUrl) { return null; }
       const responses = await Promise.all([
         fetch(uiUrl),
         fetch(definitionUrl)
@@ -129,7 +130,6 @@ export class AppsProvider {
 
 const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiInstruction[]> => {
   try {
-
     let uiConfigs: UiInstruction[] = [];
     for (let uiIx of uiIxs) {
       const ixId = (await PublicKey.findProgramAddress(
@@ -187,7 +187,8 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
           } as UiElement);
           argPosition ++;
         }
-      }      
+      }
+      uiConfigs.push(ix);
     }
     return uiConfigs;
   } catch (err: any) {
