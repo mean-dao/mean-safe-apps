@@ -56,17 +56,9 @@
         "name": "feeTreasury",
         "label": "MSP OPS",
         "help": "The Mean OPS account",
-        "type": "inputText",
-        "value": "",
-        "visibility": "show"
-      },
-      {
-        "name": "feeTreasuryToken",
-        "label": "MSP OPS Token",
-        "help": "The Mean OPS Token account",
-        "type": "inputText",
-        "value": "",
-        "visibility": "show"
+        "type": "knownValue",
+        "value": "3TD6SWY9M1mLY2kZWJNavPLhwXvcRsWdnZLRaMzERJBw",
+        "visibility": "readOnly"
       },
       {
         "name": "associatedTokenProgram",
