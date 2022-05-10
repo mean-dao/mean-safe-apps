@@ -108,8 +108,6 @@ const parseApp = async (data: any): Promise<App | null> => {
       const dataIx = result.instructions.filter((ix: any) => ix.name === uiIx.name)[0];
       if (dataIx) {
         const parsedIx = await parseUiInstruction(app.id, uiIx, dataIx);
-        console.log('parsed ix', parsedIx);
-        console.log();
         if (parsedIx) {
           uiIxs.push(parsedIx);
         }
@@ -134,43 +132,47 @@ const parseUiInstruction = async (programId: string, uiIx: any, dataIx: any): Pr
       label: uiIx.label,
       uiElements: []     
     } as UiInstruction;
-    // ui elements
-    for (let uiElem of uiIx.uiElements) {
-      let element = {
-        name: uiElem.name,
-        label: uiElem.label,
-        help: uiElem.help,
-        type: uiElem.type,
-        value: uiElem.value,
-        visibility: uiElem.visibility,
-        dataElement: {}
-      } as UiElement;
-      // accounts
-      let accIndex = 0;
-      for (let uiAcc of uiIx.accounts) {
-        let dataElem = dataIx.accounts.filter((acc: any) => acc.name === uiAcc.name)[0];
-        if (dataElem) {
-          element.dataElement = {
+    // accounts
+    let accIndex = 0;
+    for (let uiAcc of uiIx.accounts) {
+      let dataElem = dataIx.accounts.filter((acc: any) => acc.name === uiAcc.name)[0];
+      if (dataElem) {
+        ix.uiElements.push({
+          name: uiAcc.name,
+          label: uiAcc.label,
+          help: uiAcc.help,
+          type: uiAcc.type,
+          value: uiAcc.value,
+          visibility: uiAcc.visibility,
+          dataElement: {
             index: accIndex,
             name: dataElem.name,
             isWritable: dataElem.isMut,
             isSigner: dataElem.isSigner
-          } as Account;
-          accIndex ++;
-        }
+          } as Account
+        } as UiElement);
+        accIndex ++;
       }
-      // args
-      let argPosition = 0
-      for (let uiArg of uiIx.args) {
-        let dataElem = dataIx.args.filter((acc: any) => acc.name === uiArg.name)[0];
-        if (dataElem) {
-          element.dataElement = {
+    }
+    // args
+    let argPosition = 0
+    for (let uiArg of uiIx.args) {
+      let dataElem = dataIx.args.filter((acc: any) => acc.name === uiArg.name)[0];
+      if (dataElem) {
+        ix.uiElements.push({
+          name: uiArg.name,
+          label: uiArg.label,
+          help: uiArg.help,
+          type: uiArg.type,
+          value: uiArg.value,
+          visibility: uiArg.visibility,
+          dataElement: {
             position: argPosition,
             name: dataElem.name,
             dataType: dataElem.type
-          } as Arg;
-          argPosition ++;
-        }
+          } as Arg
+        } as UiElement);
+        argPosition ++;
       }
     }
     return ix;
