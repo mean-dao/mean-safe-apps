@@ -47,6 +47,78 @@
       "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
       "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/msp-idl.json",
       "ui": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/ui/msp-ui.json"
+    },
+    {
+      "id": "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi",
+      "name": "Solend",
+      "network": 101,
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi/logo.svg",
+      "definition": "",
+      "ui": ""
+    },
+    {
+      "id": "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi",
+      "name": "Solend",
+      "network": 102,
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi/logo.svg",
+      "definition": "",
+      "ui": ""
+    },
+    {
+      "id": "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi",
+      "name": "Solend",
+      "network": 103,
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi/logo.svg",
+      "definition": "",
+      "ui": ""
+    },
+    {
+      "id": "MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK",
+      "name": "Mean Staking",
+      "network": 101,
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK/logo.svg",
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/mean-stake-idl.json",
+      "ui": ""
+    },
+    {
+      "id": "MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK",
+      "name": "Mean Staking",
+      "network": 102,
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK/logo.svg",
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/mean-stake-idl.json",
+      "ui": ""
+    },
+    {
+      "id": "MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK",
+      "name": "Mean Staking",
+      "network": 103,
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK/logo.svg",
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/mean-stake-idl.json",
+      "ui": ""
+    },
+    {
+      "id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
+      "name": "Marinade",
+      "network": 101,
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD/logo.svg",
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/marinade-finance-idl.json",
+      "ui": ""
+    },
+    {
+      "id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
+      "name": "Marinade",
+      "network": 102,
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD/logo.svg",
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/marinade-finance-idl.json",
+      "ui": ""
+    },
+    {
+      "id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
+      "name": "Marinade",
+      "network": 103,
+      "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD/logo.svg",
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/marinade-finance-idl.json",
+      "ui": ""
     }
   ]
 }
