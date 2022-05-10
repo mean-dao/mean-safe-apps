@@ -5,8 +5,8 @@
       "name": "Propose Withdrawal",
       "network": 101,
       "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
-      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/msp-idl.json",
-      "uiElements": [
+      "definition": "",
+      "uiInstructions": [
       ]
     },
     {
@@ -14,8 +14,8 @@
       "name": "Propose Withdrawal",
       "network": 102,
       "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
-      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/msp-idl.json",
-      "uiElements": [
+      "definition": "",
+      "uiInstructions": [
       ]
     },
     {
@@ -23,8 +23,8 @@
       "name": "Propose Withdrawal",
       "network": 103,
       "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
-      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/msp-idl.json",
-      "uiElements": [
+      "definition": "",
+      "uiInstructions": [
       ]
     },
     {
@@ -33,7 +33,7 @@
       "network": 101,
       "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
       "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/msp-idl.json",
-      "uiElements": [
+      "uiInstructions": [
         {
           "name": "createTreasury",
           "label": "Create Treasury",
@@ -190,7 +190,7 @@
       "network": 102,
       "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
       "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/msp-idl.json",
-      "uiElements": [
+      "uiInstructions": [
         {
           "name": "createTreasury",
           "label": "Create Treasury",
@@ -347,7 +347,7 @@
       "network": 103,
       "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
       "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/msp-idl.json",
-      "uiElements": [
+      "uiInstructions": [
         {
           "name": "createTreasury",
           "label": "Create Treasury",

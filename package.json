@@ -20,7 +20,8 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -R ./lib",
-    "clean:win": "rmdir /s lib"
+    "clean:win": "rmdir /s lib",
+    "start": "ts-node main.ts"
   },
   "devDependencies": {
     "@tsconfig/node14": "^1.0.1",

@@ -1,4 +1,4 @@
-import { PublicKey, SystemProgram } from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 import { fetch } from "cross-fetch";
 import data from './apps.json';
 
@@ -30,11 +30,17 @@ export type App = {
   network: NETWORK;
   logoUri: string;
   definition: any;
+  uiInstructions: UiInstruction[];
+}
+
+export type UiInstruction = {
+  id: string;
+  name: string;
+  label: string;
   uiElements: UiElement[];
 }
 
 export type UiElement = {
-  id: string,
   name: string;
   label: string;
   help: string;
@@ -68,15 +74,15 @@ export class AppsProvider {
   }
 
   getApps = async (): Promise<App[]> => {
-    let programs: App[] = [];
+    let parsedApps: App[] = [];
     const apps = getApps(this.network);
     for (let item of apps) {
-      const program = await parseApp(item);
-      if (program) {
-        programs.push(program);
+      const app = await parseApp(item);
+      if (app) {
+        parsedApps.push(app);
       }
     }
-    return programs;
+    return parsedApps;
   };
 }
 
@@ -89,70 +95,85 @@ const parseApp = async (data: any): Promise<App | null> => {
   try {
     const response = await fetch(data.definition);
     const result = (await response.json()) as any;
-    let program = {
+    let app = {
       id: data.id,
       name: data.name,
       network: data.network,
       logoUri: data.logo,
       definition: result,
-      uiElements: []
+      uiInstructions: []
     } as App;
-    let uiElements: UiElement[] = [];
-    for (let uiIx of data.instructions) {
+    let uiIxs: UiInstruction[] = [];
+    for (let uiIx of data.uiInstructions) {
       const dataIx = result.instructions.filter((ix: any) => ix.name === uiIx.name)[0];
       if (dataIx) {
-        const ix = await parseInstruction(program.id, uiIx, dataIx);
-        if (ix) {
-          uiElements.push(ix);
+        const parsedIx = await parseUiInstruction(app.id, uiIx, dataIx);
+        console.log('parsed ix', parsedIx);
+        console.log();
+        if (parsedIx) {
+          uiIxs.push(parsedIx);
         }
       }
     }
-    program.uiElements = uiElements;
-    return program;  
+    app.uiInstructions = uiIxs;
+    return app;  
   } catch {
     return null;
   }
 };
 
-const parseInstruction = async (programId: string, uiIx: any, dataIx: any): Promise<UiElement | null> => {
+const parseUiInstruction = async (programId: string, uiIx: any, dataIx: any): Promise<UiInstruction | null> => {
   try {
     const ixId = (await PublicKey.findProgramAddress(
       [Buffer.from(uiIx.name)],
       new PublicKey(programId)
     ))[0].toBase58();
-    let element = {
+    let ix = {
       id: ixId,
       name: uiIx.name,
       label: uiIx.label,
-      help: uiIx.help,
-      type: uiIx.type,
-      value: uiIx.value,
-      visibility: uiIx.visibility,
-      dataElement: undefined      
-    } as UiElement;
-    // accounts
-    let accIndex = 0, argPosition = 0;
+      uiElements: []     
+    } as UiInstruction;
+    // ui elements
     for (let uiElem of uiIx.uiElements) {
-      let dataElem = dataIx.accounts.filter((acc: any) => acc.name === uiElem.name)[0];
-      if (dataElem) {
-        element.dataElement = {
-          index: accIndex,
-          name: dataElem.name,
-          isWritable: dataElem.isMut,
-          isSigner: dataElem.isSigner
-        } as Account;
-        accIndex ++;
-      } else {
-        dataElem = dataIx.args.filter((arg: any) => arg.name === uiElem.name)[0];
-        element.dataElement = {
-          position: argPosition,
-          name: dataElem.name,
-          dataType: dataElem.type
-        } as Arg;
-        argPosition ++;
+      let element = {
+        name: uiElem.name,
+        label: uiElem.label,
+        help: uiElem.help,
+        type: uiElem.type,
+        value: uiElem.value,
+        visibility: uiElem.visibility,
+        dataElement: {}
+      } as UiElement;
+      // accounts
+      let accIndex = 0;
+      for (let uiAcc of uiIx.accounts) {
+        let dataElem = dataIx.accounts.filter((acc: any) => acc.name === uiAcc.name)[0];
+        if (dataElem) {
+          element.dataElement = {
+            index: accIndex,
+            name: dataElem.name,
+            isWritable: dataElem.isMut,
+            isSigner: dataElem.isSigner
+          } as Account;
+          accIndex ++;
+        }
+      }
+      // args
+      let argPosition = 0
+      for (let uiArg of uiIx.args) {
+        let dataElem = dataIx.args.filter((acc: any) => acc.name === uiArg.name)[0];
+        if (dataElem) {
+          element.dataElement = {
+            position: argPosition,
+            name: dataElem.name,
+            dataType: dataElem.type
+          } as Arg;
+          argPosition ++;
+        }
       }
     }
-    return element;  
+    return ix;
   } catch {
     return null;
   }
