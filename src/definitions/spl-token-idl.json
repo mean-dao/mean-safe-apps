@@ -69,11 +69,11 @@
         "fields": [
           {
             "name": "mint",
-            "type": "pubicKey"
+            "type": "publicKey"
           },
           {
             "name": "owner",
-            "type": "pubicKey"
+            "type": "publicKey"
           },
           {
             "name": "amount",
