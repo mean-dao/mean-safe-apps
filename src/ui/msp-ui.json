@@ -58,7 +58,7 @@
         "help": "The Mean OPS account",
         "type": "knownValue",
         "value": "3TD6SWY9M1mLY2kZWJNavPLhwXvcRsWdnZLRaMzERJBw",
-        "visibility": "readOnly"
+        "visibility": "hide"
       },
       {
         "name": "associatedTokenProgram",
@@ -66,7 +66,7 @@
         "help": "The Associated Token Program account",
         "type": "knownValue",
         "value": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
-        "visibility": "readOnly"
+        "visibility": "hide"
       },
       {
         "name": "tokenProgram",
@@ -74,7 +74,7 @@
         "help": "The Token Program account",
         "type": "knownValue",
         "value": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
-        "visibility": "readOnly"
+        "visibility": "hide"
       },
       {
         "name": "systemProgram",
@@ -82,7 +82,7 @@
         "help": "The System Program account",
         "type": "knownValue",
         "value": "11111111111111111111111111111111",
-        "visibility": "readOnly"
+        "visibility": "hide"
       },
       {
         "name": "rent",
@@ -90,7 +90,7 @@
         "help": "The Rent Exempt Sysvar account",
         "type": "knownValue",
         "value": "SysvarRent111111111111111111111111111111111",
-        "visibility": "readOnly"
+        "visibility": "hide"
       }
     ],
     "args": [

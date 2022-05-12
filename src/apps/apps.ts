@@ -8,7 +8,7 @@ export enum NETWORK {
   Devnet = 103,
 }
 
-export type UiElementVisibility = "show" | "hide" | "readOnly";
+export type UiElementVisibility = "show" | "hide";
 
 export type UiType = 
     "yesOrNo"
