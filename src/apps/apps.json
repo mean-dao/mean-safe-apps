@@ -5,24 +5,24 @@
       "name": "Propose Withdrawal",
       "network": 101,
       "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
-      "definition": "",
-      "ui": ""
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/spl-token-idl.json",
+      "ui": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/ui/spl-token-ui.json"
     },
     {
       "id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
       "name": "Propose Withdrawal",
       "network": 102,
       "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
-      "definition": "",
-      "ui": ""
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/spl-token-idl.json",
+      "ui": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/ui/spl-token-ui.json"
     },
     {
       "id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
       "name": "Propose Withdrawal",
       "network": 103,
       "logo": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/assets/MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu/logo.svg",
-      "definition": "",
-      "ui": ""
+      "definition": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/definitions/spl-token-idl.json",
+      "ui": "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/ui/spl-token-ui.json"
     },
     {
       "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",

@@ -1,0 +1,266 @@
+{
+  "version": "3.3.0",
+  "name": "spl_token",
+  "instructions": [
+    {
+      "name": "transfer",
+      "accounts": [
+        {
+          "name": "source",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Mint",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mintAuthority",
+            "type": {
+              "option": "publicKey"
+            }
+          },
+          {
+            "name": "supply",
+            "type": "u64"
+          },
+          {
+            "name": "decimals",
+            "type": "u8"
+          },
+          {
+            "name": "isInitialized",
+            "type": "bool"
+          },
+          {
+            "name": "freezeAuthority",
+            "type": {
+              "option": "publicKey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Account",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubicKey"
+          },
+          {
+            "name": "owner",
+            "type": "pubicKey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "delegate",
+            "type": {
+              "option": "publicKey"
+            }
+          },
+          {
+            "name": "delegate",
+            "type": {
+              "defined": "AccountState"
+            }
+          },
+          {
+            "name": "isNative",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "delegatedAmount",
+            "type": "u64"
+          },
+          {
+            "name": "closeAuthority",
+            "type": {
+              "option": "publicKey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Multisig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "m",
+            "type": "u8"
+          },
+          {
+            "name": "n",
+            "type": "u8"
+          },
+          {
+            "name": "isInitialized",
+            "type": "bool"
+          },
+          {
+            "name": "signers",
+            "type": {
+              "array": ["publicKey", 11]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "AccountState",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Uninitialized"
+          },
+          {
+            "name": "Initialized"
+          },
+          {
+            "name": "Frozed"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 0,
+      "name": "NotRentExempt",
+      "msg": "Lamport balance below rent-exempt threshold"
+    },
+    {
+      "code": 1,
+      "name": "InsufficientFunds",
+      "msg": "LInsufficient funds"
+    },
+    {
+      "code": 2,
+      "name": "InvalidMint",
+      "msg": "Invalid Mint"
+    },
+    {
+      "code": 3,
+      "name": "MintMismatch",
+      "msg": "Account not associated with this Mint"
+    },
+    {
+      "code": 4,
+      "name": "OwnerMismatch",
+      "msg": "wner does not match"
+    },
+    {
+      "code": 5,
+      "name": "FixedSupply",
+      "msg": "Fixed supply"
+    },
+    {
+      "code": 6,
+      "name": "AlreadyInUse",
+      "msg": "Already in use"
+    },
+    {
+      "code": 7,
+      "name": "InvalidNumberOfProvidedSigners",
+      "msg": "Invalid number of provided signers"
+    },
+    {
+      "code": 8,
+      "name": "InvalidNumberOfRequiredSigners",
+      "msg": "Invalid number of required signers"
+    },
+    {
+      "code": 9,
+      "name": "UninitializedState",
+      "msg": "State is unititialized"
+    },
+    {
+      "code": 10,
+      "name": "NativeNotSupported",
+      "msg": "Instruction does not support native tokens"
+    },
+    {
+      "code": 11,
+      "name": "NonNativeHasBalance",
+      "msg": "Non-native account can only be closed if its balance is zero"
+    },
+    {
+      "code": 12,
+      "name": "InvalidInstruction",
+      "msg": "Invalid instruction"
+    },
+    {
+      "code": 13,
+      "name": "IncalidState",
+      "msg": "State is invalid for requested operation"
+    },
+    {
+      "code": 14,
+      "name": "Overflow",
+      "msg": "Operation overflowed"
+    },
+    {
+      "code": 15,
+      "name": "AuthorityTypeNotSupported",
+      "msg": "Account does not support specified authority type"
+    },
+    {
+      "code": 16,
+      "name": "NotRentExempt",
+      "msg": "Lamport balance below rent-exempt threshold"
+    },
+    {
+      "code": 17,
+      "name": "MintCannotFreeze",
+      "msg": "This token mint cannot freeze accounts"
+    },
+    {
+      "code": 18,
+      "name": "AccountFrozen",
+      "msg": "Account is frozen"
+    },
+    {
+      "code": 19,
+      "name": "MintDecimalsMismatch",
+      "msg": "The provided decimals value different from the Mint decimals"
+    },
+    {
+      "code": 20,
+      "name": "NonNativeNotSupported",
+      "msg": "Instruction does not support non-native tokens"
+    }
+  ]
+}

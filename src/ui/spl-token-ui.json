@@ -1,0 +1,43 @@
+[
+  {
+    "name": "transfer",
+    "label": "Transfer",
+    "help": "Transfer funds",
+    "accounts": [
+      {
+        "name": "source",
+        "label": "From",
+        "help": "The source of the funds",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      },
+      {
+        "name": "destination",
+        "label": "To",
+        "help": "The destination of the funds",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      },
+      {
+        "name": "authority",
+        "label": "Authority",
+        "help": "The authority of the source account",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      }
+    ],
+    "args": [
+      {
+        "name": "amount",
+        "label": "Amount",
+        "help": "The amount to transfer",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      }
+    ]
+  }
+]
