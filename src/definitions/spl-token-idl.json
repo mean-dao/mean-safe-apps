@@ -16,7 +16,7 @@
           "isSigner": false
         },
         {
-          "name": "authority",
+          "name": "owner",
           "isMut": false,
           "isSigner": true
         }

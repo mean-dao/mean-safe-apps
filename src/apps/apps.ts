@@ -163,7 +163,8 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
               index: accIndex,
               name: dataElem.name,
               isWritable: dataElem.isMut,
-              isSigner: dataElem.isSigner
+              isSigner: dataElem.isSigner,
+              dataValue: ''
             } as Account
           } as UiElement);
           accIndex ++;
@@ -184,7 +185,8 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
             dataElement: {
               index: argIndex,
               name: dataElem.name,
-              dataType: dataElem.type
+              dataType: dataElem.type,
+              dataValue: ''
             } as Arg
           } as UiElement);
           argIndex ++;

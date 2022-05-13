@@ -21,9 +21,9 @@
         "visibility": "show"
       },
       {
-        "name": "authority",
-        "label": "Authority",
-        "help": "The authority of the source account",
+        "name": "owner",
+        "label": "Owner",
+        "help": "The owner of the source account",
         "type": "inputText",
         "value": "",
         "visibility": "show"
