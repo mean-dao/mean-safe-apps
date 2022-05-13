@@ -3,6 +3,21 @@
   "name": "spl_token",
   "instructions": [
     {
+      "name": "initializeMint",
+      "accounts": [],
+      "args": []
+    },
+    {
+      "name": "InitializeAccount",
+      "accounts": [],
+      "args": []
+    },
+    {
+      "name": "InitializeMultisig",
+      "accounts": [],
+      "args": []
+    },
+    {
       "name": "transfer",
       "accounts": [
         {
