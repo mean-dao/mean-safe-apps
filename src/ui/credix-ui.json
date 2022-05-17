@@ -1,0 +1,79 @@
+[
+  {
+    "name": "initializeMarket",
+    "label": "Initialize Market",
+    "help": "Initialize Market",
+    "accounts": [],
+    "args": []
+  },
+  {
+    "name": "depositFunds",
+    "label": "Deposit Funds",
+    "help": "Deposit funds",
+    "accounts": [],
+    "args": []
+  },
+  {
+    "name": "createDeal",
+    "label": "Create Deal",
+    "help": "Create deal",
+    "accounts": [],
+    "args": []
+  },
+  {
+    "name": "activateDeal",
+    "label": "Activate Deal",
+    "help": "Activate deal",
+    "accounts": [],
+    "args": []
+  },
+  {
+    "name": "makeDealRepayment",
+    "label": "Make Deal Repayment",
+    "help": "Make Deal Repayment",
+    "accounts": [],
+    "args": []
+  },
+  {
+    "name": "withdrawFunds",
+    "label": "Withdraw Funds",
+    "help": "Wwithdraw funds",
+    "accounts": [],
+    "args": []
+  },
+  {
+    "name": "createCredixPass",
+    "label": "Create Credix Pass",
+    "help": "Create Credix Pass",
+    "accounts": [],
+    "args": []
+  },
+  {
+    "name": "updateCredixPass",
+    "label": "Update Credix Pass",
+    "help": "Update Credix Pass",
+    "accounts": [],
+    "args": []
+  },
+  {
+    "name": "freezeGlobalMarketState",
+    "label": "Freeze Global Market State",
+    "help": "Freeze Global Market State",
+    "accounts": [],
+    "args": []
+  },
+  {
+    "name": "thawGlobalMarketState",
+    "label": "Thaw Global Market State",
+    "help": "Thaw Global Market State",
+    "accounts": [],
+    "args": []
+  },
+  {
+    "name": "updateLpTokenMetadata",
+    "label": "Update Lp Token Metadata",
+    "help": "Update Lp Token Metadata",
+    "accounts": [],
+    "args": []
+  }
+]
