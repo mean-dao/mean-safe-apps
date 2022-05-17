@@ -1,12 +1,12 @@
 {
   "name": "@mean-dao/mean-multisig-apps",
-  "version": "0.1.0-alpha-1",
+  "version": "0.1.0-alpha-5",
   "description": "Mean Multisig applications repository",
   "main": "lib/index.js",
   "repository": "https://github.com/mean-dao/mean-multisig-apps.git",
   "author": "Yansel <yanselfgok@gmail.com>",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "keywords": [
     "mean-multisig-apps"
   ],
@@ -15,7 +15,8 @@
   },
   "types": "lib/index.d.ts",
   "files": [
-    "lib/*.*"
+    "lib/*.*",
+    "lib/**/*.*"
   ],
   "scripts": {
     "build": "tsc",

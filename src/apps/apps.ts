@@ -22,7 +22,16 @@ export type UiType =
   | "slot"
   | "knownValue"
   | "treasuryAccount"
-  | "txProposer";
+  | "txProposer"
+  | "tokenAmount";
+
+export type UiTokenAmountType = {
+  token: string | UiTokenAmountInfo
+}
+
+export type UiTokenAmountInfo = {
+  inputId: string;
+}
 
 export type App = {
   id: string;
