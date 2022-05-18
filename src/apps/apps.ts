@@ -139,9 +139,33 @@ export class AppsProvider {
   };
 }
 
+const getCustomIxConfig = (): UiInstruction => {
+  return {
+    id: "custom_proposal",
+    name: "custom_proposal",
+    label: "Custom Proposal",
+    help: "Executes any custom transaction using its base64 serialized representation.",
+    uiElements: [
+      {
+        name: "serialized_data",
+        label: "Serialized Data",
+        help: "Serialized base64 string of the transaction.",
+        type: "inputTextArea",
+        value: "",
+        visibility: "show",
+        dataElement: undefined
+
+      } as UiElement
+    ]
+
+  } as UiInstruction;
+}
+
 const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiInstruction[]> => {
   try {
-    let uiConfigs: UiInstruction[] = [];
+    let uiConfigs: UiInstruction[] = [
+      getCustomIxConfig()
+    ];
     for (let uiIx of uiIxs) {
       const ixId = (await PublicKey.findProgramAddress(
         [Buffer.from(uiIx.name)],
