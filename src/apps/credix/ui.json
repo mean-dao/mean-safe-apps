@@ -1,0 +1,16 @@
+[
+  {
+    "name": "depositFunds",
+    "label": "Deposit Funds",
+    "help": "Deposit funds",
+    "accounts": [],
+    "args": []
+  },
+  {
+    "name": "withdrawFunds",
+    "label": "Withdraw Funds",
+    "help": "Wwithdraw funds",
+    "accounts": [],
+    "args": []
+  }
+]

@@ -1,0 +1,94 @@
+{
+  "apps": [
+    {
+      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+      "name": "Money Streaming",
+      "network": 101,
+      "folder": "mean-msp"
+    },
+    {
+      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+      "name": "Money Streaming",
+      "network": 102,
+      "folder": "mean-msp"
+    },
+    {
+      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+      "name": "Money Streaming",
+      "network": 103,
+      "folder": "mean-msp"
+    },
+    {
+      "id": "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi",
+      "name": "Solend",
+      "network": 101,
+      "folder": "solend"
+    },
+    {
+      "id": "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi",
+      "name": "Solend",
+      "network": 102,
+      "folder": "solend"
+    },
+    {
+      "id": "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi",
+      "name": "Solend",
+      "network": 103,
+      "folder": "solend"
+    },
+    {
+      "id": "MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK",
+      "name": "Mean Staking",
+      "network": 101,
+      "folder": "mean-staking"
+    },
+    {
+      "id": "MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK",
+      "name": "Mean Staking",
+      "network": 102,
+      "folder": "mean-staking"
+    },
+    {
+      "id": "MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK",
+      "name": "Mean Staking",
+      "network": 103,
+      "folder": "mean-staking"
+    },
+    {
+      "id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
+      "name": "Marinade",
+      "network": 101,
+      "folder": "marinade"
+    },
+    {
+      "id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
+      "name": "Marinade",
+      "network": 102,
+      "folder": "marinade"
+    },
+    {
+      "id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
+      "name": "Marinade",
+      "network": 103,
+      "folder": "marinade"
+    },
+    {
+      "id": "CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX",
+      "name": "Credix Finance",
+      "network": 101,
+      "folder": "credix"
+    },
+    {
+      "id": "CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX",
+      "name": "Credix Finance",
+      "network": 102,
+      "folder": "credix"
+    },
+    {
+      "id": "CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX",
+      "name": "Credix Finance",
+      "network": 103,
+      "folder": "credix"
+    }
+  ]
+}

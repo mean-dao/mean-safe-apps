@@ -2,6 +2,8 @@ import { PublicKey } from "@solana/web3.js";
 import { fetch } from "cross-fetch";
 import data from './apps.json';
 
+export const BASE_APPS_URL = "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/apps";
+
 export enum NETWORK {
   MainnetBeta = 101,
   Testnet = 102,
@@ -23,7 +25,8 @@ export type UiType =
   | "knownValue"
   | "treasuryAccount"
   | "txProposer"
-  | "tokenAmount";
+  | "func"
+  | UiTokenAmountType;
 
 export type UiTokenAmountType = {
   token: string | UiTokenAmountInfo
@@ -37,9 +40,10 @@ export type App = {
   id: string;
   name: string;
   network: NETWORK;
+  folder: string;
   logoUri: string;
-  ui: string;
-  definition: string;
+  uiUrl: string;
+  defUrl: string;
 }
 
 export type AppConfig = {
@@ -96,16 +100,21 @@ export class AppsProvider {
         if (!network) { return data.apps; }
         return data.apps.filter((a: any) => a.network == network);
       };
-      let apps: App[] = [];
+      let apps: App[] = [
+        await getCustomAppConfig(
+          this.network || 103
+        )
+      ];
       const appList = getApps(this.network);
       for (let item of appList) {
         apps.push({
           id: item.id,
           name: item.name,
           network: item.network,
-          logoUri: item.logo,
-          ui: item.ui,
-          definition: item.definition
+          folder: item.folder,
+          logoUri: `${BASE_APPS_URL}/${item.folder}/logo.svg`,
+          uiUrl: `${BASE_APPS_URL}/${item.folder}/ui.json`,
+          defUrl: `${BASE_APPS_URL}/${item.folder}/definition.json`
         } as App);
       }
       return apps;
@@ -118,13 +127,20 @@ export class AppsProvider {
   getAppConfig = async (
     appId: string,
     uiUrl: string, 
-    definitionUrl: string
+    defUrl: string
   ): Promise<AppConfig | null> => {
     try {
-      if (!uiUrl || !definitionUrl) { return null; }
+      if (!uiUrl || !defUrl) { return null; }
+      if (appId === "custom_proposal") {
+        const uiResult = await fetch(uiUrl);
+        return {
+          ui: await getUiConfig(appId, uiResult, undefined),
+          definition: ""
+        } as AppConfig;
+      }
       const responses = await Promise.all([
         fetch(uiUrl),
-        fetch(definitionUrl)
+        fetch(defUrl)
       ]);
       const uiResult = await responses[0].json();
       const defResult = await responses[1].json();
@@ -139,33 +155,21 @@ export class AppsProvider {
   };
 }
 
-const getCustomIxConfig = (): UiInstruction => {
+const getCustomAppConfig = (network: NETWORK): App => {
   return {
     id: "custom_proposal",
-    name: "custom_proposal",
-    label: "Custom Proposal",
-    help: "Executes any custom transaction using its base64 serialized representation.",
-    uiElements: [
-      {
-        name: "serialized_data",
-        label: "Serialized Data",
-        help: "Serialized base64 string of the transaction.",
-        type: "inputTextArea",
-        value: "",
-        visibility: "show",
-        dataElement: undefined
-
-      } as UiElement
-    ]
-
-  } as UiInstruction;
+    name: "Custom Transaction Proposal",
+    network: network,
+    folder: "custom",
+    logoUri: `${BASE_APPS_URL}/custom/logo.svg`,
+    uiUrl: `${BASE_APPS_URL}/custom/ui.json`,
+    defUrl: ""
+  } as App;
 }
 
 const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiInstruction[]> => {
   try {
-    let uiConfigs: UiInstruction[] = [
-      getCustomIxConfig()
-    ];
+    let uiConfigs: UiInstruction[] = [];
     for (let uiIx of uiIxs) {
       const ixId = (await PublicKey.findProgramAddress(
         [Buffer.from(uiIx.name)],
@@ -178,51 +182,63 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
         help: uiIx.help,
         uiElements: []     
       } as UiInstruction;
-      // accounts
-      let dataIx = defData.instructions.filter((i: any) => i.name === uiIx.name)[0];
-      if (!dataIx) { continue; }
-      let accIndex = 0;
-      for (let uiAcc of uiIx.accounts) {
-        let dataElem = dataIx.accounts.filter((acc: any) => acc.name === uiAcc.name)[0];
-        if (dataElem) {
-          ix.uiElements.push({
-            name: uiAcc.name,
-            label: uiAcc.label,
-            help: uiAcc.help,
-            type: uiAcc.type,
-            value: uiAcc.value,
-            visibility: uiAcc.visibility,
-            dataElement: {
-              index: accIndex,
-              name: dataElem.name,
-              isWritable: dataElem.isMut,
-              isSigner: dataElem.isSigner,
-              dataValue: ''
-            } as Account
-          } as UiElement);
-          accIndex ++;
+      // custom proposal
+      if (!defData && appId === "custom_proposal") {
+        ix.uiElements.push({
+          name: "custom_tx_proposal",
+          label: "Custom Transaction Proposal",
+          help: "",
+          type: "inputTextArea",
+          value: "",
+          visibility: "show"
+        } as UiElement);
+      } else {
+        // accounts
+        let dataIx = defData.instructions.filter((i: any) => i.name === uiIx.name)[0];
+        if (!dataIx) { continue; }
+        let accIndex = 0;
+        for (let uiAcc of uiIx.accounts) {
+          let dataElem = dataIx.accounts.filter((acc: any) => acc.name === uiAcc.name)[0];
+          if (dataElem) {
+            ix.uiElements.push({
+              name: uiAcc.name,
+              label: uiAcc.label,
+              help: uiAcc.help,
+              type: uiAcc.type,
+              value: uiAcc.value,
+              visibility: uiAcc.visibility,
+              dataElement: {
+                index: accIndex,
+                name: dataElem.name,
+                isWritable: dataElem.isMut,
+                isSigner: dataElem.isSigner,
+                dataValue: ''
+              } as Account
+            } as UiElement);
+            accIndex ++;
+          }
         }
-      }
-      // args
-      let argIndex = 0
-      for (let uiArg of uiIx.args) {
-        let dataElem = dataIx.args.filter((acc: any) => acc.name === uiArg.name)[0];
-        if (dataElem) {
-          ix.uiElements.push({
-            name: uiArg.name,
-            label: uiArg.label,
-            help: uiArg.help,
-            type: uiArg.type,
-            value: uiArg.value,
-            visibility: uiArg.visibility,
-            dataElement: {
-              index: argIndex,
-              name: dataElem.name,
-              dataType: dataElem.type,
-              dataValue: ''
-            } as Arg
-          } as UiElement);
-          argIndex ++;
+        // args
+        let argIndex = 0
+        for (let uiArg of uiIx.args) {
+          let dataElem = dataIx.args.filter((acc: any) => acc.name === uiArg.name)[0];
+          if (dataElem) {
+            ix.uiElements.push({
+              name: uiArg.name,
+              label: uiArg.label,
+              help: uiArg.help,
+              type: uiArg.type,
+              value: uiArg.value,
+              visibility: uiArg.visibility,
+              dataElement: {
+                index: argIndex,
+                name: dataElem.name,
+                dataType: dataElem.type,
+                dataValue: ''
+              } as Arg
+            } as UiElement);
+            argIndex ++;
+          }
         }
       }
       uiConfigs.push(ix);
