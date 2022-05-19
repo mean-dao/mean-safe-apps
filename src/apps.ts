@@ -2,6 +2,7 @@ import { PublicKey } from "@solana/web3.js";
 import { fetch } from "cross-fetch";
 import data from './apps.json';
 
+export const MEAN_MULTISIG_PROGRAM = new PublicKey("FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j");
 export const BASE_APPS_URL = "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/apps";
 
 export enum NETWORK {
@@ -130,14 +131,15 @@ export class AppsProvider {
     defUrl: string
   ): Promise<AppConfig | null> => {
     try {
-      if (!uiUrl || !defUrl) { return null; }
-      if (appId === "custom_proposal") {
-        const uiResult = await fetch(uiUrl);
+      if (appId === MEAN_MULTISIG_PROGRAM.toBase58()) {
+        const uiResponse = await fetch(uiUrl);
+        const uiResult = await uiResponse.json();
         return {
           ui: await getUiConfig(appId, uiResult, undefined),
           definition: ""
         } as AppConfig;
       }
+      if (!uiUrl || !defUrl) { return null; }
       const responses = await Promise.all([
         fetch(uiUrl),
         fetch(defUrl)
@@ -157,7 +159,7 @@ export class AppsProvider {
 
 const getCustomAppConfig = (network: NETWORK): App => {
   return {
-    id: "custom_proposal",
+    id: MEAN_MULTISIG_PROGRAM.toBase58(),
     name: "Custom Transaction Proposal",
     network: network,
     folder: "custom",
@@ -183,14 +185,17 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
         uiElements: []     
       } as UiInstruction;
       // custom proposal
-      if (!defData && appId === "custom_proposal") {
+      if (appId === MEAN_MULTISIG_PROGRAM.toBase58()) {
+        const uiArg = uiIxs[0].args[0];
+        if (!uiArg) { continue; }
         ix.uiElements.push({
-          name: "custom_tx_proposal",
-          label: "Custom Transaction Proposal",
-          help: "",
-          type: "inputTextArea",
-          value: "",
-          visibility: "show"
+          name: uiArg.name,
+          label: uiArg.label,
+          help: uiArg.help,
+          type: uiArg.type,
+          value: uiArg.value,
+          visibility: uiArg.visibility,
+          dataElement: undefined
         } as UiElement);
       } else {
         // accounts
