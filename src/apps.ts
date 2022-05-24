@@ -173,7 +173,7 @@ export class AppsProvider {
 const getCustomAppConfig = (network: NETWORK): App => {
   return {
     id: MEAN_MULTISIG_PROGRAM.toBase58(),
-    name: "Custom Transaction Proposal",
+    name: "Custom Transaction",
     network: network,
     folder: "custom",
     logoUri: `${BASE_APPS_URL}/custom/logo.svg`,
