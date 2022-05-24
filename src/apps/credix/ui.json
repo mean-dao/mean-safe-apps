@@ -3,14 +3,246 @@
     "name": "depositFunds",
     "label": "Deposit Funds",
     "help": "Deposit funds",
-    "accounts": [],
-    "args": []
+    "accounts": [
+      {
+        "name": "investor",
+        "label": "Investor",
+        "help": "The Investor",
+        "type": "multisig",
+        "value": "",
+        "visibility": "hide"
+      },
+      {
+        "name": "gatewayToken",
+        "label": "Gateway Token",
+        "help": "PDA of the Gateway",
+        "type": {
+          "func": {
+            "name": "getGatewayToken",
+            "inputs": [
+              {
+                "network": ""
+              },
+              {
+                "seeds": []
+              }
+            ]
+          }
+        },
+        "value": "",
+        "visibility": "hide"
+      },
+      {
+        "name": "globalMarketState",
+        "label": "Global Market State",
+        "help": "Global Market State",
+        "type": {
+          "func": {
+            "name": "getGlobalMarketState",
+            "inputs": [
+              {
+                "network": ""
+              },
+              {
+                "seeds": []
+              }
+            ]
+          }
+        },
+        "value": "",
+        "visibility": "hide"
+      },
+      {
+        "name": "signingAuthority",
+        "label": "Signing Authority",
+        "help": "Signing Authority",
+        "type": {
+          "func": {
+            "name": "getSigningAuthority",
+            "inputs": [
+              {
+                "network": ""
+              },
+              {
+                "seeds": []
+              }
+            ]
+          }
+        },
+        "value": "",
+        "visibility": "hide"
+      },
+      {
+        "name": "investorTokenAccount",
+        "label": "Investor Token Account",
+        "help": "Investor Token Account",
+        "type": {
+          "func": {
+            "name": "getInvestorTokenAccount",
+            "inputs": [
+              {
+                "network": ""
+              },
+              {
+                "seeds": []
+              }
+            ]
+          }
+        },
+        "value": "",
+        "visibility": "hide"
+      },
+      {
+        "name": "liquidityPoolTokenAccount",
+        "label": "LP Token Account",
+        "help": "Liquidity Pool Token Account",
+        "type": {
+          "func": {
+            "name": "getLPTokenAccount",
+            "inputs": [
+              {
+                "network": ""
+              },
+              {
+                "seeds": []
+              }
+            ]
+          }
+        },
+        "value": "",
+        "visibility": "hide"
+      },
+      {
+        "name": "lpTokenMint",
+        "label": "LP Token Mint",
+        "help": "Liquidity Pool Token Mint",
+        "type": "inputText",
+        "value": "",
+        "visibility": "hide"
+      },
+      {
+        "name": "investorLpTokenAccount",
+        "label": "Investor LP Token Account",
+        "help": "Investor Liquidity Pool Token Account",
+        "type": {
+          "func": {
+            "name": "getInvestorLPTokenAccount",
+            "inputs": [
+              {
+                "network": ""
+              },
+              {
+                "seeds": []
+              }
+            ]
+          }
+        },
+        "value": "",
+        "visibility": "hide"
+      },
+      {
+        "name": "credixPass",
+        "label": "Credi Pass",
+        "help": "Credit Pass Account",
+        "type": {
+          "func": {
+            "name": "getCredixPass",
+            "inputs": [
+              {
+                "network": ""
+              },
+              {
+                "seeds": []
+              }
+            ]
+          }
+        },
+        "value": "",
+        "visibility": "hide",
+        "pda": {
+          "seeds": [
+            {
+              "kind": "account",
+              "type": "publicKey",
+              "account": "GlobalMarketState",
+              "path": "global_market_state"
+            },
+            {
+              "kind": "account",
+              "type": "publicKey",
+              "path": "investor"
+            },
+            {
+              "kind": "const",
+              "type": "string",
+              "value": "credix-pass"
+            }
+          ]
+        }
+      },
+      {
+        "name": "baseTokenMint",
+        "isMut": false,
+        "isSigner": false
+      },
+      {
+        "name": "associatedTokenProgram",
+        "label": "Associated Token Program",
+        "help": "The Associated Token Program account",
+        "type": "knownValue",
+        "value": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+        "visibility": "hide"
+      },
+      {
+        "name": "rent",
+        "label": "Rent",
+        "help": "The Rent Exempt Sysvar account",
+        "type": "knownValue",
+        "value": "SysvarRent111111111111111111111111111111111",
+        "visibility": "hide"
+      },
+      {
+        "name": "tokenProgram",
+        "label": "Token Program",
+        "help": "The Token Program account",
+        "type": "knownValue",
+        "value": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+        "visibility": "hide"
+      },
+      {
+        "name": "systemProgram",
+        "label": "System Program",
+        "help": "The System Program account",
+        "type": "knownValue",
+        "value": "11111111111111111111111111111111",
+        "visibility": "hide"
+      }
+    ],
+    "args": [
+      {
+        "name": "amount",
+        "label": "Amount",
+        "help": "The amount to be deposited.",
+        "type": "inputNumber",
+        "value": "",
+        "visibility": "show"
+      }
+    ]
   },
   {
     "name": "withdrawFunds",
     "label": "Withdraw Funds",
     "help": "Wwithdraw funds",
     "accounts": [],
-    "args": []
+    "args": [
+      {
+        "name": "baseWithdrawalAmount",
+        "label": "Base Withdrawal Amount",
+        "help": "The amount to be withdrawn.",
+        "type": "inputNumber",
+        "value": "",
+        "visibility": "show"
+      }
+    ]
   }
 ]

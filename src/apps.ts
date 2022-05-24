@@ -26,8 +26,8 @@ export type UiType =
   | "knownValue"
   | "treasuryAccount"
   | "txProposer"
-  | "func"
-  | UiTokenAmountType;
+  | UiTokenAmountType
+  | UiFunc;
 
 export type UiTokenAmountType = {
   token: string | UiTokenAmountInfo
@@ -35,6 +35,20 @@ export type UiTokenAmountType = {
 
 export type UiTokenAmountInfo = {
   inputId: string;
+}
+
+export type UiFunc = {
+  func: string;
+}
+
+export type UiFuncInfo = {
+  name: string;
+  inputs: UiFuncInput[]
+}
+
+export type UiFuncInput = UiElement | {
+  name: string;
+  value: any;
 }
 
 export type App = {
@@ -102,12 +116,11 @@ export class AppsProvider {
         return data.apps.filter((a: any) => a.network == network);
       };
       let apps: App[] = [
-        await getCustomAppConfig(
-          this.network || 103
-        )
+        getCustomAppConfig(this.network || 103)
       ];
       const appList = getApps(this.network);
       for (let item of appList) {
+        if (!item.folder) { continue; }
         apps.push({
           id: item.id,
           name: item.name,
