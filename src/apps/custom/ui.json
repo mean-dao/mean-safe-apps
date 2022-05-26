@@ -3,6 +3,7 @@
     "name": "custom_tx_proposal",
     "label": "Custom Transaction Proposal",
     "help": "",
+    "type": "config",
     "accounts": [],
     "args": [
       {

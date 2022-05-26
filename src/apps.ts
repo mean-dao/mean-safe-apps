@@ -26,6 +26,7 @@ export type UiType =
   | "knownValue"
   | "treasuryAccount"
   | "txProposer"
+  | "multisig"
   | UiTokenAmountType
   | UiFunc;
 
@@ -71,7 +72,16 @@ export type UiInstruction = {
   name: string;
   label: string;
   help: string;
+  type: UiInstructionType;
   uiElements: UiElement[];
+}
+
+export type UiInstructionType = "config" | {
+  func: UiInstructionTypeFunc;
+}
+
+export type UiInstructionTypeFunc = {
+  name: string;
 }
 
 export type UiElement = {
@@ -195,6 +205,7 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
         name: uiIx.name,
         label: uiIx.label,
         help: uiIx.help,
+        type: uiIx.type,
         uiElements: []     
       } as UiInstruction;
       // custom proposal
