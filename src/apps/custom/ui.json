@@ -1,6 +1,6 @@
 [
   {
-    "name": "custom_tx_proposal",
+    "name": "customProposal",
     "label": "Custom Transaction Proposal",
     "help": "",
     "type": "config",

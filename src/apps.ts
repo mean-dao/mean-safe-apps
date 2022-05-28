@@ -1,8 +1,7 @@
-import { PublicKey } from "@solana/web3.js";
+import { PublicKey, SystemProgram } from "@solana/web3.js";
 import { fetch } from "cross-fetch";
 import data from './apps.json';
 
-export const MEAN_MULTISIG_PROGRAM = new PublicKey("FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j");
 export const BASE_APPS_URL = "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/develop/src/apps";
 
 export enum NETWORK {
@@ -13,8 +12,9 @@ export enum NETWORK {
 
 export type UiElementVisibility = "show" | "hide";
 
-export type UiType = 
-    "yesOrNo"
+export type UiType =
+    "textInfo"
+  | "yesOrNo"
   | "option"
   | "optionOwners"
   | "optionAccounts"
@@ -57,6 +57,7 @@ export type App = {
   name: string;
   network: NETWORK;
   folder: string;
+  active: boolean;
   logoUri: string;
   uiUrl: string;
   defUrl: string;
@@ -126,16 +127,16 @@ export class AppsProvider {
         return data.apps.filter((a: any) => a.network == network);
       };
       let apps: App[] = [
-        getCustomAppConfig(this.network || 103)
+        getCustomApp(this.network || 103)
       ];
       const appList = getApps(this.network);
       for (let item of appList) {
-        if (!item.folder) { continue; }
         apps.push({
           id: item.id,
           name: item.name,
           network: item.network,
           folder: item.folder,
+          active: item.active,
           logoUri: `${BASE_APPS_URL}/${item.folder}/logo.svg`,
           uiUrl: `${BASE_APPS_URL}/${item.folder}/ui.json`,
           defUrl: `${BASE_APPS_URL}/${item.folder}/definition.json`
@@ -154,9 +155,9 @@ export class AppsProvider {
     defUrl: string
   ): Promise<AppConfig | null> => {
     try {
-      if (appId === MEAN_MULTISIG_PROGRAM.toBase58()) {
+      if (appId === SystemProgram.programId.toBase58()) {
         const uiResponse = await fetch(uiUrl);
-        const uiResult = await uiResponse.json();
+        const uiResult = (!uiResponse.ok || uiResponse.status !== 200) ? {} : await uiResponse.json();
         return {
           ui: await getUiConfig(appId, uiResult, undefined),
           definition: ""
@@ -167,8 +168,8 @@ export class AppsProvider {
         fetch(uiUrl),
         fetch(defUrl)
       ]);
-      const uiResult = await responses[0].json();
-      const defResult = await responses[1].json();
+      const uiResult = responses[0].status !== 200 ? null : await responses[0].json();
+      const defResult = responses[1].status !== 200 ? null : await responses[1].json();
       return {
         ui: await getUiConfig(appId, uiResult, defResult),
         definition: defResult
@@ -180,12 +181,13 @@ export class AppsProvider {
   };
 }
 
-const getCustomAppConfig = (network: NETWORK): App => {
+const getCustomApp = (network: NETWORK): App => {
   return {
-    id: MEAN_MULTISIG_PROGRAM.toBase58(),
+    id: SystemProgram.programId.toBase58(),
     name: "Custom Transaction",
     network: network,
     folder: "custom",
+    active: true,
     logoUri: `${BASE_APPS_URL}/custom/logo.svg`,
     uiUrl: `${BASE_APPS_URL}/custom/ui.json`,
     defUrl: ""
@@ -195,6 +197,7 @@ const getCustomAppConfig = (network: NETWORK): App => {
 const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiInstruction[]> => {
   try {
     let uiConfigs: UiInstruction[] = [];
+    if (!uiIxs) { return uiConfigs; }
     for (let uiIx of uiIxs) {
       const ixId = (await PublicKey.findProgramAddress(
         [Buffer.from(uiIx.name)],
@@ -209,7 +212,7 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
         uiElements: []     
       } as UiInstruction;
       // custom proposal
-      if (appId === MEAN_MULTISIG_PROGRAM.toBase58()) {
+      if (appId === SystemProgram.programId.toBase58()) {
         const uiArg = uiIxs[0].args[0];
         if (!uiArg) { continue; }
         ix.uiElements.push({
@@ -223,7 +226,7 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
         } as UiElement);
       } else {
         // accounts
-        let dataIx = defData.instructions.filter((i: any) => i.name === uiIx.name)[0];
+        let dataIx = !defData ? null : defData.instructions.filter((i: any) => i.name === uiIx.name)[0];
         if (!dataIx) { continue; }
         let accIndex = 0;
         for (let uiAcc of uiIx.accounts) {
