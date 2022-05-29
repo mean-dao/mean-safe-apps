@@ -125,6 +125,27 @@
       "network": 103,
       "folder": "mean-multisig",
       "active": false
+    },
+    {
+      "id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "name": "SPL Token",
+      "network": 101,
+      "folder": "spl-token",
+      "active": false
+    },
+    {
+      "id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "name": "SPL Token",
+      "network": 102,
+      "folder": "spl-token",
+      "active": false
+    },
+    {
+      "id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "name": "SPL Token",
+      "network": 103,
+      "folder": "spl-token",
+      "active": false
     }
   ]
 }
