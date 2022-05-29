@@ -1,0 +1,92 @@
+[
+  {
+    "name": "transfer",
+    "label": "Transfer",
+    "help": "Transfer funds",
+    "accounts": [
+      {
+        "name": "source",
+        "label": "From",
+        "help": "The source of the funds",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      },
+      {
+        "name": "destination",
+        "label": "To",
+        "help": "The destination of the funds",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      },
+      {
+        "name": "owner",
+        "label": "Owner",
+        "help": "The owner of the source account",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      }
+    ],
+    "args": [
+      {
+        "name": "amount",
+        "label": "Amount",
+        "help": "The amount to transfer",
+        "type": {
+          "from": {
+            "inputId": "source"
+          }
+        },
+        "value": "",
+        "visibility": "show"
+      }
+    ]
+  },
+  {
+    "name": "setAuthority",
+    "label": "Set Authority",
+    "help": "Set Token ",
+    "accounts": [
+      {
+        "name": "source",
+        "label": "From",
+        "help": "The source of the funds",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      },
+      {
+        "name": "destination",
+        "label": "To",
+        "help": "The destination of the funds",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      },
+      {
+        "name": "owner",
+        "label": "Owner",
+        "help": "The owner of the source account",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      }
+    ],
+    "args": [
+      {
+        "name": "amount",
+        "label": "Amount",
+        "help": "The amount to transfer",
+        "type": {
+          "from": {
+            "inputId": "source"
+          }
+        },
+        "value": "",
+        "visibility": "show"
+      }
+    ]
+  }
+]

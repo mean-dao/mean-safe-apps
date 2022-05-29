@@ -1,0 +1,70 @@
+[
+  {
+    "name": "depositFunds",
+    "label": "Deposit Funds",
+    "help": "Deposit funds",
+    "type": {
+      "func": {
+        "name": "getDepositIx"
+      }
+    },
+    "accounts": [
+      {
+        "name": "investor",
+        "label": "Investor",
+        "help": "The Investor",
+        "type": "multisig",
+        "value": "",
+        "visibility": "hide"
+      }
+    ],
+    "args": [
+      {
+        "name": "amount",
+        "label": "Amount",
+        "help": "The amount to be deposited.",
+        "type": {
+          "from": {
+            "inputId": "investorTokenAccount"
+          }
+        },
+        "value": "",
+        "visibility": "show"
+      }
+    ]
+  },
+  {
+    "name": "withdrawFunds",
+    "label": "Withdraw Funds",
+    "help": "Withdraw Funds",
+    "type": {
+      "func": {
+        "name": "getWithdrawIx"
+      }
+    },
+    "accounts": [
+      {
+        "name": "investor",
+        "label": "Investor",
+        "help": "The Investor",
+        "type": "multisig",
+        "value": "",
+        "visibility": "hide"
+      }
+    ],
+    "args": [
+      {
+        "name": "baseWithdrawalAmount",
+        "label": "Base Withdrawal Amount",
+        "help": "The amount to be withdrawn.",
+        "type": {
+          "from": {
+            "inputId": "investorTokenAccount"
+          }
+        },
+        "value": "",
+        "visibility": "show"
+      }
+    ]
+  }
+]

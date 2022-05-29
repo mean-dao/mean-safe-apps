@@ -1,0 +1,19 @@
+[
+  {
+    "name": "customProposal",
+    "label": "Custom Transaction Proposal",
+    "help": "",
+    "type": "config",
+    "accounts": [],
+    "args": [
+      {
+        "name": "serializedTx",
+        "label": "Serialized Transaction",
+        "help": "The serialized transaction in base64 string format.",
+        "type": "inputTextArea",
+        "value": "",
+        "visibility": "show"
+      }
+    ]
+  }
+]
