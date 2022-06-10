@@ -5,21 +5,21 @@
       "name": "Money Streaming",
       "network": 101,
       "folder": "mean-msp",
-      "active": false
+      "active": true
     },
     {
       "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
       "name": "Money Streaming",
       "network": 102,
       "folder": "mean-msp",
-      "active": false
+      "active": true
     },
     {
       "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
       "name": "Money Streaming",
       "network": 103,
       "folder": "mean-msp",
-      "active": false
+      "active": true
     },
     {
       "id": "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi",
