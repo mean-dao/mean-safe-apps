@@ -1,6 +1,6 @@
 import { AnchorProvider, Idl, Program, BN, utils } from "@project-serum/anchor";
 import { Commitment, Connection, Keypair, PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY, TransactionInstruction } from "@solana/web3.js";
-import { TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID, getAssociatedTokenAddress, getMint } from "@solana/spl-token";
+import { TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID, Token, MintLayout, MintInfo } from "@solana/spl-token";
 import * as credixIdl from "./definition.json";
 
 const gatewwayProgramPubKey = new PublicKey("gatem74V238djXdzWnJf94Wo1DcnuGkfijbf3AuBhfs");
@@ -53,19 +53,25 @@ export const getDepositIx = async (
     program.programId
   );
 
-  const investorTokenAccount = await getAssociatedTokenAddress(
+  const investorTokenAccount = await Token.getAssociatedTokenAddress(
+    ASSOCIATED_TOKEN_PROGRAM_ID,
+    TOKEN_PROGRAM_ID,
     globalMarketAccount.baseTokenMint as PublicKey,
     investor,
     true
   );
 
-  const liquidityPoolTokenAccount = await getAssociatedTokenAddress(
+  const liquidityPoolTokenAccount = await Token.getAssociatedTokenAddress(
+    ASSOCIATED_TOKEN_PROGRAM_ID,
+    TOKEN_PROGRAM_ID,
     globalMarketAccount.baseTokenMint as PublicKey,
     signingAuthority,
     true
   );
   
-  const investorLPTokenAccount = await getAssociatedTokenAddress(
+  const investorLPTokenAccount = await Token.getAssociatedTokenAddress(
+    ASSOCIATED_TOKEN_PROGRAM_ID,
+    TOKEN_PROGRAM_ID,
     globalMarketAccount.lpTokenMint as PublicKey,
     investor,
     true
@@ -74,7 +80,13 @@ export const getDepositIx = async (
   const credixSeed = Buffer.from(utils.bytes.utf8.encode("credix-pass"));
   const credixPassSeeds = [marketAddress.toBuffer(), investor.toBuffer(), credixSeed];
   const [credixPass] = await PublicKey.findProgramAddress(credixPassSeeds, program.programId);
-  const baseTokenMintAccount = await getMint(program.provider.connection, globalMarketAccount.baseTokenMint as PublicKey);
+  const baseTokenMintInfo= await program.provider.connection.getAccountInfo(globalMarketAccount.baseTokenMint as PublicKey);
+  
+  if (!baseTokenMintInfo) { 
+    throw Error("Mint not found.");
+  }
+
+  const baseTokenMintAccount = MintLayout.decode(baseTokenMintInfo.data) as MintInfo;
   const depositAmount = new BN(amount * 10 ** baseTokenMintAccount.decimals);
 
   return await program.methods
@@ -124,19 +136,25 @@ export const getWithdrawIx = async (
     program.programId
   );
 
-  const investorTokenAccount = await getAssociatedTokenAddress(
+  const investorTokenAccount = await Token.getAssociatedTokenAddress(
+    ASSOCIATED_TOKEN_PROGRAM_ID,
+    TOKEN_PROGRAM_ID,
     globalMarketAccount.baseTokenMint as PublicKey,
     investor,
     true
   );
 
-  const liquidityPoolTokenAccount = await getAssociatedTokenAddress(
+  const liquidityPoolTokenAccount = await Token.getAssociatedTokenAddress(
+    ASSOCIATED_TOKEN_PROGRAM_ID,
+    TOKEN_PROGRAM_ID,
     globalMarketAccount.baseTokenMint as PublicKey,
     signingAuthority,
     true
   );
   
-  const investorLPTokenAccount = await getAssociatedTokenAddress(
+  const investorLPTokenAccount = await Token.getAssociatedTokenAddress(
+    ASSOCIATED_TOKEN_PROGRAM_ID,
+    TOKEN_PROGRAM_ID,
     globalMarketAccount.lpTokenMint as PublicKey,
     investor,
     true
@@ -145,7 +163,14 @@ export const getWithdrawIx = async (
   const credixSeed = Buffer.from(utils.bytes.utf8.encode("credix-pass"));
   const credixPassSeeds = [marketAddress.toBuffer(), investor.toBuffer(), credixSeed];
   const [credixPass] = await PublicKey.findProgramAddress(credixPassSeeds, program.programId);
-  const baseTokenMintAccount = await getMint(program.provider.connection, globalMarketAccount.baseTokenMint as PublicKey);
+  const baseTokenMintInfo= await program.provider.connection.getAccountInfo(globalMarketAccount.baseTokenMint as PublicKey);
+  
+  if (!baseTokenMintInfo) { 
+    throw Error("Mint not found.");
+  }
+
+  const baseTokenMintAccount = MintLayout.decode(baseTokenMintInfo.data) as MintInfo;
+  const depositAmount = new BN(amount * 10 ** baseTokenMintAccount.decimals);
   const withdrawalAmount = new BN(amount * 10 ** baseTokenMintAccount.decimals);
 
   return await program.methods
