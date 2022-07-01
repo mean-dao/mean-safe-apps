@@ -50,7 +50,7 @@ export class AppsProvider {
     defUrl: string
   ): Promise<AppConfig | null> => {
     try {
-      if (appId === SystemProgram.programId.toBase58()) {
+      if (appId === NATIVE_LOADER.toBase58()) {
         const uiResponse = await fetch(uiUrl);
         const uiResult = (!uiResponse.ok || uiResponse.status !== 200) ? {} : await uiResponse.json();
         return {
