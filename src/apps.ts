@@ -113,7 +113,7 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
         uiElements: []     
       } as UiInstruction;
       // custom proposal
-      if (appId === SystemProgram.programId.toBase58()) {
+      if (appId === NATIVE_LOADER.toBase58()) {
         const uiArg = uiIxs[0].args[0];
         if (!uiArg) { continue; }
         ix.uiElements.push({
