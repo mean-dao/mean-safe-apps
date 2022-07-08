@@ -1,0 +1,142 @@
+[
+  {
+    "name": "createTreasuryAndTemplate",
+    "label": "Create Treasury with Template",
+    "help": "Creates a vesting contract",
+    "accounts": [
+      {
+        "name": "payer",
+        "label": "Payer",
+        "help": "The payer of the transaction",
+        "type": "inputText",
+        "value": "",
+        "visibility": "hide"
+      },
+      {
+        "name": "treasurer",
+        "label": "Treasurer",
+        "help": "The owner of the treasury",
+        "type": "inputText",
+        "value": "",
+        "visibility": "hide"
+      },
+      {
+        "name": "treasury",
+        "label": "Treasury",
+        "help": "The treasury",
+        "type": "inputText",
+        "value": "",
+        "visibility": "hide"
+      },
+      {
+        "name": "treasuryMint",
+        "label": "Treasury Mint",
+        "help": "The mint of the Treasury",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      },
+      {
+        "name": "treasuryToken",
+        "label": "Treasury Token",
+        "help": "The Token account of the Treasury",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      },
+      {
+        "name": "associatedToken",
+        "label": "Treasury Token Mint",
+        "help": "The mint of the Treasury Token account",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      },
+      {
+        "name": "feeTreasury",
+        "label": "MSP OPS",
+        "help": "The Mean OPS account",
+        "type": "knownValue",
+        "value": "3TD6SWY9M1mLY2kZWJNavPLhwXvcRsWdnZLRaMzERJBw",
+        "visibility": "hide"
+      },
+      {
+        "name": "associatedTokenProgram",
+        "label": "Associated Token Program",
+        "help": "The Associated Token Program account",
+        "type": "knownValue",
+        "value": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+        "visibility": "hide"
+      },
+      {
+        "name": "tokenProgram",
+        "label": "Token Program",
+        "help": "The Token Program account",
+        "type": "knownValue",
+        "value": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+        "visibility": "hide"
+      },
+      {
+        "name": "systemProgram",
+        "label": "System Program",
+        "help": "The System Program account",
+        "type": "knownValue",
+        "value": "11111111111111111111111111111111",
+        "visibility": "hide"
+      },
+      {
+        "name": "rent",
+        "label": "Rent",
+        "help": "The Rent Exempt Sysvar account",
+        "type": "knownValue",
+        "value": "SysvarRent111111111111111111111111111111111",
+        "visibility": "hide"
+      }
+    ],
+    "args": [
+      {
+        "name": "slot",
+        "label": "Slot",
+        "help": "The network current slot",
+        "type": "slot",
+        "value": "",
+        "visibility": "hide"
+      },
+      {
+        "name": "name",
+        "label": "Name",
+        "help": "The name of the Treasury",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      },
+      {
+        "name": "treasuryType",
+        "label": "Treasury Type",
+        "help": "The Treasury type (Open/Lock)",
+        "type": "option",
+        "value": [
+          { "key": 0, "value": "Open" },
+          { "key": 1, "value": "Lock" }
+        ],
+        "visibility": "show"
+      },
+      {
+        "name": "autoClose",
+        "label": "Autoclose",
+        "help": "Sets if the Treasury will be automatically close after closing its last Stream",
+        "type": "yesOrNo",
+        "value": "",
+        "visibility": "show"
+      },
+      {
+        "name": "solFeePayedByTreasury",
+        "label": "Fee payed by Treasury",
+        "help": "Sets if the beneficiary fees are going to be payed by the Treasury",
+        "type": "yesOrNo",
+        "value": "",
+        "visibility": "show"
+      }
+    ]
+  }
+]
