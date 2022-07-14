@@ -2,21 +2,42 @@
   "apps": [
     {
       "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
-      "name": "Money Streaming",
+      "name": "Token Vesting",
+      "network": 101,
+      "folder": "mean-vesting",
+      "active": true
+    },
+    {
+      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+      "name": "Token Vesting",
+      "network": 102,
+      "folder": "mean-vesting",
+      "active": true
+    },
+    {
+      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+      "name": "Token Vesting",
+      "network": 103,
+      "folder": "mean-vesting",
+      "active": true
+    },
+    {
+      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+      "name": "Payment Streaming",
       "network": 101,
       "folder": "mean-msp",
       "active": true
     },
     {
       "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
-      "name": "Money Streaming",
+      "name": "Payment Streaming",
       "network": 102,
       "folder": "mean-msp",
       "active": true
     },
     {
       "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
-      "name": "Money Streaming",
+      "name": "Payment Streaming",
       "network": 103,
       "folder": "mean-msp",
       "active": true
