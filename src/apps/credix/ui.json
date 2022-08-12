@@ -66,5 +66,55 @@
         "visibility": "show"
       }
     ]
+  },
+  {
+    "name": "depositTranche",
+    "label": "Deposit Funds to Tranche",
+    "help": "Deposit funds to Tranche",
+    "type": {
+      "func": {
+        "name": "getTrancheDepositIx"
+      }
+    },
+    "accounts": [
+      {
+        "name": "investor",
+        "label": "Investor",
+        "help": "The Investor",
+        "type": "multisig",
+        "value": "",
+        "visibility": "hide"
+      },
+      {
+        "name": "deal",
+        "label": "Deal",
+        "help": "The deal for which you want to invest in a tranche",
+        "type": "inputText",
+        "value": "",
+        "visibility": "show"
+      }
+    ],
+    "args": [
+      {
+        "name": "amount",
+        "label": "Amount",
+        "help": "The amount to be deposited.",
+        "type": {
+          "from": {
+            "inputId": "investorTrancheTokenAccount"
+          }
+        },
+        "value": "",
+        "visibility": "show"
+      },
+      {
+        "name": "trancheIndex",
+        "label": "Tranche Index",
+        "help": "The tranche Index of the deal",
+        "type": "inputNumber",
+        "value": "",
+        "visibility": "show"
+      }
+    ]
   }
 ]
