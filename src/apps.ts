@@ -14,6 +14,12 @@ export class AppsProvider {
     this.network = network ? network : NETWORK.MainnetBeta;
   }
 
+  getBaseUrl = () => {
+    // const env = this.network === NETWORK.MainnetBeta ? "main" : "develop";
+    // return BASE_APPS_URL.replace("{env}", env);
+    return BASE_APPS_URL.replace("{env}", 'v1.3.3-alpha.4');
+  }
+
   getApps = async (): Promise<App[]> => {
     try {
       const baseUrl = this.getBaseUrl();
@@ -74,11 +80,6 @@ export class AppsProvider {
       return null;
     }
   };
-
-  getBaseUrl = () => {
-    const env = this.network === NETWORK.MainnetBeta ? "main" : "develop";
-    return BASE_APPS_URL.replace("{env}", env);
-  }
 
   private getCustomApp = (network: NETWORK): App => {
     const baseUrl = this.getBaseUrl();
