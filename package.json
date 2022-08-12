@@ -1,6 +1,6 @@
 {
   "name": "@mean-dao/mean-multisig-apps",
-  "version": "1.3.3-alpha.2",
+  "version": "1.3.3-alpha.3",
   "description": "Mean Multisig applications repository",
   "main": "lib/index.js",
   "repository": "https://github.com/mean-dao/mean-multisig-apps.git",

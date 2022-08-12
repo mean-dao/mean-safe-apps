@@ -2,10 +2,9 @@ import { PublicKey } from "@solana/web3.js";
 import { Account, App, AppConfig, Arg, NETWORK, UiElement, UiInstruction } from "./types";
 import { fetch } from "cross-fetch";
 import data from './apps.json';
-import { version } from '../package.json';
 
 const NATIVE_LOADER = new PublicKey("NativeLoader1111111111111111111111111111111");
-const BASE_APPS_URL = `https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/v${version}/src/apps`;
+const BASE_APPS_URL = "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/{env}/src/apps";
 
 export class AppsProvider {
 
@@ -77,7 +76,8 @@ export class AppsProvider {
   };
 
   getBaseUrl = () => {
-    return BASE_APPS_URL;
+    const env = this.network === NETWORK.MainnetBeta ? "main" : "develop";
+    return BASE_APPS_URL.replace("{env}", env);
   }
 
   private getCustomApp = (network: NETWORK): App => {
