@@ -1,10 +1,11 @@
-import { PublicKey, SystemProgram } from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 import { Account, App, AppConfig, Arg, NETWORK, UiElement, UiInstruction } from "./types";
 import { fetch } from "cross-fetch";
 import data from './apps.json';
+import { version } from '../package.json';
 
 const NATIVE_LOADER = new PublicKey("NativeLoader1111111111111111111111111111111");
-const BASE_APPS_URL = "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/{env}/src/apps";
+const BASE_APPS_URL = `https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/v${version}/src/apps`;
 
 export class AppsProvider {
 
@@ -46,7 +47,7 @@ export class AppsProvider {
 
   getAppConfig = async (
     appId: string,
-    uiUrl: string, 
+    uiUrl: string,
     defUrl: string
   ): Promise<AppConfig | null> => {
     try {
@@ -76,10 +77,9 @@ export class AppsProvider {
   };
 
   getBaseUrl = () => {
-    const env = this.network === NETWORK.MainnetBeta ? "main" : "develop";
-    return BASE_APPS_URL.replace("{env}", env);
+    return BASE_APPS_URL;
   }
-  
+
   private getCustomApp = (network: NETWORK): App => {
     const baseUrl = this.getBaseUrl();
     return {
@@ -110,7 +110,7 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
         label: uiIx.label,
         help: uiIx.help,
         type: uiIx.type,
-        uiElements: []     
+        uiElements: []
       } as UiInstruction;
       // custom proposal
       if (appId === NATIVE_LOADER.toBase58()) {
@@ -148,7 +148,7 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
                 dataValue: ''
               } as Account
             } as UiElement);
-            accIndex ++;
+            accIndex++;
           }
         }
         // args
@@ -170,7 +170,7 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
                 dataValue: ''
               } as Arg
             } as UiElement);
-            argIndex ++;
+            argIndex++;
           }
         }
       }
