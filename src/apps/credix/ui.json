@@ -20,6 +20,14 @@
     ],
     "args": [
       {
+        "name": "marketName",
+        "label": "Market name",
+        "help": "The name of the market you want to deposit in",
+        "type": "inputText",
+        "value": "credix-marketplace",
+        "visibility": "show"
+      },
+      {
         "name": "amount",
         "label": "Amount",
         "help": "The amount to be deposited.",
@@ -53,6 +61,14 @@
       }
     ],
     "args": [
+      {
+        "name": "marketName",
+        "label": "Market name",
+        "help": "The name of the market you want to deposit in",
+        "type": "inputText",
+        "value": "credix-marketplace",
+        "visibility": "show"
+      },
       {
         "name": "baseWithdrawalAmount",
         "label": "Base Withdrawal Amount",
@@ -95,6 +111,14 @@
       }
     ],
     "args": [
+      {
+        "name": "marketName",
+        "label": "Market name",
+        "help": "The name of the market you want to deposit in",
+        "type": "inputText",
+        "value": "credix-marketplace",
+        "visibility": "show"
+      },
       {
         "name": "amount",
         "label": "Amount",

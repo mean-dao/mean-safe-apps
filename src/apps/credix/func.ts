@@ -50,9 +50,10 @@ export const createProgram = (
 export const getDepositIx = async (
   program: Program<Idl>,
   investor: PublicKey,
+  marketName: string,
   amount: number
 ): Promise<TransactionInstruction> => {
-  const marketSeed = Buffer.from(utils.bytes.utf8.encode("credix-marketplace"));
+  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName));
   const [marketAddress] = await PublicKey.findProgramAddress(
     [marketSeed],
     program.programId
@@ -149,9 +150,10 @@ export const getDepositIx = async (
 export const getWithdrawIx = async (
   program: Program<Idl>,
   investor: PublicKey,
+  marketName: string,
   amount: number
 ): Promise<TransactionInstruction> => {
-  const marketSeed = Buffer.from(utils.bytes.utf8.encode("credix-marketplace"));
+  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName));
   const [marketAddress] = await PublicKey.findProgramAddress(
     [marketSeed],
     program.programId
@@ -250,10 +252,11 @@ export const getTrancheDepositIx = async (
   program: Program<Idl>,
   investor: PublicKey,
   deal: PublicKey,
+  marketName: string,
   amount: number,
   trancheIndex: number
 ): Promise<TransactionInstruction> => {
-  const marketSeed = Buffer.from(utils.bytes.utf8.encode("credix-marketplace"));
+  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName));
   const [marketAddress] = await PublicKey.findProgramAddress(
     [marketSeed],
     program.programId
