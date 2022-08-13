@@ -337,19 +337,7 @@ export const getTrancheDepositIx = async (
     program.programId
   );
 
-  const trancheTokenMintInfo = await program.provider.connection.getAccountInfo(
-    trancheMintPda as PublicKey
-  );
-
-  if (!trancheTokenMintInfo) {
-    throw Error("Mint not found.");
-  }
-
-  const trancheTokenMintAccount = MintLayout.decode(
-    trancheTokenMintInfo.data
-  ) as MintInfo;
-
-  const depositAmount = new BN(amount * 10 ** trancheTokenMintAccount.decimals);
+  const depositAmount = new BN(amount * 10 ** 6);
 
   const investorAssociatedTrancheMintAccount =
     await Token.getAssociatedTokenAddress(
