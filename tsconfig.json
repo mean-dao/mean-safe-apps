@@ -1,5 +1,4 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig.json",
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Node 14",
   "compilerOptions": {
@@ -18,5 +17,5 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src/*.ts", "src/**/*.ts", "src/**/*.json"],
-  "exclude": ["main.ts", "src/assets/**/*.*"]
+  "exclude": ["main.ts", "src/assets/**/*.*", "tests/*"]
 }
