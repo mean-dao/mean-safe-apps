@@ -50,8 +50,8 @@ export const createProgram = (
 export const getDepositIx = async (
   program: Program<Idl>,
   investor: PublicKey,
-  marketName: string,
-  amount: number
+  amount: number,
+  marketName: string = 'credix-marketplace'
 ): Promise<TransactionInstruction> => {
   const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName));
   const [marketAddress] = await PublicKey.findProgramAddress(
