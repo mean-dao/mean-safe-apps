@@ -51,9 +51,9 @@ export const getDepositIx = async (
   program: Program<Idl>,
   investor: PublicKey,
   amount: number,
-  marketName: string = 'credix-marketplace'
+  marketName: string | undefined = 'credix-marketplace'
 ): Promise<TransactionInstruction> => {
-  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName));
+  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName || 'credix-marketplace'));
   const [marketAddress] = await PublicKey.findProgramAddress(
     [marketSeed],
     program.programId
@@ -396,8 +396,8 @@ export const getGatewayToken = async (
   if (additionalSeed.length != 8) {
     throw new Error(
       "Additional Seed has length " +
-        additionalSeed.length +
-        " instead of 8 when calling getGatewayTokenAddressForOwnerAndGatekeeperNetwork."
+      additionalSeed.length +
+      " instead of 8 when calling getGatewayTokenAddressForOwnerAndGatekeeperNetwork."
     );
   }
 
