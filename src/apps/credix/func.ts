@@ -24,6 +24,9 @@ const credixProgram = new PublicKey(
   "CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX"
 );
 
+const DEFAULT_MARKET_PLACE = "credix-marketplace";
+const DEFAULT_TEST_MARKET_PLACE = "credix-test-marketplace";
+
 export const createProgram = (
   connection: Connection,
   commitment?: Commitment
@@ -51,9 +54,9 @@ export const getDepositIx = async (
   program: Program<Idl>,
   investor: PublicKey,
   amount: number,
-  marketName: string | undefined = 'credix-marketplace'
+  marketName: string | undefined = DEFAULT_MARKET_PLACE
 ): Promise<TransactionInstruction> => {
-  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName || 'credix-marketplace'));
+  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName || DEFAULT_MARKET_PLACE));
   const [marketAddress] = await PublicKey.findProgramAddress(
     [marketSeed],
     program.programId
@@ -151,9 +154,9 @@ export const getWithdrawIx = async (
   program: Program<Idl>,
   investor: PublicKey,
   amount: number,
-  marketName: string | undefined = 'credix-marketplace'
+  marketName: string | undefined = DEFAULT_MARKET_PLACE
 ): Promise<TransactionInstruction> => {
-  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName || 'credix-marketplace'));
+  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName || DEFAULT_MARKET_PLACE));
   const [marketAddress] = await PublicKey.findProgramAddress(
     [marketSeed],
     program.programId
@@ -254,9 +257,9 @@ export const getTrancheDepositIx = async (
   deal: PublicKey,
   amount: number,
   trancheIndex: number,
-  marketName: string | undefined = 'credix-marketplace'
+  marketName: string | undefined = DEFAULT_TEST_MARKET_PLACE
 ): Promise<TransactionInstruction> => {
-  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName || 'credix-marketplace'));
+  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName || DEFAULT_TEST_MARKET_PLACE));
   const [marketAddress] = await PublicKey.findProgramAddress(
     [marketSeed],
     program.programId
