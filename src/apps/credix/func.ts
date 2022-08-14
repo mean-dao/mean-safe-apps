@@ -346,7 +346,7 @@ export const getTrancheDepositIx = async (
     await Token.getAssociatedTokenAddress(
       ASSOCIATED_TOKEN_PROGRAM_ID,
       TOKEN_PROGRAM_ID,
-      globalMarketAccount.baseTokenMint as PublicKey,
+      trancheMintPda,
       investor,
       true
     );
