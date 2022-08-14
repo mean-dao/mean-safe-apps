@@ -24,6 +24,9 @@ const credixProgram = new PublicKey(
   "CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX"
 );
 
+const DEFAULT_MARKET_PLACE = "credix-marketplace";
+const DEFAULT_TEST_MARKET_PLACE = "credix-test-marketplace";
+
 export const createProgram = (
   connection: Connection,
   commitment?: Commitment
@@ -50,10 +53,10 @@ export const createProgram = (
 export const getDepositIx = async (
   program: Program<Idl>,
   investor: PublicKey,
-  marketName: string,
-  amount: number
+  amount: number,
+  marketName: string | undefined = DEFAULT_MARKET_PLACE
 ): Promise<TransactionInstruction> => {
-  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName));
+  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName || DEFAULT_MARKET_PLACE));
   const [marketAddress] = await PublicKey.findProgramAddress(
     [marketSeed],
     program.programId
@@ -150,10 +153,10 @@ export const getDepositIx = async (
 export const getWithdrawIx = async (
   program: Program<Idl>,
   investor: PublicKey,
-  marketName: string,
-  amount: number
+  amount: number,
+  marketName: string | undefined = DEFAULT_MARKET_PLACE
 ): Promise<TransactionInstruction> => {
-  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName));
+  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName || DEFAULT_MARKET_PLACE));
   const [marketAddress] = await PublicKey.findProgramAddress(
     [marketSeed],
     program.programId
@@ -252,11 +255,11 @@ export const getTrancheDepositIx = async (
   program: Program<Idl>,
   investor: PublicKey,
   deal: PublicKey,
-  marketName: string,
   amount: number,
-  trancheIndex: number
+  trancheIndex: number,
+  marketName: string | undefined = DEFAULT_TEST_MARKET_PLACE
 ): Promise<TransactionInstruction> => {
-  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName));
+  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName || DEFAULT_TEST_MARKET_PLACE));
   const [marketAddress] = await PublicKey.findProgramAddress(
     [marketSeed],
     program.programId
@@ -337,19 +340,7 @@ export const getTrancheDepositIx = async (
     program.programId
   );
 
-  const trancheTokenMintInfo = await program.provider.connection.getAccountInfo(
-    trancheMintPda as PublicKey
-  );
-
-  if (!trancheTokenMintInfo) {
-    throw Error("Mint not found.");
-  }
-
-  const trancheTokenMintAccount = MintLayout.decode(
-    trancheTokenMintInfo.data
-  ) as MintInfo;
-
-  const depositAmount = new BN(amount * 10 ** trancheTokenMintAccount.decimals);
+  const depositAmount = new BN(amount * 10 ** 6);
 
   const investorAssociatedTrancheMintAccount =
     await Token.getAssociatedTokenAddress(
@@ -396,8 +387,8 @@ export const getGatewayToken = async (
   if (additionalSeed.length != 8) {
     throw new Error(
       "Additional Seed has length " +
-        additionalSeed.length +
-        " instead of 8 when calling getGatewayTokenAddressForOwnerAndGatekeeperNetwork."
+      additionalSeed.length +
+      " instead of 8 when calling getGatewayTokenAddressForOwnerAndGatekeeperNetwork."
     );
   }
 
