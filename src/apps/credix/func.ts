@@ -257,9 +257,9 @@ export const getTrancheDepositIx = async (
   deal: PublicKey,
   amount: number,
   trancheIndex: number,
-  marketName: string | undefined = DEFAULT_TEST_MARKET_PLACE
+  marketName: string | undefined = DEFAULT_MARKET_PLACE
 ): Promise<TransactionInstruction> => {
-  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName || DEFAULT_TEST_MARKET_PLACE));
+  const marketSeed = Buffer.from(utils.bytes.utf8.encode(marketName || DEFAULT_MARKET_PLACE));
   const [marketAddress] = await PublicKey.findProgramAddress(
     [marketSeed],
     program.programId
