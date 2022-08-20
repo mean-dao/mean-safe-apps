@@ -52,10 +52,24 @@ export class AppsProvider {
 
   getAppConfig = async (
     appId: string,
-    uiUrl: string,
-    defUrl: string
+    uiUrl?: string,
+    defUrl?: string
   ): Promise<AppConfig | null> => {
     try {
+      // Read urls from app's details
+      if (!uiUrl || !defUrl) {
+        const appInfo = (await this.getApps()).find(x => x.id === appId);
+        if (!appInfo) {
+          return null;
+        }
+        if (!uiUrl) {
+          uiUrl = appInfo.uiUrl;
+        }
+        if (!defUrl) {
+          defUrl = appInfo.defUrl;
+        }
+      }
+
       if (appId === NATIVE_LOADER.toBase58()) {
         const uiResponse = await fetch(uiUrl);
         const uiResult = (!uiResponse.ok || uiResponse.status !== 200) ? {} : await uiResponse.json();
@@ -64,13 +78,13 @@ export class AppsProvider {
           definition: ""
         } as AppConfig;
       }
-      if (!uiUrl || !defUrl) { return null; }
-      const responses = await Promise.all([
+
+      const [uiRes, defRes] = await Promise.all([
         fetch(uiUrl),
         fetch(defUrl)
       ]);
-      const uiResult = responses[0].status !== 200 ? null : await responses[0].json();
-      const defResult = responses[1].status !== 200 ? null : await responses[1].json();
+      const uiResult = uiRes.status !== 200 ? null : await uiRes.json();
+      const defResult = defRes.status !== 200 ? null : await defRes.json();
       return {
         ui: await getUiConfig(appId, uiResult, defResult),
         definition: defResult
@@ -101,12 +115,9 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
     let uiConfigs: UiInstruction[] = [];
     if (!uiIxs) { return uiConfigs; }
     for (let uiIx of uiIxs) {
-      const ixId = (await PublicKey.findProgramAddress(
-        [Buffer.from(uiIx.name)],
-        new PublicKey(appId)
-      ))[0].toBase58();
+      const [ixId] = await PublicKey.findProgramAddress([Buffer.from(uiIx.name)], new PublicKey(appId));
       let ix = {
-        id: ixId,
+        id: ixId.toBase58(),
         name: uiIx.name,
         label: uiIx.label,
         help: uiIx.help,
@@ -128,11 +139,11 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
         } as UiElement);
       } else {
         // accounts
-        let dataIx = !defData ? null : defData.instructions.filter((i: any) => i.name === uiIx.name)[0];
+        let dataIx = !defData ? null : defData.instructions.find((i: any) => i.name === uiIx.name);
         if (!dataIx) { continue; }
         let accIndex = 0;
         for (let uiAcc of uiIx.accounts) {
-          let dataElem = dataIx.accounts.filter((acc: any) => acc.name === uiAcc.name)[0];
+          let dataElem = dataIx.accounts.find((acc: any) => acc.name === uiAcc.name);
           if (dataElem) {
             ix.uiElements.push({
               name: uiAcc.name,
@@ -155,8 +166,8 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
         // args
         let argIndex = 0
         for (let uiArg of uiIx.args) {
-          let dataElem = dataIx.args.filter((acc: any) => acc.name === uiArg.name)[0];
-          if (dataElem) {
+          let dataElem = dataIx.args.find((acc: any) => acc.name === uiArg.name);
+          if (ix.uiElements.findIndex(x => x.name === uiArg.name) == -1) {
             ix.uiElements.push({
               name: uiArg.name,
               label: uiArg.label,
@@ -165,9 +176,9 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
               value: uiArg.value,
               visibility: uiArg.visibility,
               dataElement: {
-                index: argIndex,
-                name: dataElem.name,
-                dataType: dataElem.type,
+                index: Number(`${accIndex}${argIndex}`),
+                name: dataElem?.name || uiArg.name,
+                dataType: dataElem?.type || uiArg.type,
                 dataValue: ''
               } as Arg
             } as UiElement);
