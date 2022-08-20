@@ -29,4 +29,21 @@ describe('apps.ts', () => {
             expect(list.length).toBeGreaterThan(0);
         })
     })
+
+    describe('getAppConfig', () => {
+        const credixId = 'CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX';
+        it('should get credix for devnet', async () => {
+            const config = await appsProviderDevnet.getAppConfig(credixId);
+            //console.log(config?.ui);
+            expect(config).toBeDefined();
+            expect(config?.ui.length).toBeGreaterThan(0);
+        })
+
+        it('should get credix for mainnet', async () => {
+            const config = await appsProviderMainnet.getAppConfig(credixId);
+            console.log(JSON.stringify(config?.ui));
+            expect(config).toBeDefined();
+            expect(config?.ui.length).toBeGreaterThan(0);
+        })
+    })
 });
