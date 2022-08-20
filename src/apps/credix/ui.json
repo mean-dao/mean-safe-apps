@@ -103,7 +103,7 @@
       },
       {
         "name": "deal",
-        "label": "Deal",
+        "label": "Deal (address)",
         "help": "The deal for which you want to invest in a tranche",
         "type": "inputText",
         "value": "",

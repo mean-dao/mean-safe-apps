@@ -139,11 +139,11 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
         } as UiElement);
       } else {
         // accounts
-        let dataIx = !defData ? null : defData.instructions.filter((i: any) => i.name === uiIx.name)[0];
+        let dataIx = !defData ? null : defData.instructions.find((i: any) => i.name === uiIx.name);
         if (!dataIx) { continue; }
         let accIndex = 0;
         for (let uiAcc of uiIx.accounts) {
-          let dataElem = dataIx.accounts.filter((acc: any) => acc.name === uiAcc.name)[0];
+          let dataElem = dataIx.accounts.find((acc: any) => acc.name === uiAcc.name);
           if (dataElem) {
             ix.uiElements.push({
               name: uiAcc.name,
@@ -166,8 +166,8 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
         // args
         let argIndex = 0
         for (let uiArg of uiIx.args) {
-          let dataElem = dataIx.args.filter((acc: any) => acc.name === uiArg.name)[0];
-          if (dataElem) {
+          let dataElem = dataIx.args.find((acc: any) => acc.name === uiArg.name);
+          if (ix.uiElements.findIndex(x => x.name === uiArg.name) == -1) {
             ix.uiElements.push({
               name: uiArg.name,
               label: uiArg.label,
@@ -176,9 +176,9 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
               value: uiArg.value,
               visibility: uiArg.visibility,
               dataElement: {
-                index: argIndex,
-                name: dataElem.name,
-                dataType: dataElem.type,
+                index: Number(`${accIndex}${argIndex}`),
+                name: dataElem?.name || uiArg.name,
+                dataType: dataElem?.type || uiArg.type,
                 dataValue: ''
               } as Arg
             } as UiElement);

@@ -41,7 +41,7 @@ describe('apps.ts', () => {
 
         it('should get credix for mainnet', async () => {
             const config = await appsProviderMainnet.getAppConfig(credixId);
-            console.log(JSON.stringify(config?.ui));
+            console.log(JSON.stringify(config?.ui, null, 2));
             expect(config).toBeDefined();
             expect(config?.ui.length).toBeGreaterThan(0);
         })
