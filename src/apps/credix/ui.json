@@ -1,144 +1,202 @@
 [
-  {
-    "name": "depositFunds",
-    "label": "Deposit Funds",
-    "help": "Deposit funds",
-    "type": {
-      "func": {
-        "name": "getDepositIx"
-      }
-    },
-    "accounts": [
-      {
-        "name": "investor",
-        "label": "Investor",
-        "help": "The Investor",
-        "type": "multisig",
-        "value": "",
-        "visibility": "hide"
-      }
-    ],
-    "args": [
-      {
-        "name": "marketName",
-        "label": "Market name",
-        "help": "The name of the market you want to deposit in",
-        "type": "inputText",
-        "value": "credix-marketplace",
-        "visibility": "show"
-      },
-      {
-        "name": "amount",
-        "label": "Amount",
-        "help": "The amount to be deposited.",
-        "type": {
-          "from": {
-            "inputId": "investorTokenAccount"
-          }
-        },
-        "value": "",
-        "visibility": "show"
-      }
-    ]
-  },
-  {
-    "name": "withdrawFunds",
-    "label": "Withdraw Funds",
-    "help": "Withdraw Funds",
-    "type": {
-      "func": {
-        "name": "getWithdrawIx"
-      }
-    },
-    "accounts": [
-      {
-        "name": "investor",
-        "label": "Investor",
-        "help": "The Investor",
-        "type": "multisig",
-        "value": "",
-        "visibility": "hide"
-      }
-    ],
-    "args": [
-      {
-        "name": "marketName",
-        "label": "Market name",
-        "help": "The name of the market you want to deposit in",
-        "type": "inputText",
-        "value": "credix-marketplace",
-        "visibility": "show"
-      },
-      {
-        "name": "baseWithdrawalAmount",
-        "label": "Base Withdrawal Amount",
-        "help": "The amount to be withdrawn.",
-        "type": {
-          "from": {
-            "inputId": "investorTokenAccount"
-          }
-        },
-        "value": "",
-        "visibility": "show"
-      }
-    ]
-  },
-  {
-    "name": "depositTranche",
-    "label": "Deposit Funds to Tranche",
-    "help": "Deposit funds to Tranche",
-    "type": {
-      "func": {
-        "name": "getTrancheDepositIx"
-      }
-    },
-    "accounts": [
-      {
-        "name": "investor",
-        "label": "Investor",
-        "help": "The Investor",
-        "type": "multisig",
-        "value": "",
-        "visibility": "hide"
-      },
-      {
-        "name": "deal",
-        "label": "Deal (address)",
-        "help": "The deal for which you want to invest in a tranche",
-        "type": "inputText",
-        "value": "",
-        "visibility": "show"
-      }
-    ],
-    "args": [
-      {
-        "name": "marketName",
-        "label": "Market name",
-        "help": "The name of the market you want to deposit in",
-        "type": "inputText",
-        "value": "credix-marketplace",
-        "visibility": "show"
-      },
-      {
-        "name": "amount",
-        "label": "Amount",
-        "help": "The amount to be deposited.",
-        "type": {
-          "from": {
-            "inputId": "investorTrancheTokenAccount"
-          }
-        },
-        "value": "",
-        "visibility": "show"
-      },
-      {
-        "name": "trancheIndex",
-        "label": "Tranche Index",
-        "help": "The tranche Index of the deal",
-        "type": "inputNumber",
-        "value": "",
-        "visibility": "show"
-      }
-    ]
-  }
+	{
+		"name": "depositFunds",
+		"label": "Deposit Funds",
+		"help": "Deposit funds",
+		"type": {
+			"func": {
+				"name": "getDepositIx"
+			}
+		},
+		"accounts": [
+			{
+				"name": "investor",
+				"label": "Investor",
+				"help": "The Investor",
+				"type": "multisig",
+				"value": "",
+				"visibility": "hide"
+			}
+		],
+		"args": [
+			{
+				"name": "marketName",
+				"label": "Market name",
+				"help": "The name of the market you want to deposit in",
+				"type": "inputText",
+				"value": "credix-marketplace",
+				"visibility": "show"
+			},
+			{
+				"name": "amount",
+				"label": "Amount",
+				"help": "The amount to be deposited.",
+				"type": {
+					"from": {
+						"inputId": "investorTokenAccount"
+					}
+				},
+				"value": "",
+				"visibility": "show"
+			}
+		]
+	},
+	{
+		"name": "withdrawFunds",
+		"label": "Withdraw Funds",
+		"help": "Withdraw Funds",
+		"type": {
+			"func": {
+				"name": "getWithdrawIx"
+			}
+		},
+		"accounts": [
+			{
+				"name": "investor",
+				"label": "Investor",
+				"help": "The Investor",
+				"type": "multisig",
+				"value": "",
+				"visibility": "hide"
+			}
+		],
+		"args": [
+			{
+				"name": "marketName",
+				"label": "Market name",
+				"help": "The name of the market you want to deposit in",
+				"type": "inputText",
+				"value": "credix-marketplace",
+				"visibility": "show"
+			},
+			{
+				"name": "baseWithdrawalAmount",
+				"label": "Base Withdrawal Amount",
+				"help": "The amount to be withdrawn.",
+				"type": {
+					"from": {
+						"inputId": "investorTokenAccount"
+					}
+				},
+				"value": "",
+				"visibility": "show"
+			}
+		]
+	},
+	{
+		"name": "depositTranche",
+		"label": "Deposit Funds to Tranche",
+		"help": "Deposit funds to Tranche",
+		"type": {
+			"func": {
+				"name": "getTrancheDepositIx"
+			}
+		},
+		"accounts": [
+			{
+				"name": "investor",
+				"label": "Investor",
+				"help": "The Investor",
+				"type": "multisig",
+				"value": "",
+				"visibility": "hide"
+			},
+			{
+				"name": "deal",
+				"label": "Deal (address)",
+				"help": "The deal for which you want to invest in a tranche",
+				"type": "inputText",
+				"value": "",
+				"visibility": "show"
+			}
+		],
+		"args": [
+			{
+				"name": "marketName",
+				"label": "Market name",
+				"help": "The name of the market you want to deposit in",
+				"type": "inputText",
+				"value": "credix-marketplace",
+				"visibility": "show"
+			},
+			{
+				"name": "amount",
+				"label": "Amount",
+				"help": "The amount to be deposited.",
+				"type": {
+					"from": {
+						"inputId": "investorTrancheTokenAccount"
+					}
+				},
+				"value": "",
+				"visibility": "show"
+			},
+			{
+				"name": "trancheIndex",
+				"label": "Tranche Index",
+				"help": "The tranche Index of the deal",
+				"type": "inputNumber",
+				"value": "",
+				"visibility": "show"
+			}
+		]
+	},
+	{
+		"name": "withdrawTranche",
+		"label": "Withdraw Funds from Tranche",
+		"help": "Withdraw funds from Tranche",
+		"type": {
+			"func": {
+				"name": "getTrancheWithdrawIx"
+			}
+		},
+		"accounts": [
+			{
+				"name": "investor",
+				"label": "Investor",
+				"help": "The Investor",
+				"type": "multisig",
+				"value": "",
+				"visibility": "hide"
+			},
+			{
+				"name": "deal",
+				"label": "Deal (address)",
+				"help": "The deal for which you want to withdraw from a tranche",
+				"type": "inputText",
+				"value": "",
+				"visibility": "show"
+			}
+		],
+		"args": [
+			{
+				"name": "marketName",
+				"label": "Market name",
+				"help": "The name of the market you want withdraw from",
+				"type": "inputText",
+				"value": "credix-marketplace",
+				"visibility": "show"
+			},
+			{
+				"name": "amount",
+				"label": "Amount",
+				"help": "The amount to be withdrawn.",
+				"type": {
+					"from": {
+						"inputId": "investorTrancheTokenAccount"
+					}
+				},
+				"value": "",
+				"visibility": "show"
+			},
+			{
+				"name": "trancheIndex",
+				"label": "Tranche Index",
+				"help": "The tranche Index of the deal",
+				"type": "inputNumber",
+				"value": "",
+				"visibility": "show"
+			}
+		]
+	}
 ]
