@@ -1,9 +1,9 @@
 {
   "name": "@mean-dao/mean-multisig-apps",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "description": "Mean Multisig applications repository",
   "main": "lib/index.js",
-  "repository": "https://github.com/mean-dao/mean-multisig-apps.git",
+  "repository": "https://github.com/supermean-org/supersafe-apps.git",
   "author": "Mean Labs <support@supermean.com>",
   "license": "MIT",
   "private": false,
@@ -11,7 +11,7 @@
     "mean-multisig-apps"
   ],
   "bugs": {
-    "url": "https://github.com/mean-dao/mean-multisig-apps.git/issues"
+    "url": "https://github.com/supermean-org/supersafe-apps.git/issues"
   },
   "types": "lib/index.d.ts",
   "files": [
