@@ -15,7 +15,7 @@
       "active": true
     },
     {
-      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+      "id": "MSPdQo5ZdrPh6rU1LsvUv5nRhAnj1mj6YQEqBUq8YwZ",
       "name": "Token Vesting",
       "network": 103,
       "folder": "mean-vesting",
@@ -36,7 +36,7 @@
       "active": true
     },
     {
-      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+      "id": "MSPdQo5ZdrPh6rU1LsvUv5nRhAnj1mj6YQEqBUq8YwZ",
       "name": "Payment Streaming",
       "network": 103,
       "folder": "mean-msp",
@@ -141,7 +141,7 @@
       "active": false
     },
     {
-      "id": "FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j",
+      "id": "MMSdTDhtwBs2w4MxGCbqfWLgerMQNbXazizghoh7uMJ",
       "name": "Mean Multisig",
       "network": 103,
       "folder": "mean-multisig",
