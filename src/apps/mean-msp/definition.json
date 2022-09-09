@@ -100,9 +100,6 @@
     },
     {
       "name": "createStream",
-      "docs": [
-        "Create Stream"
-      ],
       "accounts": [
         {
           "name": "payer",
@@ -137,7 +134,7 @@
         {
           "name": "stream",
           "isMut": true,
-          "isSigner": false
+          "isSigner": true
         },
         {
           "name": "feeTreasury",
