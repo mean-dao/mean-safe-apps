@@ -180,10 +180,6 @@
           "type": "string"
         },
         {
-          "name": "uniqueSeed",
-          "type": "publicKey"
-        },
-        {
           "name": "startUtc",
           "type": "u64"
         },
