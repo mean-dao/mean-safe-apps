@@ -4,7 +4,7 @@ import { fetch } from "cross-fetch";
 import data from './apps.json';
 
 const NATIVE_LOADER = new PublicKey("NativeLoader1111111111111111111111111111111");
-const BASE_APPS_URL = "https://raw.githubusercontent.com/mean-dao/mean-multisig-apps/{env}/src/apps";
+const BASE_APPS_URL = "https://raw.githubusercontent.com/supermean-org/supersafe-apps/{env}/src/apps";
 
 export class AppsProvider {
 
