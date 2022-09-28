@@ -5,7 +5,7 @@ describe('apps.ts', () => {
     let appsProviderDevnet: AppsProvider;
     let appsProviderMainnet: AppsProvider;
     beforeAll(async () => {
-        //TODO: put here info
+        //Create providers for different networks
         appsProviderDevnet = new AppsProvider(NETWORK.Devnet);
         appsProviderMainnet = new AppsProvider(NETWORK.MainnetBeta);
     })
