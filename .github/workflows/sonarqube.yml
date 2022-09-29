@@ -1,11 +1,11 @@
-name: Sonar
+name: SonarQube
 on:
   workflow_dispatch:
   push:
     branches:
       - main
       - develop
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened]
 jobs:
   build:
