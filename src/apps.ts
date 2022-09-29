@@ -17,7 +17,6 @@ export class AppsProvider {
   getBaseUrl = () => {
     const env = this.network === NETWORK.MainnetBeta ? "main" : "develop";
     return BASE_APPS_URL.replace("{env}", env);
-    //return BASE_APPS_URL.replace("{env}", 'v1.3.3-alpha.10');
   }
 
   getApps = async (): Promise<App[]> => {

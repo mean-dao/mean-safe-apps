@@ -10,6 +10,7 @@ The **Mean Multisig Apps** repository is maintained by Mean DAO and it will also
 
 [![npm](https://img.shields.io/npm/v/@mean-dao/mean-multisig-apps)](https://www.npmjs.com/package/@mean-dao/mean-multisig-apps/v/latest) 
 <!-- [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mean-dao/mean-multisig-apps/edit/main/README.md) -->
+[![NPM Publish](https://github.com/supermean-org/supersafe-apps/actions/workflows/release.yml/badge.svg)](https://github.com/supermean-org/supersafe-apps/actions/workflows/release.yml)
 
 ## Installation
 
