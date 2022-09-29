@@ -70,15 +70,6 @@ export const getDepositIx = async (
 		throw Error("Market not found.");
 	}
 
-	const gatewayToken = await getGatewayToken(
-		investor,
-		globalMarketAccount.gatekeeperNetwork as PublicKey
-	);
-
-	if (!gatewayToken) {
-		throw Error("No valid Civic gateway token found");
-	}
-
 	const [signingAuthority] = await PublicKey.findProgramAddress(
 		[marketAddress.toBuffer()],
 		program.programId
@@ -135,14 +126,13 @@ export const getDepositIx = async (
 		.depositFunds(depositAmount)
 		.accounts({
 			investor,
-			gatewayToken: gatewayToken,
 			globalMarketState: marketAddress,
 			signingAuthority: signingAuthority,
 			investorTokenAccount: investorTokenAccount,
 			liquidityPoolTokenAccount: liquidityPoolTokenAccount,
 			lpTokenMint: globalMarketAccount.lpTokenMint as PublicKey,
 			investorLpTokenAccount: investorLPTokenAccount,
-			credixPass,
+			credixPass: credixPass,
 			baseTokenMint: globalMarketAccount.baseTokenMint as PublicKey,
 			associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
 			rent: SYSVAR_RENT_PUBKEY,
@@ -170,15 +160,6 @@ export const getWithdrawIx = async (
 
 	if (!globalMarketAccount) {
 		throw Error("Market not found.");
-	}
-
-	const gatewayToken = await getGatewayToken(
-		investor,
-		globalMarketAccount.gatekeeperNetwork as PublicKey
-	);
-
-	if (!gatewayToken) {
-		throw Error("No valid Civic gateway token found");
 	}
 
 	const [signingAuthority] = await PublicKey.findProgramAddress(
@@ -237,8 +218,7 @@ export const getWithdrawIx = async (
 	return await program.methods
 		.withdrawFunds(withdrawalAmount)
 		.accounts({
-			investor,
-			gatewayToken: gatewayToken,
+			investor: investor,
 			globalMarketState: marketAddress,
 			signingAuthority: signingAuthority,
 			investorLpTokenAccount: investorLPTokenAccount,
@@ -247,7 +227,7 @@ export const getWithdrawIx = async (
 			treasuryPoolTokenAccount:
 				globalMarketAccount.treasuryPoolTokenAccount as PublicKey,
 			lpTokenMint: globalMarketAccount.lpTokenMint as PublicKey,
-			credixPass,
+			credixPass: credixPass,
 			baseTokenMint: globalMarketAccount.baseTokenMint as PublicKey,
 			associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
 			tokenProgram: TOKEN_PROGRAM_ID,
@@ -275,15 +255,6 @@ export const getTrancheDepositIx = async (
 
 	if (!globalMarketAccount) {
 		throw Error("Market not found.");
-	}
-
-	const gatewayToken = await getGatewayToken(
-		investor,
-		globalMarketAccount.gatekeeperNetwork as PublicKey
-	);
-
-	if (!gatewayToken) {
-		throw Error("No valid Civic gateway token found");
 	}
 
 	const [signingAuthority] = await PublicKey.findProgramAddress(
@@ -360,8 +331,7 @@ export const getTrancheDepositIx = async (
 	return await program.methods
 		.depositTranche(depositAmount, trancheIndex)
 		.accounts({
-			investor,
-			gatewayToken: gatewayToken,
+			investor: investor,
 			tranchePass: tranchePassPda,
 			deal: deal,
 			dealTranches: tranchesPda,
@@ -401,15 +371,6 @@ export const getTrancheWithdrawIx = async (
 
 	if (!globalMarketAccount) {
 		throw Error("Market not found.");
-	}
-
-	const gatewayToken = await getGatewayToken(
-		investor,
-		globalMarketAccount.gatekeeperNetwork as PublicKey
-	);
-
-	if (!gatewayToken) {
-		throw Error("No valid Civic gateway token found");
 	}
 
 	const [signingAuthority] = await PublicKey.findProgramAddress(
@@ -498,7 +459,6 @@ export const getTrancheWithdrawIx = async (
 		.withdrawTranche(trancheIndex, withdrawAmount)
 		.accounts({
 			investor: investor,
-			gatewayToken: gatewayToken,
 			tranchePass: tranchePassPda,
 			deal: deal,
 			investorTranche: investorTranche,
@@ -517,36 +477,4 @@ export const getTrancheWithdrawIx = async (
 			rent: SYSVAR_RENT_PUBKEY,
 		})
 		.instruction();
-};
-
-export const getGatewayToken = async (
-	owner: PublicKey,
-	gatekeeperNetwork: PublicKey,
-	seed?: Uint8Array
-): Promise<PublicKey> => {
-	const additionalSeed = seed
-		? Buffer.from(seed)
-		: Buffer.from([0, 0, 0, 0, 0, 0, 0, 0]);
-
-	if (additionalSeed.length != 8) {
-		throw new Error(
-			"Additional Seed has length " +
-				additionalSeed.length +
-				" instead of 8 when calling getGatewayTokenAddressForOwnerAndGatekeeperNetwork."
-		);
-	}
-
-	const seeds = [
-		owner.toBuffer(),
-		Buffer.from("gateway", "utf8"),
-		additionalSeed,
-		gatekeeperNetwork.toBuffer(),
-	];
-
-	const [publicKey] = await PublicKey.findProgramAddress(
-		seeds,
-		gatewwayProgramPubKey
-	);
-
-	return publicKey;
 };
