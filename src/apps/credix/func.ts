@@ -17,9 +17,6 @@ import {
 } from "@solana/spl-token";
 import * as credixIdl from "./definition.json";
 
-const gatewwayProgramPubKey = new PublicKey(
-	"gatem74V238djXdzWnJf94Wo1DcnuGkfijbf3AuBhfs"
-);
 const credixProgram = new PublicKey(
 	"CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX"
 );
