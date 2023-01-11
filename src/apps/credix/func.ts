@@ -206,10 +206,31 @@ export const getWithdrawIx = async (
 		throw Error("Mint not found.");
 	}
 
+	const [programStatePda] = await PublicKey.findProgramAddress(
+		[Buffer.from(utils.bytes.utf8.encode("program-state"))],
+		program.programId
+	);
+
+	const programState = await program.account.programState.fetchNullable(
+		programStatePda
+	);
+
+	if (!programState) {
+		throw Error("Program state not found.");
+	}
+
+	const credixMultisigTokenAccount = await Token.getAssociatedTokenAddress(
+		ASSOCIATED_TOKEN_PROGRAM_ID,
+		TOKEN_PROGRAM_ID,
+		globalMarketAccount.baseTokenMint as PublicKey,
+		programState.credixMultisigKey as PublicKey,
+		true
+	);
+
 	const baseTokenMintAccount = MintLayout.decode(
 		baseTokenMintInfo.data
 	) as MintInfo;
-	const depositAmount = new BN(amount * 10 ** baseTokenMintAccount.decimals);
+
 	const withdrawalAmount = new BN(amount * 10 ** baseTokenMintAccount.decimals);
 
 	return await program.methods
@@ -224,6 +245,8 @@ export const getWithdrawIx = async (
 			treasuryPoolTokenAccount:
 				globalMarketAccount.treasuryPoolTokenAccount as PublicKey,
 			lpTokenMint: globalMarketAccount.lpTokenMint as PublicKey,
+			credixMultisigKey: programState.credixMultisigKey as PublicKey,
+			credixMultisigTokenAccount: credixMultisigTokenAccount,
 			credixPass: credixPass,
 			baseTokenMint: globalMarketAccount.baseTokenMint as PublicKey,
 			associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
