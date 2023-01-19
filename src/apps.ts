@@ -4,7 +4,7 @@ import { fetch } from "cross-fetch";
 import data from './apps.json';
 
 const NATIVE_LOADER = new PublicKey("NativeLoader1111111111111111111111111111111");
-const BASE_APPS_URL = "https://raw.githubusercontent.com/supermean-org/supersafe-apps/{env}/src/apps";
+const BASE_APPS_URL = "https://raw.githubusercontent.com/supermean-org/supersafe-apps/main/src/apps";
 
 export class AppsProvider {
 
@@ -14,14 +14,8 @@ export class AppsProvider {
     this.network = network ? network : NETWORK.MainnetBeta;
   }
 
-  getBaseUrl = () => {
-    const env = this.network === NETWORK.MainnetBeta ? "main" : "develop";
-    return BASE_APPS_URL.replace("{env}", env);
-  }
-
   getApps = async (): Promise<App[]> => {
     try {
-      const baseUrl = this.getBaseUrl();
       const getApps = (network?: NETWORK) => {
         if (!network) { return data.apps; }
         return data.apps.filter((a: any) => a.network == network);
@@ -37,9 +31,9 @@ export class AppsProvider {
           network: item.network,
           folder: item.folder,
           active: item.active,
-          logoUri: `${baseUrl}/${item.folder}/logo.svg`,
-          uiUrl: `${baseUrl}/${item.folder}/ui.json`,
-          defUrl: `${baseUrl}/${item.folder}/definition.json`
+          logoUri: `${BASE_APPS_URL}/${item.folder}/logo.svg`,
+          uiUrl: `${BASE_APPS_URL}/${item.folder}/ui.json`,
+          defUrl: `${BASE_APPS_URL}/${item.folder}/definition.json`
         } as App);
       }
       return apps;
