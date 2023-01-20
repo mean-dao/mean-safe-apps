@@ -38,7 +38,7 @@ jobs:
             -Dsonar.verbose=false
             -Dsonar.projectKey=${{ github.event.repository.name }}
             -Dsonar.sources=.
-            -Dsonar.exclusions=tests/
+            -Dsonar.exclusions=tests/*.ts
             -Dsonar.tests=tests/
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
 
