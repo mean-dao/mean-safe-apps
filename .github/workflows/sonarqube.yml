@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop
   pull_request_target:
     types: [opened, synchronize, reopened]
 jobs:
@@ -19,7 +18,7 @@ jobs:
       - name: Setup Nodejs
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 16
           cache: 'yarn'
 
       - name: Install
