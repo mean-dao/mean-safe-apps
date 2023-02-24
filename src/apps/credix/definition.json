@@ -1,5 +1,5 @@
 {
-	"version": "3.3.0",
+	"version": "3.4.0",
 	"name": "credix",
 	"instructions": [
 		{
@@ -519,11 +519,6 @@
 					"name": "owner",
 					"isMut": true,
 					"isSigner": true
-				},
-				{
-					"name": "borrower",
-					"isMut": false,
-					"isSigner": false
 				},
 				{
 					"name": "deal",
@@ -2339,7 +2334,7 @@
 				},
 				{
 					"name": "tranchePass",
-					"isMut": false,
+					"isMut": true,
 					"isSigner": false,
 					"pda": {
 						"seeds": [
@@ -2369,6 +2364,38 @@
 								"kind": "const",
 								"type": "string",
 								"value": "tranche-pass"
+							}
+						]
+					}
+				},
+				{
+					"name": "trancheInfo",
+					"isMut": true,
+					"isSigner": false,
+					"isOptional": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal"
+							},
+							{
+								"kind": "arg",
+								"type": "u8",
+								"path": "tranche_index"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "tranche-info"
 							}
 						]
 					}
@@ -3066,6 +3093,38 @@
 					"isSigner": false
 				},
 				{
+					"name": "trancheInfo",
+					"isMut": true,
+					"isSigner": false,
+					"isOptional": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal"
+							},
+							{
+								"kind": "arg",
+								"type": "u8",
+								"path": "tranche_index"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "tranche-info"
+							}
+						]
+					}
+				},
+				{
 					"name": "tokenProgram",
 					"isMut": false,
 					"isSigner": false
@@ -3439,6 +3498,14 @@
 				{
 					"name": "yearLatestServiceFeesCharged",
 					"type": "u8"
+				},
+				{
+					"name": "performanceFeePercentage",
+					"type": {
+						"option": {
+							"defined": "Fraction"
+						}
+					}
 				}
 			]
 		},
@@ -4545,6 +4612,32 @@
 					}
 				},
 				{
+					"name": "dealTranches",
+					"isMut": false,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "tranches"
+							}
+						]
+					}
+				},
+				{
 					"name": "systemProgram",
 					"isMut": false,
 					"isSigner": false
@@ -4566,6 +4659,517 @@
 							"defined": "RepaymentPeriodInput"
 						}
 					}
+				}
+			]
+		},
+		{
+			"name": "adjustTranchesAndPrincipal",
+			"accounts": [
+				{
+					"name": "owner",
+					"isMut": false,
+					"isSigner": true
+				},
+				{
+					"name": "deal",
+					"isMut": true,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal.borrower"
+							},
+							{
+								"kind": "account",
+								"type": "u16",
+								"account": "Deal",
+								"path": "deal.deal_number"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "deal-info"
+							}
+						]
+					}
+				},
+				{
+					"name": "globalMarketState",
+					"isMut": false,
+					"isSigner": false
+				},
+				{
+					"name": "marketAdmins",
+					"isMut": false,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "admins"
+							}
+						]
+					}
+				},
+				{
+					"name": "repaymentSchedule",
+					"isMut": true,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "repayment-schedule"
+							}
+						]
+					}
+				},
+				{
+					"name": "dealTranches",
+					"isMut": true,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "tranches"
+							}
+						]
+					}
+				}
+			],
+			"args": [
+				{
+					"name": "trancheUpscaleConfigs",
+					"type": {
+						"vec": {
+							"defined": "TrancheUpscaleConfig"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "poolDepositTranche",
+			"accounts": [
+				{
+					"name": "signer",
+					"isMut": true,
+					"isSigner": true
+				},
+				{
+					"name": "globalMarketState",
+					"isMut": true,
+					"isSigner": false
+				},
+				{
+					"name": "signingAuthority",
+					"isMut": false,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							}
+						]
+					}
+				},
+				{
+					"name": "marketAdmins",
+					"isMut": false,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "admins"
+							}
+						]
+					}
+				},
+				{
+					"name": "deal",
+					"isMut": false,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal.borrower"
+							},
+							{
+								"kind": "account",
+								"type": "u16",
+								"account": "Deal",
+								"path": "deal.deal_number"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "deal-info"
+							}
+						]
+					}
+				},
+				{
+					"name": "repaymentSchedule",
+					"isMut": false,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "repayment-schedule"
+							}
+						]
+					}
+				},
+				{
+					"name": "dealTranches",
+					"isMut": true,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "tranches"
+							}
+						]
+					}
+				},
+				{
+					"name": "baseTokenMint",
+					"isMut": false,
+					"isSigner": false
+				},
+				{
+					"name": "dealTokenAccount",
+					"isMut": true,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "deal-token-account"
+							}
+						]
+					}
+				},
+				{
+					"name": "liquidityPoolTokenAccount",
+					"isMut": true,
+					"isSigner": false
+				},
+				{
+					"name": "rent",
+					"isMut": false,
+					"isSigner": false
+				},
+				{
+					"name": "tokenProgram",
+					"isMut": false,
+					"isSigner": false
+				},
+				{
+					"name": "systemProgram",
+					"isMut": false,
+					"isSigner": false
+				}
+			],
+			"args": [
+				{
+					"name": "amount",
+					"type": "u64"
+				}
+			]
+		},
+		{
+			"name": "poolWithdrawTranche",
+			"accounts": [
+				{
+					"name": "signer",
+					"isMut": true,
+					"isSigner": true
+				},
+				{
+					"name": "globalMarketState",
+					"isMut": true,
+					"isSigner": false
+				},
+				{
+					"name": "signingAuthority",
+					"isMut": false,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							}
+						]
+					}
+				},
+				{
+					"name": "marketAdmins",
+					"isMut": false,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "admins"
+							}
+						]
+					}
+				},
+				{
+					"name": "deal",
+					"isMut": false,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal.borrower"
+							},
+							{
+								"kind": "account",
+								"type": "u16",
+								"account": "Deal",
+								"path": "deal.deal_number"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "deal-info"
+							}
+						]
+					}
+				},
+				{
+					"name": "repaymentSchedule",
+					"isMut": false,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "repayment-schedule"
+							}
+						]
+					}
+				},
+				{
+					"name": "dealTranches",
+					"isMut": true,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "tranches"
+							}
+						]
+					}
+				},
+				{
+					"name": "baseTokenMint",
+					"isMut": false,
+					"isSigner": false
+				},
+				{
+					"name": "dealTokenAccount",
+					"isMut": true,
+					"isSigner": false,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "GlobalMarketState",
+								"path": "global_market_state"
+							},
+							{
+								"kind": "account",
+								"type": "publicKey",
+								"account": "Deal",
+								"path": "deal"
+							},
+							{
+								"kind": "const",
+								"type": "string",
+								"value": "deal-token-account"
+							}
+						]
+					}
+				},
+				{
+					"name": "liquidityPoolTokenAccount",
+					"isMut": true,
+					"isSigner": false
+				},
+				{
+					"name": "rent",
+					"isMut": false,
+					"isSigner": false
+				},
+				{
+					"name": "tokenProgram",
+					"isMut": false,
+					"isSigner": false
+				},
+				{
+					"name": "systemProgram",
+					"isMut": false,
+					"isSigner": false
+				}
+			],
+			"args": [
+				{
+					"name": "amount",
+					"type": "u64"
 				}
 			]
 		}
@@ -4689,6 +5293,9 @@
 					},
 					{
 						"name": "amountWithdrawn",
+						"docs": [
+							"The principal amount withdrawn from deal token account by borrower"
+						],
 						"type": "u64"
 					},
 					{
@@ -4719,6 +5326,9 @@
 					},
 					{
 						"name": "maxFundingDuration",
+						"docs": [
+							"The number of days after tranche investors can call burn tranches if the deal does not goes live."
+						],
 						"type": "u8"
 					},
 					{
@@ -4765,12 +5375,18 @@
 					},
 					{
 						"name": "performanceFeePercentage",
+						"docs": [
+							"Percentage of the interest share taken as the fees [asset manager fees + credix fees]"
+						],
 						"type": {
 							"defined": "Fraction"
 						}
 					},
 					{
 						"name": "gracePeriod",
+						"docs": [
+							"The number of days after the due date that no late fees are applied"
+						],
 						"type": "u8"
 					},
 					{
@@ -4785,6 +5401,9 @@
 					},
 					{
 						"name": "serviceFeePercentage",
+						"docs": [
+							"The percentage of the outstanding principal that is charged as an annual fee, going to the asset manager’s treasury (+ credix’ treasury)"
+						],
 						"type": {
 							"defined": "Fraction"
 						}
@@ -4799,11 +5418,24 @@
 					},
 					{
 						"name": "yearLatestServiceFeesCharged",
+						"docs": [
+							"Used to keep track of the year service fee is charged for."
+						],
 						"type": "u8"
 					},
 					{
 						"name": "migrated",
+						"docs": ["true when we bring off chain deal onchain."],
 						"type": "bool"
+					},
+					{
+						"name": "originalGoLiveAt",
+						"docs": [
+							"When upscaling we store the `go_live_at` timestamp here and reset `go_live_at`.",
+							"We do this so the deal is no longer regarded as in progress, requiring a new activation.",
+							"Across all upscales, the initial point of activation should always be regarded as the `go_live_at` so we need to be able to restore it."
+						],
+						"type": "i64"
 					}
 				]
 			}
@@ -4827,6 +5459,7 @@
 					},
 					{
 						"name": "poolOutstandingCredit",
+						"docs": ["The amount from senior tranche lent"],
 						"type": "u64"
 					},
 					{
@@ -4843,12 +5476,16 @@
 					},
 					{
 						"name": "performanceFee",
+						"docs": [
+							"The percentage of interest share collected as fees[asset manager fees + credix share]"
+						],
 						"type": {
 							"defined": "Fraction"
 						}
 					},
 					{
 						"name": "withdrawalFee",
+						"docs": ["The fee charged for withdrawals"],
 						"type": {
 							"defined": "Fraction"
 						}
@@ -4863,6 +5500,9 @@
 					},
 					{
 						"name": "gracePeriod",
+						"docs": [
+							"The number of days after the due date that no late fees are applied"
+						],
 						"type": "u8"
 					},
 					{
@@ -4885,18 +5525,28 @@
 					},
 					{
 						"name": "credixPerformanceFeePercentage",
+						"docs": [
+							"The percentage of the credix_performance_fee_percentage going to the Credix treasury"
+						],
 						"type": {
 							"defined": "Fraction"
 						}
 					},
 					{
 						"name": "credixServiceFeePercentage",
+						"docs": [
+							"The percentage of the service_fee going to the Credix treasury"
+						],
 						"type": {
 							"defined": "Fraction"
 						}
 					},
 					{
 						"name": "poolSizeLimitPercentage",
+						"docs": [
+							"Maximum possible deposit limit in addition the pool outstanding credit",
+							"pool_size_limit = pool_outstanding_credit + pool_size_limit_percentage * pool_outstanding_credit"
+						],
 						"type": {
 							"defined": "Fraction"
 						}
@@ -4969,12 +5619,16 @@
 					},
 					{
 						"name": "credixPerformanceFeePercentage",
+						"docs": [
+							"Percentage of the interest share taken as the fees [asset manager fees + credix fees]"
+						],
 						"type": {
 							"defined": "Fraction"
 						}
 					},
 					{
 						"name": "credixServiceFeePercentage",
+						"docs": ["Percentage of credix share in the performance fees"],
 						"type": {
 							"defined": "Fraction"
 						}
@@ -5011,6 +5665,22 @@
 			}
 		},
 		{
+			"name": "TrancheInfo",
+			"type": {
+				"kind": "struct",
+				"fields": [
+					{
+						"name": "snapshots",
+						"type": {
+							"vec": {
+								"defined": "TrancheSnapshot"
+							}
+						}
+					}
+				]
+			}
+		},
+		{
 			"name": "TranchePass",
 			"type": {
 				"kind": "struct",
@@ -5034,12 +5704,53 @@
 					{
 						"name": "trancheIndex",
 						"type": "u8"
+					},
+					{
+						"name": "deposits",
+						"docs": ["The legacy deposits are not added to this vec."],
+						"type": {
+							"vec": {
+								"defined": "UpscaleDeposits"
+							}
+						}
 					}
 				]
 			}
 		}
 	],
 	"types": [
+		{
+			"name": "TrancheUpscaleConfig",
+			"type": {
+				"kind": "struct",
+				"fields": [
+					{
+						"name": "upscaleSize",
+						"type": "u64"
+					},
+					{
+						"name": "returnPercentage",
+						"type": {
+							"defined": "Fraction"
+						}
+					},
+					{
+						"name": "maxDepositPercentage",
+						"type": {
+							"defined": "Fraction"
+						}
+					},
+					{
+						"name": "earlyWithdrawalInterest",
+						"type": "bool"
+					},
+					{
+						"name": "earlyWithdrawalPrincipal",
+						"type": "bool"
+					}
+				]
+			}
+		},
 		{
 			"name": "TrancheConfig",
 			"type": {
@@ -5105,6 +5816,7 @@
 				"fields": [
 					{
 						"name": "claimBaseAmount",
+						"docs": ["base amount deposited"],
 						"type": "u64"
 					},
 					{
@@ -5220,10 +5932,18 @@
 						}
 					},
 					{
+						"name": "optionalAccount",
+						"type": "bool"
+					},
+					{
+						"name": "upscaleSize",
+						"type": "u64"
+					},
+					{
 						"name": "padding",
 						"docs": ["Reserved size for extra fields"],
 						"type": {
-							"array": ["u8", 28]
+							"array": ["u8", 19]
 						}
 					}
 				]
@@ -5288,6 +6008,46 @@
 					},
 					{
 						"name": "interest",
+						"type": "u64"
+					}
+				]
+			}
+		},
+		{
+			"name": "TrancheSnapshot",
+			"type": {
+				"kind": "struct",
+				"fields": [
+					{
+						"name": "createdAt",
+						"type": "i64"
+					},
+					{
+						"name": "interestRepaid",
+						"type": "u64"
+					},
+					{
+						"name": "principalRepaid",
+						"type": "u64"
+					},
+					{
+						"name": "size",
+						"type": "u64"
+					}
+				]
+			}
+		},
+		{
+			"name": "UpscaleDeposits",
+			"type": {
+				"kind": "struct",
+				"fields": [
+					{
+						"name": "upscaleIndex",
+						"type": "u32"
+					},
+					{
+						"name": "amount",
 						"type": "u64"
 					}
 				]
@@ -6175,373 +6935,333 @@
 	"errors": [
 		{
 			"code": 6000,
-			"name": "InvalidPrincipalAmount",
-			"msg": "This amount is not sufficient as a principal amount."
-		},
-		{
-			"code": 6001,
-			"name": "InvalidInterestAmount",
-			"msg": "This amount is not sufficient as an interest amount."
-		},
-		{
-			"code": 6002,
-			"name": "DealNotLive",
-			"msg": "This deal is not live yet."
-		},
-		{
-			"code": 6003,
-			"name": "InvalidDealRepaymentType",
-			"msg": "Invalid deal repayment type."
-		},
-		{
-			"code": 6004,
-			"name": "NotEnoughLiquidity",
-			"msg": "Not enough liquidity."
-		},
-		{
-			"code": 6005,
-			"name": "PrincipalRepaid",
-			"msg": "Principal is already repaid."
-		},
-		{
-			"code": 6006,
-			"name": "InterestRepaid",
-			"msg": "Interest is already repaid."
-		},
-		{
-			"code": 6007,
 			"name": "UnauthorizedSigner",
 			"msg": "The Signer is not authorized to use this instruction."
 		},
 		{
-			"code": 6008,
+			"code": 6001,
 			"name": "CredixPassInvalid",
 			"msg": "Credix pass is invalid for this request."
 		},
 		{
-			"code": 6009,
+			"code": 6002,
 			"name": "CredixPassInactive",
 			"msg": "Credix pass is inactive at the moment."
 		},
 		{
-			"code": 6010,
-			"name": "NotEnoughLPTokens",
-			"msg": "Not enough LP tokens."
-		},
-		{
-			"code": 6011,
+			"code": 6003,
 			"name": "NotEnoughBaseTokens",
 			"msg": "Not enough Base tokens."
 		},
 		{
-			"code": 6012,
-			"name": "InterestBeforePrincipal",
-			"msg": "Repay interest before principal."
-		},
-		{
-			"code": 6013,
+			"code": 6004,
 			"name": "MarketIsFrozen",
 			"msg": "This market is currently frozen. Please try again later."
 		},
 		{
-			"code": 6014,
+			"code": 6005,
 			"name": "InvalidBorrowerTokenAccount",
 			"msg": "Invalid Borrower Token Account."
 		},
 		{
-			"code": 6015,
+			"code": 6006,
 			"name": "InvalidBorrowerAccount",
 			"msg": "Invalid Borrower Account."
 		},
 		{
-			"code": 6016,
-			"name": "DealAlreadyActive",
-			"msg": "Deal is already active."
-		},
-		{
-			"code": 6017,
+			"code": 6007,
 			"name": "InvalidInvestorTokenAccount",
 			"msg": "Invalid Investor Token Account."
 		},
 		{
-			"code": 6018,
+			"code": 6008,
 			"name": "InvalidTokenAccountMint",
 			"msg": "Invalid mint for Token Account."
 		},
 		{
-			"code": 6019,
+			"code": 6009,
 			"name": "InvalidMintAccount",
 			"msg": "Invalid mint Account."
 		},
 		{
-			"code": 6020,
+			"code": 6010,
 			"name": "InvalidTreasuryAccount",
 			"msg": "Invalid treasury Account for this market."
 		},
 		{
-			"code": 6021,
+			"code": 6011,
 			"name": "WithdrawalsLocked",
 			"msg": "Not yet possible to withdraw funds."
 		},
 		{
-			"code": 6022,
+			"code": 6012,
 			"name": "TotalTrancheSizeNotOne",
 			"msg": "Total tranche size should be one."
 		},
 		{
-			"code": 6023,
+			"code": 6013,
 			"name": "TotalTrancheReturnsNotOne",
 			"msg": "Total tranche returns should be one."
 		},
 		{
-			"code": 6024,
+			"code": 6014,
 			"name": "InvalidTrancheSizeOrReturns",
 			"msg": "A tranche with a size should have a value for its returns and vice versa."
 		},
 		{
-			"code": 6025,
+			"code": 6015,
 			"name": "InvalidTrancheIndex",
 			"msg": "There is no tranche in the deal with the provided index."
 		},
 		{
-			"code": 6026,
-			"name": "DealAlreadyOpen",
-			"msg": "Deal is already opened."
-		},
-		{
-			"code": 6027,
+			"code": 6016,
 			"name": "DealNotOpen",
 			"msg": "This deal is not open for funding yet."
 		},
 		{
-			"code": 6028,
+			"code": 6017,
 			"name": "TranchePassInactive",
 			"msg": "Tranche pass is inactive at the moment."
 		},
 		{
-			"code": 6029,
+			"code": 6018,
 			"name": "InvalidInstructionDepositTranche",
 			"msg": "Deposit Tranche instruction doesn't exist for senior tranche(index=1)."
 		},
 		{
-			"code": 6030,
-			"name": "RepaymentPeriodsPrincipalValuesInvalid",
-			"msg": "Total sum of all the principal should be equal to the total principal of the deal."
-		},
-		{
-			"code": 6031,
+			"code": 6019,
 			"name": "NotEnoughTokens",
 			"msg": "Not enough tokens"
 		},
 		{
-			"code": 6032,
+			"code": 6020,
 			"name": "DealNotOpenForActivation",
 			"msg": "A deal can only be activated once all tranches(except for the senior tranche at index 1) have been filled."
 		},
 		{
-			"code": 6033,
+			"code": 6021,
 			"name": "DealNotInProgress",
 			"msg": "Deal not in progress"
 		},
 		{
-			"code": 6034,
+			"code": 6022,
 			"name": "DealNotOpenForFunding",
 			"msg": "Deal not open for funding"
 		},
 		{
-			"code": 6035,
+			"code": 6023,
 			"name": "InvalidDealTokenAccount",
 			"msg": "Invalid deal token account."
 		},
 		{
-			"code": 6036,
+			"code": 6024,
 			"name": "DealNotOpenForBurningTranches",
 			"msg": "Deal not open for burning tranches"
 		},
 		{
-			"code": 6037,
+			"code": 6025,
 			"name": "InvalidSeniorTrancheInstruction",
 			"msg": "This instruction is invalid for senior tranche."
 		},
 		{
-			"code": 6038,
+			"code": 6026,
 			"name": "RepaymentPeriodsMissing",
 			"msg": "Repayment periods not fully set"
 		},
 		{
-			"code": 6039,
-			"name": "LastRepaymentInvalid",
-			"msg": "Last repayment in the repayment schedule should have some value for principal or interest"
-		},
-		{
-			"code": 6040,
-			"name": "ScheduleWithZeroRepayments",
-			"msg": "Repayment schedule has zero entries"
-		},
-		{
-			"code": 6041,
+			"code": 6027,
 			"name": "DealTrancheWithdrawalClosed",
 			"msg": "Deal not open for tranche withdrawal"
 		},
 		{
-			"code": 6042,
+			"code": 6028,
 			"name": "DealNotPending",
 			"msg": "Deal is not pending"
 		},
 		{
-			"code": 6043,
+			"code": 6029,
 			"name": "RepaymentPeriodsAlreadySet",
 			"msg": "Repayment periods already set"
 		},
 		{
-			"code": 6044,
+			"code": 6030,
 			"name": "TotalPeriodsExceeded",
 			"msg": "Total periods exceeded"
 		},
 		{
-			"code": 6045,
+			"code": 6031,
 			"name": "InvalidRepaymentSchedule",
 			"msg": "Invalid repayment schedule"
 		},
 		{
-			"code": 6046,
+			"code": 6032,
 			"name": "WrongAmountTrancheConfigs",
 			"msg": "Wrong number of tranche configs: expected 10"
 		},
 		{
-			"code": 6047,
-			"name": "RemainderCalculationFailed",
-			"msg": "Could not calculate remainder"
-		},
-		{
-			"code": 6048,
-			"name": "SimplifyFractionFailed",
-			"msg": "Could not simplify fraction"
-		},
-		{
-			"code": 6049,
+			"code": 6033,
 			"name": "TrancheFunded",
 			"msg": "Tranche already funded"
 		},
 		{
-			"code": 6050,
+			"code": 6034,
 			"name": "TransferSafeguard",
 			"msg": "Transfer safeguard"
 		},
 		{
-			"code": 6051,
+			"code": 6035,
 			"name": "MaxManagersExceeded",
 			"msg": "Too many managers specified. Max: 10"
 		},
 		{
-			"code": 6052,
+			"code": 6036,
 			"name": "MaxPassIssuersExceeded",
 			"msg": "Too many pass issuers specified. Max: 5"
 		},
 		{
-			"code": 6053,
+			"code": 6037,
 			"name": "InvalidPassInstructionSigner",
 			"msg": "The signer does not have permission to issue passes."
 		},
 		{
-			"code": 6054,
-			"name": "PeriodIndexOutOfBounds",
-			"msg": "The period index exceeds the length of periods."
-		},
-		{
-			"code": 6055,
+			"code": 6038,
 			"name": "BaseDepositLimitExceeded",
 			"msg": "The max deposit amount limit reached. Please try again later."
 		},
 		{
-			"code": 6056,
+			"code": 6039,
 			"name": "DaysInYearPeriodDurationRest",
 			"msg": "Days in year is not a multiple of period duration"
 		},
 		{
-			"code": 6057,
+			"code": 6040,
 			"name": "MintNotOwnedByCredix",
 			"msg": "The passed mint account is not initialized by credix program or does not have a freeze authority."
 		},
 		{
-			"code": 6058,
+			"code": 6041,
 			"name": "InvalidMigrateDealInstruction",
 			"msg": "This instruction is not valid for a migrated deal."
 		},
 		{
-			"code": 6059,
+			"code": 6042,
 			"name": "PeriodDurationIsZero",
 			"msg": "Period duration is zero"
 		},
 		{
-			"code": 6060,
+			"code": 6043,
 			"name": "MigrateDealInstruction",
 			"msg": "This instruction is only for migrated deals."
 		},
 		{
-			"code": 6061,
+			"code": 6044,
 			"name": "DuplicateTrancheClaimsInvestors",
 			"msg": "Tranche claim configs 2 or more claims with same investor and tranche index."
 		},
 		{
-			"code": 6062,
+			"code": 6045,
 			"name": "DuplicateLpClaimsInvestor",
 			"msg": "Lp claim configs contains 2 or more claims with same investor."
 		},
 		{
-			"code": 6063,
+			"code": 6046,
 			"name": "TrancheClaimForSeniorTranche",
 			"msg": "Tranche claim data invalid provide tranche claims for senior tranche, Use lp claims instead."
 		},
 		{
-			"code": 6064,
+			"code": 6047,
 			"name": "TrancheClaimAmountInvalid",
 			"msg": "Tranche claims base amounts don't add up to the tranche size."
 		},
 		{
-			"code": 6065,
+			"code": 6048,
 			"name": "DealNotOpenForClaims",
 			"msg": "This migrated deal hasn't been activated yet. It is not open for claims"
 		},
 		{
-			"code": 6066,
+			"code": 6049,
 			"name": "TrancheClaimIndexOutOfBounds",
 			"msg": "The tranche claim index is greater then tranche claims length."
 		},
 		{
-			"code": 6067,
+			"code": 6050,
 			"name": "TrancheClaimInvalidInvestor",
 			"msg": "The tranche claim index provided belongs to other investor."
 		},
 		{
-			"code": 6068,
+			"code": 6051,
 			"name": "TrancheClaimInvalidIndex",
 			"msg": "The tranche claim index provided belongs to other tranche index."
 		},
 		{
-			"code": 6069,
+			"code": 6052,
 			"name": "LpClaimIndexOutOfBounds",
 			"msg": "The tranche claim index is greater then tranche claims length."
 		},
 		{
-			"code": 6070,
+			"code": 6053,
 			"name": "LpClaimInvestorInvalid",
 			"msg": "The lp claim index provided belongs to other investor."
 		},
 		{
-			"code": 6071,
+			"code": 6054,
 			"name": "ModifyingRepaidPeriods",
 			"msg": "Can not modify partially repaid periods."
 		},
 		{
-			"code": 6072,
+			"code": 6055,
 			"name": "DealPrincipalModified",
 			"msg": "Can not modify total principal expected in the repayment schedule."
 		},
 		{
-			"code": 6073,
+			"code": 6056,
 			"name": "StructuringDealForbidden",
 			"msg": "Deal should pending or structuring to (re)set the repayment schedule"
+		},
+		{
+			"code": 6057,
+			"name": "RepaymentScheduleMissing",
+			"msg": "Repayment schedule is required for sell order with tranche token"
+		},
+		{
+			"code": 6058,
+			"name": "DealMissing",
+			"msg": "Deal is required for sell order with tranche token"
+		},
+		{
+			"code": 6059,
+			"name": "TranchePassMissing",
+			"msg": "Tranche Pass is required for sell order with tranche token"
+		},
+		{
+			"code": 6060,
+			"name": "DealTranchesMissing",
+			"msg": "Deal Tranches is required for sell order with tranche token"
+		},
+		{
+			"code": 6061,
+			"name": "SellerTrancheMissing",
+			"msg": "Seller Tranche is required for sell order with tranche token"
+		},
+		{
+			"code": 6062,
+			"name": "WrongAmountTrancheUpscaleConfigs",
+			"msg": "Wrong number upscale of tranche configs: expected 10"
+		},
+		{
+			"code": 6063,
+			"name": "MissingTrancheInfoAccount",
+			"msg": "The instruction expected tranche info account: Found None"
+		},
+		{
+			"code": 6064,
+			"name": "RepaymentPeriodNotFound",
+			"msg": "Repayment period index not found"
+		},
+		{
+			"code": 6065,
+			"name": "TrancheRepaymentMissing",
+			"msg": "Tranche repayments missing, Can not adjusts tranches."
 		}
 	]
 }

@@ -361,6 +361,8 @@ export const getTrancheDepositIx = async (
 			investorBaseAccount: investorTokenAccount,
 			investorTrancheTokenAccount: investorAssociatedTrancheMintAccount,
 			baseTokenMint: globalMarketAccount.baseTokenMint as PublicKey,
+			// we pass the credix program ID; which will be perceived by Anchor as an optional account for which the value is null.
+			trancheInfo: credixProgram,
 			signingAuthority: signingAuthority,
 			globalMarketState: marketAddress,
 			associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -489,6 +491,8 @@ export const getTrancheWithdrawIx = async (
 			investorBaseAccount: investorTokenAccount,
 			investorTrancheTokenAccount: investorAssociatedTrancheMintAccount,
 			baseTokenMint: globalMarketAccount.baseTokenMint as PublicKey,
+			// we pass the credix program ID; which will be perceived by Anchor as an optional account for which the value is null.
+			trancheInfo: credixProgram,
 			signingAuthority: signingAuthority,
 			globalMarketState: marketAddress,
 			associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
