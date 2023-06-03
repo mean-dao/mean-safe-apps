@@ -1,172 +1,172 @@
 {
-  "apps": [
-    {
-      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
-      "name": "Token Vesting",
-      "network": 101,
-      "folder": "mean-vesting",
-      "active": true
-    },
-    {
-      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
-      "name": "Token Vesting",
-      "network": 102,
-      "folder": "mean-vesting",
-      "active": true
-    },
-    {
-      "id": "MSPdQo5ZdrPh6rU1LsvUv5nRhAnj1mj6YQEqBUq8YwZ",
-      "name": "Token Vesting",
-      "network": 103,
-      "folder": "mean-vesting",
-      "active": true
-    },
-    {
-      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
-      "name": "Payment Streaming",
-      "network": 101,
-      "folder": "mean-msp",
-      "active": true
-    },
-    {
-      "id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
-      "name": "Payment Streaming",
-      "network": 102,
-      "folder": "mean-msp",
-      "active": true
-    },
-    {
-      "id": "MSPdQo5ZdrPh6rU1LsvUv5nRhAnj1mj6YQEqBUq8YwZ",
-      "name": "Payment Streaming",
-      "network": 103,
-      "folder": "mean-msp",
-      "active": true
-    },
-    {
-      "id": "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi",
-      "name": "Solend",
-      "network": 101,
-      "folder": "solend",
-      "active": false
-    },
-    {
-      "id": "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi",
-      "name": "Solend",
-      "network": 102,
-      "folder": "solend",
-      "active": false
-    },
-    {
-      "id": "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi",
-      "name": "Solend",
-      "network": 103,
-      "folder": "solend",
-      "active": false
-    },
-    {
-      "id": "MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK",
-      "name": "Mean Staking",
-      "network": 101,
-      "folder": "mean-staking",
-      "active": false
-    },
-    {
-      "id": "MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK",
-      "name": "Mean Staking",
-      "network": 102,
-      "folder": "mean-staking",
-      "active": false
-    },
-    {
-      "id": "MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK",
-      "name": "Mean Staking",
-      "network": 103,
-      "folder": "mean-staking",
-      "active": false
-    },
-    {
-      "id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
-      "name": "Marinade",
-      "network": 101,
-      "folder": "marinade",
-      "active": false
-    },
-    {
-      "id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
-      "name": "Marinade",
-      "network": 102,
-      "folder": "marinade",
-      "active": false
-    },
-    {
-      "id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
-      "name": "Marinade",
-      "network": 103,
-      "folder": "marinade",
-      "active": false
-    },
-    {
-      "id": "CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX",
-      "name": "Credix Finance",
-      "network": 101,
-      "folder": "credix",
-      "active": true
-    },
-    {
-      "id": "CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX",
-      "name": "Credix Finance",
-      "network": 102,
-      "folder": "credix",
-      "active": true
-    },
-    {
-      "id": "CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX",
-      "name": "Credix Finance",
-      "network": 103,
-      "folder": "credix",
-      "active": true
-    },
-    {
-      "id": "FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j",
-      "name": "Mean Multisig",
-      "network": 101,
-      "folder": "mean-multisig",
-      "active": false
-    },
-    {
-      "id": "FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j",
-      "name": "Mean Multisig",
-      "network": 102,
-      "folder": "mean-multisig",
-      "active": false
-    },
-    {
-      "id": "MMSdTDhtwBs2w4MxGCbqfWLgerMQNbXazizghoh7uMJ",
-      "name": "Mean Multisig",
-      "network": 103,
-      "folder": "mean-multisig",
-      "active": false
-    },
-    {
-      "id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
-      "name": "SPL Token",
-      "network": 101,
-      "folder": "spl-token",
-      "active": false
-    },
-    {
-      "id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
-      "name": "SPL Token",
-      "network": 102,
-      "folder": "spl-token",
-      "active": false
-    },
-    {
-      "id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
-      "name": "SPL Token",
-      "network": 103,
-      "folder": "spl-token",
-      "active": false
-    }
-  ]
+	"apps": [
+		{
+			"id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+			"name": "Token Vesting",
+			"network": 101,
+			"folder": "mean-vesting",
+			"active": true
+		},
+		{
+			"id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+			"name": "Token Vesting",
+			"network": 102,
+			"folder": "mean-vesting",
+			"active": true
+		},
+		{
+			"id": "MSPdQo5ZdrPh6rU1LsvUv5nRhAnj1mj6YQEqBUq8YwZ",
+			"name": "Token Vesting",
+			"network": 103,
+			"folder": "mean-vesting",
+			"active": true
+		},
+		{
+			"id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+			"name": "Payment Streaming",
+			"network": 101,
+			"folder": "mean-msp",
+			"active": true
+		},
+		{
+			"id": "MSPCUMbLfy2MeT6geLMMzrUkv1Tx88XRApaVRdyxTuu",
+			"name": "Payment Streaming",
+			"network": 102,
+			"folder": "mean-msp",
+			"active": true
+		},
+		{
+			"id": "MSPdQo5ZdrPh6rU1LsvUv5nRhAnj1mj6YQEqBUq8YwZ",
+			"name": "Payment Streaming",
+			"network": 103,
+			"folder": "mean-msp",
+			"active": true
+		},
+		{
+			"id": "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi",
+			"name": "Solend",
+			"network": 101,
+			"folder": "solend",
+			"active": false
+		},
+		{
+			"id": "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi",
+			"name": "Solend",
+			"network": 102,
+			"folder": "solend",
+			"active": false
+		},
+		{
+			"id": "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi",
+			"name": "Solend",
+			"network": 103,
+			"folder": "solend",
+			"active": false
+		},
+		{
+			"id": "MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK",
+			"name": "Mean Staking",
+			"network": 101,
+			"folder": "mean-staking",
+			"active": false
+		},
+		{
+			"id": "MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK",
+			"name": "Mean Staking",
+			"network": 102,
+			"folder": "mean-staking",
+			"active": false
+		},
+		{
+			"id": "MSTKTNxDrVTd32qF8kyaiUhFidmgPaYGU932FbRa7eK",
+			"name": "Mean Staking",
+			"network": 103,
+			"folder": "mean-staking",
+			"active": false
+		},
+		{
+			"id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
+			"name": "Marinade",
+			"network": 101,
+			"folder": "marinade",
+			"active": false
+		},
+		{
+			"id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
+			"name": "Marinade",
+			"network": 102,
+			"folder": "marinade",
+			"active": false
+		},
+		{
+			"id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
+			"name": "Marinade",
+			"network": 103,
+			"folder": "marinade",
+			"active": false
+		},
+		{
+			"id": "CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX",
+			"name": "Credix Finance",
+			"network": 101,
+			"folder": "credix",
+			"active": true
+		},
+		{
+			"id": "CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX",
+			"name": "Credix Finance",
+			"network": 102,
+			"folder": "credix",
+			"active": true
+		},
+		{
+			"id": "CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX",
+			"name": "Credix Finance",
+			"network": 103,
+			"folder": "credix-devnet",
+			"active": true
+		},
+		{
+			"id": "FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j",
+			"name": "Mean Multisig",
+			"network": 101,
+			"folder": "mean-multisig",
+			"active": false
+		},
+		{
+			"id": "FF7U7Vj1PpBkTPau7frwLLrUHrjkxTQLsH7U5K3T3B3j",
+			"name": "Mean Multisig",
+			"network": 102,
+			"folder": "mean-multisig",
+			"active": false
+		},
+		{
+			"id": "MMSdTDhtwBs2w4MxGCbqfWLgerMQNbXazizghoh7uMJ",
+			"name": "Mean Multisig",
+			"network": 103,
+			"folder": "mean-multisig",
+			"active": false
+		},
+		{
+			"id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+			"name": "SPL Token",
+			"network": 101,
+			"folder": "spl-token",
+			"active": false
+		},
+		{
+			"id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+			"name": "SPL Token",
+			"network": 102,
+			"folder": "spl-token",
+			"active": false
+		},
+		{
+			"id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+			"name": "SPL Token",
+			"network": 103,
+			"folder": "spl-token",
+			"active": false
+		}
+	]
 }
