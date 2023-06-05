@@ -1,6 +1,6 @@
 {
 	"name": "@mean-dao/mean-multisig-apps",
-	"version": "1.3.13",
+	"version": "1.3.14",
 	"description": "Mean Multisig applications repository",
 	"main": "lib/index.js",
 	"repository": "https://github.com/supermean-org/supersafe-apps.git",
