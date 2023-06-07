@@ -1,15 +1,26 @@
 import { PublicKey } from "@solana/web3.js";
-import { Account, App, AppConfig, Arg, NETWORK, UiConfigIx, UiElement, UiInstruction } from "./types";
+import {
+  Account,
+  App,
+  AppConfig,
+  Arg,
+  NETWORK,
+  UiConfigIx,
+  UiElement,
+  UiInstruction,
+} from "./types";
 import { fetch } from "cross-fetch";
-import data from './apps.json';
+import data from "./apps.json";
 import { Idl } from "@coral-xyz/anchor";
 import { IdlAccount } from "@coral-xyz/anchor/dist/cjs/idl";
 
-const NATIVE_LOADER = new PublicKey("NativeLoader1111111111111111111111111111111");
-const BASE_APPS_URL = "https://raw.githubusercontent.com/supermean-org/supersafe-apps/main/src/apps";
+const NATIVE_LOADER = new PublicKey(
+  "NativeLoader1111111111111111111111111111111"
+);
+const BASE_APPS_URL =
+  "https://raw.githubusercontent.com/supermean-org/supersafe-apps/main/src/apps";
 
 export class AppsProvider {
-
   network?: NETWORK;
 
   constructor(network?: NETWORK) {
@@ -19,12 +30,12 @@ export class AppsProvider {
   getApps = async (): Promise<App[]> => {
     try {
       const getApps = (network?: NETWORK) => {
-        if (!network) { return data.apps; }
+        if (!network) {
+          return data.apps;
+        }
         return data.apps.filter((a: any) => a.network == network);
       };
-      let apps: App[] = [
-        this.getCustomApp(this.network || 103)
-      ];
+      let apps: App[] = [this.getCustomApp(this.network || 103)];
       const appList = getApps(this.network);
       for (let item of appList) {
         apps.push({
@@ -35,7 +46,7 @@ export class AppsProvider {
           active: item.active,
           logoUri: `${BASE_APPS_URL}/${item.folder}/logo.svg`,
           uiUrl: `${BASE_APPS_URL}/${item.folder}/ui.json`,
-          defUrl: `${BASE_APPS_URL}/${item.folder}/definition.json`
+          defUrl: `${BASE_APPS_URL}/${item.folder}/definition.json`,
         } as App);
       }
       return apps;
@@ -53,7 +64,7 @@ export class AppsProvider {
     try {
       // Read urls from app's details
       if (!uiUrl || !defUrl) {
-        const appInfo = (await this.getApps()).find(x => x.id === appId);
+        const appInfo = (await this.getApps()).find((x) => x.id === appId);
         if (!appInfo) {
           return null;
         }
@@ -67,22 +78,22 @@ export class AppsProvider {
 
       if (appId === NATIVE_LOADER.toBase58()) {
         const uiResponse = await fetch(uiUrl);
-        const uiResult = (!uiResponse.ok || uiResponse.status !== 200) ? {} : await uiResponse.json();
+        const uiResult =
+          !uiResponse.ok || uiResponse.status !== 200
+            ? {}
+            : await uiResponse.json();
         return {
           ui: await getUiConfig(appId, uiResult, undefined),
-          definition: ""
+          definition: "",
         } as AppConfig;
       }
 
-      const [uiRes, defRes] = await Promise.all([
-        fetch(uiUrl),
-        fetch(defUrl)
-      ]);
+      const [uiRes, defRes] = await Promise.all([fetch(uiUrl), fetch(defUrl)]);
       const uiResult = uiRes.status !== 200 ? null : await uiRes.json();
       const defResult = defRes.status !== 200 ? null : await defRes.json();
       return {
         ui: await getUiConfig(appId, uiResult, defResult),
-        definition: defResult
+        definition: defResult,
       } as AppConfig;
     } catch (err: any) {
       console.log(err);
@@ -99,29 +110,40 @@ export class AppsProvider {
       active: true,
       logoUri: `${BASE_APPS_URL}/custom/logo.svg`,
       uiUrl: `${BASE_APPS_URL}/custom/ui.json`,
-      defUrl: ""
+      defUrl: "",
     } as App;
-  }
+  };
 }
 
-const getUiConfig = async (appId: string, uiIxs: UiConfigIx[], defData?: Idl): Promise<UiInstruction[]> => {
+const getUiConfig = async (
+  appId: string,
+  uiIxs: UiConfigIx[],
+  defData?: Idl
+): Promise<UiInstruction[]> => {
   try {
     let uiConfigs: UiInstruction[] = [];
-    if (!uiIxs) { return uiConfigs; }
+    if (!uiIxs) {
+      return uiConfigs;
+    }
     for (let uiIx of uiIxs) {
-      const [ixId] = await PublicKey.findProgramAddress([Buffer.from(uiIx.name)], new PublicKey(appId));
+      const [ixId] = await PublicKey.findProgramAddress(
+        [Buffer.from(uiIx.name)],
+        new PublicKey(appId)
+      );
       let ix = {
         id: ixId.toBase58(),
         name: uiIx.name,
         label: uiIx.label,
         help: uiIx.help,
         type: uiIx.type,
-        uiElements: []
+        uiElements: [],
       } as UiInstruction;
       // custom proposal
       if (appId === NATIVE_LOADER.toBase58()) {
         const uiArg = uiIxs[0].args[0];
-        if (!uiArg) { continue; }
+        if (!uiArg) {
+          continue;
+        }
         ix.uiElements.push({
           name: uiArg.name,
           label: uiArg.label,
@@ -129,20 +151,23 @@ const getUiConfig = async (appId: string, uiIxs: UiConfigIx[], defData?: Idl): P
           type: uiArg.type,
           value: uiArg.value,
           visibility: uiArg.visibility,
-          dataElement: undefined
+          dataElement: undefined,
         } as UiElement);
       } else {
-        let idlIx = !defData ? null : defData.instructions.find((i) => i.name === uiIx.name);
+        let idlIx = !defData
+          ? undefined
+          : defData.instructions.find((i) => i.name === uiIx.name);
         if (!idlIx && !uiIx.allowUnmatchedIxName) continue;
-        
         // accounts
         let accIndex = 0;
         for (let uiAcc of uiIx.accounts) {
-          let idlAccountItem = idlIx?.accounts.find((acc: any) => acc.name === uiAcc.name);
+          let idlAccountItem = idlIx?.accounts.find(
+            (acc: any) => acc.name === uiAcc.name
+          );
           let accountConfig = idlAccountItem as IdlAccount;
-          
+
           //accountConfig can be IdlAccount | IdlAccounts but we dont support IdlAccounts for now
-          if(idlAccountItem && !accountConfig) continue;
+          // if (!accountConfig) continue;
 
           if (accountConfig || uiIx.allowUnmatchedIxName) {
             ix.uiElements.push({
@@ -154,20 +179,20 @@ const getUiConfig = async (appId: string, uiIxs: UiConfigIx[], defData?: Idl): P
               visibility: uiAcc.visibility,
               dataElement: {
                 index: accIndex,
-                name: accountConfig.name,
-                isWritable: accountConfig?.isMut,
-                isSigner: accountConfig?.isSigner,
-                dataValue: ''
-              } as Account
+                name: accountConfig?.name || uiAcc.name,
+                isWritable: accountConfig?.isMut || false,
+                isSigner: accountConfig?.isSigner || false,
+                dataValue: "",
+              } as Account,
             } as UiElement);
             accIndex++;
           }
         }
         // args
-        let argIndex = 0
+        let argIndex = 0;
         for (let uiArg of uiIx.args) {
           let dataElem = idlIx?.args.find((arg) => arg.name === uiArg.name);
-          if (ix.uiElements.findIndex(x => x.name === uiArg.name) == -1) {
+          if (ix.uiElements.findIndex((x) => x.name === uiArg.name) == -1) {
             ix.uiElements.push({
               name: uiArg.name,
               label: uiArg.label,
@@ -179,8 +204,8 @@ const getUiConfig = async (appId: string, uiIxs: UiConfigIx[], defData?: Idl): P
                 index: Number(`${accIndex}${argIndex}`),
                 name: dataElem?.name || uiArg.name,
                 dataType: dataElem?.type || uiArg.type,
-                dataValue: ''
-              } as Arg
+                dataValue: "",
+              } as Arg,
             } as UiElement);
             argIndex++;
           }
