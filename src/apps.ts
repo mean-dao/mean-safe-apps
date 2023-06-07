@@ -154,9 +154,9 @@ const getUiConfig = async (appId: string, uiIxs: UiConfigIx[], defData?: Idl): P
               visibility: uiAcc.visibility,
               dataElement: {
                 index: accIndex,
-                name: accountConfig.name,
-                isWritable: accountConfig?.isMut,
-                isSigner: accountConfig?.isSigner,
+                name: accountConfig?.name ?? uiAcc.name,
+                isWritable: accountConfig?.isMut ?? false,
+                isSigner: accountConfig?.isSigner ?? false,
                 dataValue: ''
               } as Account
             } as UiElement);
