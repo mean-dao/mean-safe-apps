@@ -167,7 +167,7 @@ const getUiConfig = async (
           let accountConfig = idlAccountItem as IdlAccount;
 
           //accountConfig can be IdlAccount | IdlAccounts but we dont support IdlAccounts for now
-          // if (!accountConfig) continue;
+          if (!accountConfig && !uiIx.allowUnmatchedIxName) continue;
 
           if (accountConfig || uiIx.allowUnmatchedIxName) {
             ix.uiElements.push({
