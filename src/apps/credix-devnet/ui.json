@@ -43,6 +43,7 @@
 	},
 	{
 		"name": "createWithdrawRequest",
+		"allowUnmatchedIxName": true,
 		"label": "Create Withdraw Request",
 		"help": "Create Withdraw Request",
 		"type": {
@@ -85,6 +86,7 @@
 	},
 	{
 		"name": "redeemFundsForWithdrawRequest",
+		"allowUnmatchedIxName": true,
 		"label": "Redeem Funds For Withdraw Request",
 		"help": "Redeem Funds FOr Withdraw Request",
 		"type": {
