@@ -1,7 +1,9 @@
 import { PublicKey } from "@solana/web3.js";
-import { Account, App, AppConfig, Arg, NETWORK, UiElement, UiInstruction } from "./types";
+import { Account, App, AppConfig, Arg, NETWORK, UiConfigIx, UiElement, UiInstruction } from "./types";
 import { fetch } from "cross-fetch";
 import data from './apps.json';
+import { Idl } from "@coral-xyz/anchor";
+import { IdlAccount } from "@coral-xyz/anchor/dist/cjs/idl";
 
 const NATIVE_LOADER = new PublicKey("NativeLoader1111111111111111111111111111111");
 const BASE_APPS_URL = "https://raw.githubusercontent.com/supermean-org/supersafe-apps/main/src/apps";
@@ -102,7 +104,7 @@ export class AppsProvider {
   }
 }
 
-const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiInstruction[]> => {
+const getUiConfig = async (appId: string, uiIxs: UiConfigIx[], defData?: Idl): Promise<UiInstruction[]> => {
   try {
     let uiConfigs: UiInstruction[] = [];
     if (!uiIxs) { return uiConfigs; }
@@ -130,13 +132,19 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
           dataElement: undefined
         } as UiElement);
       } else {
+        let idlIx = !defData ? null : defData.instructions.find((i) => i.name === uiIx.name);
+        if (!idlIx && !uiIx.allowUnmatchedIxName) continue;
+        
         // accounts
-        let dataIx = !defData ? null : defData.instructions.find((i: any) => i.name === uiIx.name);
-        if (!dataIx) { continue; }
         let accIndex = 0;
         for (let uiAcc of uiIx.accounts) {
-          let dataElem = dataIx.accounts.find((acc: any) => acc.name === uiAcc.name);
-          if (dataElem) {
+          let idlAccountItem = idlIx?.accounts.find((acc: any) => acc.name === uiAcc.name);
+          let accountConfig = idlAccountItem as IdlAccount;
+          
+          //accountConfig can be IdlAccount | IdlAccounts but we dont support IdlAccounts for now
+          if(idlAccountItem && !accountConfig) continue;
+
+          if (accountConfig || uiIx.allowUnmatchedIxName) {
             ix.uiElements.push({
               name: uiAcc.name,
               label: uiAcc.label,
@@ -146,9 +154,9 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
               visibility: uiAcc.visibility,
               dataElement: {
                 index: accIndex,
-                name: dataElem.name,
-                isWritable: dataElem.isMut,
-                isSigner: dataElem.isSigner,
+                name: accountConfig.name,
+                isWritable: accountConfig?.isMut,
+                isSigner: accountConfig?.isSigner,
                 dataValue: ''
               } as Account
             } as UiElement);
@@ -158,7 +166,7 @@ const getUiConfig = async (appId: string, uiIxs: any, defData: any): Promise<UiI
         // args
         let argIndex = 0
         for (let uiArg of uiIx.args) {
-          let dataElem = dataIx.args.find((acc: any) => acc.name === uiArg.name);
+          let dataElem = idlIx?.args.find((arg) => arg.name === uiArg.name);
           if (ix.uiElements.findIndex(x => x.name === uiArg.name) == -1) {
             ix.uiElements.push({
               name: uiArg.name,

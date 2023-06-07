@@ -64,6 +64,29 @@ export type AppConfig = {
   definition: any;
 };
 
+export type UiConfigIxAccountOrArg = {
+  name: string;
+  label: string;
+  help: string;
+  type: UiType;
+  value: any;
+  visibility: UiElementVisibility;
+}
+
+export type UiConfigIx = {
+  name: string,
+  label: string,
+  help: string;
+  type: UiInstructionType;
+  accounts: UiConfigIxAccountOrArg[];
+  args: UiConfigIxAccountOrArg[];
+  /**
+   * If true, the name of this UI instruction (from ui.json) does not need to
+   * match an instruction in the definition.json file. Default value is false.
+   */
+  allowUnmatchedIxName?: boolean;
+}
+
 export type UiInstruction = {
   id: string;
   name: string;
