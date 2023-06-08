@@ -12,7 +12,10 @@ describe('apps.ts', () => {
 
     afterAll(async () => {
 
-    })
+    });
+
+    describe('dummy test', () => {console.log("========= This is a dummy test ========");
+    });
 
     describe('getApps', () => {
         it('should get list for devnet', async () => {
@@ -64,5 +67,5 @@ describe('apps.ts', () => {
             expect(config).toBeDefined();
             expect(withdrawTranche).toBeDefined();
         })
-    })
+    });
 });
