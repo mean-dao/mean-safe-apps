@@ -26,16 +26,16 @@ export class AppsProvider {
         this.getCustomApp(this.network || 103)
       ];
       const appList = getApps(this.network);
-      for (let item of appList) {
+      for (let appConfig of appList) {
         apps.push({
-          id: item.id,
-          name: item.name,
-          network: item.network,
-          folder: item.folder,
-          active: item.active,
-          logoUri: `${BASE_APPS_URL}/${item.folder}/logo.svg`,
-          uiUrl: `${BASE_APPS_URL}/${item.folder}/ui.json`,
-          defUrl: `${BASE_APPS_URL}/${item.folder}/definition.json`
+          id: appConfig.id,
+          name: appConfig.name,
+          network: appConfig.network,
+          folder: appConfig.folder,
+          active: appConfig.active,
+          logoUri: `${BASE_APPS_URL}/${appConfig.folder}/logo.svg`,
+          uiUrl: `${BASE_APPS_URL}/${appConfig.folder}/ui.json`,
+          defUrl: `${BASE_APPS_URL}/${appConfig.folder}/definition.json`
         } as App);
       }
       return apps;
@@ -105,10 +105,13 @@ export class AppsProvider {
 }
 
 const getUiConfig = async (appId: string, uiIxs: UiConfigIx[], defData?: Idl): Promise<UiInstruction[]> => {
+  console.log('Calling getUiConfig Line 108: ', 'appId: ', appId);
+  
   try {
     let uiConfigs: UiInstruction[] = [];
     if (!uiIxs) { return uiConfigs; }
     for (let uiIx of uiIxs) {
+      console.log('Inside getUiConfig Line 114: ', 'uiIx.name: ', uiIx.name);
       const [ixId] = await PublicKey.findProgramAddress([Buffer.from(uiIx.name)], new PublicKey(appId));
       let ix = {
         id: ixId.toBase58(),
