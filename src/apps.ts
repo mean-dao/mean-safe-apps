@@ -26,16 +26,16 @@ export class AppsProvider {
         this.getCustomApp(this.network || 103)
       ];
       const appList = getApps(this.network);
-      for (let item of appList) {
+      for (let appConfig of appList) {
         apps.push({
-          id: item.id,
-          name: item.name,
-          network: item.network,
-          folder: item.folder,
-          active: item.active,
-          logoUri: `${BASE_APPS_URL}/${item.folder}/logo.svg`,
-          uiUrl: `${BASE_APPS_URL}/${item.folder}/ui.json`,
-          defUrl: `${BASE_APPS_URL}/${item.folder}/definition.json`
+          id: appConfig.id,
+          name: appConfig.name,
+          network: appConfig.network,
+          folder: appConfig.folder,
+          active: appConfig.active,
+          logoUri: `${BASE_APPS_URL}/${appConfig.folder}/logo.svg`,
+          uiUrl: `${BASE_APPS_URL}/${appConfig.folder}/ui.json`,
+          defUrl: `${BASE_APPS_URL}/${appConfig.folder}/definition.json`
         } as App);
       }
       return apps;
@@ -154,9 +154,9 @@ const getUiConfig = async (appId: string, uiIxs: UiConfigIx[], defData?: Idl): P
               visibility: uiAcc.visibility,
               dataElement: {
                 index: accIndex,
-                name: accountConfig.name,
-                isWritable: accountConfig?.isMut,
-                isSigner: accountConfig?.isSigner,
+                name: accountConfig?.name ?? uiAcc.name,
+                isWritable: accountConfig?.isMut ?? false,
+                isSigner: accountConfig?.isSigner ?? false,
                 dataValue: ''
               } as Account
             } as UiElement);

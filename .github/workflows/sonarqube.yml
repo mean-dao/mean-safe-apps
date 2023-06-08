@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  pull_request_target:
+  pull_request: # do not change to pull_request_target. See https://securitylab.github.com/research/github-actions-preventing-pwn-requests/#:~:text=The%20main%20differences%20between%20the,but%20not%20from%20external%20forks.
     types: [opened, synchronize, reopened]
 jobs:
   build:
@@ -30,6 +30,7 @@ jobs:
       # Run the Quality Scanner
       - name: SonarQube Scanner
         uses: sonarsource/sonarqube-scan-action@master
+        continue-on-error: true # Skipping this step for PRs from an external fork which will fail because not having access to secrets
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -48,8 +49,7 @@ jobs:
         uses: sonarsource/sonarqube-quality-gate-action@master
         # Force to fail step after specific time.
         timeout-minutes: 5
-        continue-on-error: true # this should be removed in the future when the sonarqube is passing
-
+        continue-on-error: true # Skipping this step for PRs from an external fork which will fail because not having access to secrets
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
