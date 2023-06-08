@@ -105,13 +105,10 @@ export class AppsProvider {
 }
 
 const getUiConfig = async (appId: string, uiIxs: UiConfigIx[], defData?: Idl): Promise<UiInstruction[]> => {
-  console.log('Calling getUiConfig Line 108: ', 'appId: ', appId);
-  
   try {
     let uiConfigs: UiInstruction[] = [];
     if (!uiIxs) { return uiConfigs; }
     for (let uiIx of uiIxs) {
-      console.log('Inside getUiConfig Line 114: ', 'uiIx.name: ', uiIx.name);
       const [ixId] = await PublicKey.findProgramAddress([Buffer.from(uiIx.name)], new PublicKey(appId));
       let ix = {
         id: ixId.toBase58(),
