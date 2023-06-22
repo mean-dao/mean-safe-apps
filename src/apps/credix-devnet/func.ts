@@ -21,7 +21,7 @@ import * as credixIdl from "./definition.json";
 import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 
 const credixProgram = new PublicKey(
-	"CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX"
+	"crdszSnZQu7j36KfsMJ4VEmMUTJgrNYXwoPVHUANpAu"
 );
 
 const DEFAULT_MARKET_PLACE = "credix-marketplace";
