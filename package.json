@@ -1,6 +1,6 @@
 {
 	"name": "@mean-dao/mean-multisig-apps",
-	"version": "1.3.17",
+	"version": "1.3.18",
 	"description": "Mean Multisig applications repository",
 	"main": "lib/index.js",
 	"repository": "https://github.com/supermean-org/supersafe-apps.git",
@@ -28,7 +28,7 @@
 		"@coral-xyz/anchor-cli": "^0.26.0",
 		"@solana/spl-token": "0.1.8",
 		"@solana/web3.js": "1.36.0",
-		"@credix/credix-client": "3.0.0",
+		"@credix/credix-client": "3.0.1-alpha.4",
 		"cross-fetch": "^3.1.5"
 	},
 	"devDependencies": {
