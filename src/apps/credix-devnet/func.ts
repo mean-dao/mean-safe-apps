@@ -62,15 +62,12 @@ const createClient = (program: Program<Idl>) => {
 		commitment: "confirmed",
 		preflightCommitment: "processed",
 	};
-	const programId = new PublicKey(
-		"CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX"
-	);
 	const secondaryMarketProgramId = new PublicKey(
 		"MSMTVTYZXBGJB1SCViC4yGY17tcF2S9meV7iGTyfoAn"
 	);
 
 	const config = {
-		programId: programId,
+		programId: credixProgram,
 		secondaryMarketProgramId,
 		confirmOptions: confirmOptions,
 	};
