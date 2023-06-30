@@ -1,6 +1,7 @@
 [
 	{
 		"name": "depositFunds",
+		"allowUnmatchedIxName": true,
 		"label": "Deposit Funds",
 		"help": "Deposit funds",
 		"type": {
