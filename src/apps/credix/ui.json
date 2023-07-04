@@ -1,7 +1,6 @@
 [
 	{
 		"name": "depositFunds",
-		"allowUnmatchedIxName": true,
 		"label": "Deposit Funds",
 		"help": "Deposit funds",
 		"type": {
@@ -44,7 +43,6 @@
 	},
 	{
 		"name": "createWithdrawRequest",
-		"allowUnmatchedIxName": true,
 		"label": "Create Withdraw Request",
 		"help": "Create Withdraw Request",
 		"type": {
@@ -86,13 +84,12 @@
 		]
 	},
 	{
-		"name": "redeemFundsForWithdrawRequest",
-		"allowUnmatchedIxName": true,
+		"name": "redeemWithdrawRequest",
 		"label": "Redeem Funds For Withdraw Request",
 		"help": "Redeem Funds FOr Withdraw Request",
 		"type": {
 			"func": {
-				"name": "getRedeemRequestIx"
+				"name": "getRedeemWithdrawRequestIx"
 			}
 		},
 		"accounts": [
@@ -220,18 +217,6 @@
 				"help": "The name of the market you want withdraw from",
 				"type": "inputText",
 				"value": "credix-marketplace",
-				"visibility": "show"
-			},
-			{
-				"name": "amount",
-				"label": "Amount",
-				"help": "The amount to be withdrawn.",
-				"type": {
-					"from": {
-						"inputId": "investorTrancheTokenAccount"
-					}
-				},
-				"value": "",
 				"visibility": "show"
 			},
 			{
