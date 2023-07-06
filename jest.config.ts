@@ -6,6 +6,7 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
-  // setupFilesAfterEnv: ['./tests/bootstrap.ts']
+  // setupFilesAfterEnv: ['./tests/bootstrap.ts'],
+  // testTimeout: 30000
 };
 export default config;
