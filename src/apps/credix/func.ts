@@ -1,8 +1,6 @@
 import { AnchorProvider, Idl, Program, BN, utils } from "@coral-xyz/anchor";
-import { CredixClient } from "@credix/credix-client";
 import {
 	Commitment,
-	ConfirmOptions,
 	Connection,
 	Keypair,
 	PublicKey,
@@ -18,7 +16,6 @@ import {
 	MintInfo,
 } from "@solana/spl-token";
 import * as credixIdl from "./definition.json";
-import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 
 const credixProgram = new PublicKey(
 	"CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX"
@@ -49,51 +46,96 @@ export const createProgram = (
 	return new Program(credixIdl as Idl, credixProgram, provider);
 };
 
-const createClient = (program: Program<Idl>) => {
-	const connection = program.provider.connection;
-	const readOnlyWallet = Keypair.generate();
-	const anchorWallet = {
-		publicKey: new PublicKey(readOnlyWallet.publicKey),
-		signAllTransactions: async (txs: any) => txs,
-		signTransaction: async (tx: any) => tx,
-	};
-
-	const confirmOptions: ConfirmOptions = {
-		commitment: "confirmed",
-		preflightCommitment: "processed",
-	};
-	const programId = new PublicKey(
-		"CRDx2YkdtYtGZXGHZ59wNv1EwKHQndnRc1gT4p8i2vPX"
-	);
-	const secondaryMarketProgramId = new PublicKey(
-		"MSMTVTYZXBGJB1SCViC4yGY17tcF2S9meV7iGTyfoAn"
-	);
-
-	const config = {
-		programId: programId,
-		secondaryMarketProgramId,
-		confirmOptions: confirmOptions,
-	};
-
-	return new CredixClient(connection, anchorWallet as NodeWallet, config);
-};
-
 export const getDepositIx = async (
 	program: Program<Idl>,
 	investor: PublicKey,
 	amount: number,
 	marketName: string | undefined = DEFAULT_MARKET_PLACE
 ): Promise<TransactionInstruction> => {
-	const client = createClient(program);
-	const market = await client.fetchMarket(marketName);
+	const marketSeed = Buffer.from(
+		utils.bytes.utf8.encode(marketName || DEFAULT_MARKET_PLACE)
+	);
+	const [marketAddress] = await PublicKey.findProgramAddress(
+		[marketSeed],
+		program.programId
+	);
+	const globalMarketAccount =
+		await program.account.globalMarketState.fetchNullable(marketAddress);
 
-	if (!market) {
+	if (!globalMarketAccount) {
 		throw Error("Market not found.");
 	}
 
-	const depositIx = await market?.depositIx(amount * 10 ** 6, investor);
+	const [signingAuthority] = await PublicKey.findProgramAddress(
+		[marketAddress.toBuffer()],
+		program.programId
+	);
 
-	return depositIx;
+	const investorTokenAccount = await Token.getAssociatedTokenAddress(
+		ASSOCIATED_TOKEN_PROGRAM_ID,
+		TOKEN_PROGRAM_ID,
+		globalMarketAccount.baseTokenMint as PublicKey,
+		investor,
+		true
+	);
+
+	const liquidityPoolTokenAccount = await Token.getAssociatedTokenAddress(
+		ASSOCIATED_TOKEN_PROGRAM_ID,
+		TOKEN_PROGRAM_ID,
+		globalMarketAccount.baseTokenMint as PublicKey,
+		signingAuthority,
+		true
+	);
+
+	const investorLPTokenAccount = await Token.getAssociatedTokenAddress(
+		ASSOCIATED_TOKEN_PROGRAM_ID,
+		TOKEN_PROGRAM_ID,
+		globalMarketAccount.lpTokenMint as PublicKey,
+		investor,
+		true
+	);
+
+	const credixSeed = Buffer.from(utils.bytes.utf8.encode("credix-pass"));
+	const credixPassSeeds = [
+		marketAddress.toBuffer(),
+		investor.toBuffer(),
+		credixSeed,
+	];
+	const [credixPass] = await PublicKey.findProgramAddress(
+		credixPassSeeds,
+		program.programId
+	);
+	const baseTokenMintInfo = await program.provider.connection.getAccountInfo(
+		globalMarketAccount.baseTokenMint as PublicKey
+	);
+
+	if (!baseTokenMintInfo) {
+		throw Error("Mint not found.");
+	}
+
+	const baseTokenMintAccount = MintLayout.decode(
+		baseTokenMintInfo.data
+	) as MintInfo;
+	const depositAmount = new BN(amount * 10 ** baseTokenMintAccount.decimals);
+
+	return await program.methods
+		.depositFunds(depositAmount)
+		.accounts({
+			investor,
+			globalMarketState: marketAddress,
+			signingAuthority: signingAuthority,
+			investorTokenAccount: investorTokenAccount,
+			liquidityPoolTokenAccount: liquidityPoolTokenAccount,
+			lpTokenMint: globalMarketAccount.lpTokenMint as PublicKey,
+			investorLpTokenAccount: investorLPTokenAccount,
+			credixPass: credixPass,
+			baseTokenMint: globalMarketAccount.baseTokenMint as PublicKey,
+			associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
+			rent: SYSVAR_RENT_PUBKEY,
+			tokenProgram: TOKEN_PROGRAM_ID,
+			systemProgram: SystemProgram.programId,
+		})
+		.instruction();
 };
 
 export const getCreateWithdrawRequestIx = async (
@@ -102,43 +144,224 @@ export const getCreateWithdrawRequestIx = async (
 	amount: number,
 	marketName: string | undefined = DEFAULT_MARKET_PLACE
 ): Promise<TransactionInstruction> => {
-	const client = createClient(program);
-	const market = await client.fetchMarket(marketName);
+	const marketSeed = Buffer.from(
+		utils.bytes.utf8.encode(marketName || DEFAULT_MARKET_PLACE)
+	);
+	const [marketAddress] = await PublicKey.findProgramAddress(
+		[marketSeed],
+		program.programId
+	);
+	const globalMarketAccount =
+		await program.account.globalMarketState.fetchNullable(marketAddress);
 
-	if (!market) {
+	if (!globalMarketAccount) {
 		throw Error("Market not found.");
 	}
 
-	const latestWithdrawEpoch = await market.fetchLatestWithdrawEpoch();
-	const createWithdrawRequestIx =
-		await latestWithdrawEpoch.createWithdrawRequestIx(
-			amount * 10 ** 6,
-			investor
-		);
+	const [signingAuthority] = await PublicKey.findProgramAddress(
+		[marketAddress.toBuffer()],
+		program.programId
+	);
 
-	return createWithdrawRequestIx;
+	const credixSeed = Buffer.from(utils.bytes.utf8.encode("credix-pass"));
+	const credixPassSeeds = [
+		marketAddress.toBuffer(),
+		investor.toBuffer(),
+		credixSeed,
+	];
+	const [credixPass] = await PublicKey.findProgramAddress(
+		credixPassSeeds,
+		program.programId
+	);
+
+	const liquidityPoolTokenAccount = await Token.getAssociatedTokenAddress(
+		ASSOCIATED_TOKEN_PROGRAM_ID,
+		TOKEN_PROGRAM_ID,
+		globalMarketAccount.baseTokenMint as PublicKey,
+		signingAuthority,
+		true
+	);
+
+	const investorLPTokenAccount = await Token.getAssociatedTokenAddress(
+		ASSOCIATED_TOKEN_PROGRAM_ID,
+		TOKEN_PROGRAM_ID,
+		globalMarketAccount.lpTokenMint as PublicKey,
+		investor,
+		true
+	);
+
+	const latestWithdrawEpochIdx =
+		globalMarketAccount.latestWithdrawEpochIdx as number;
+
+	const [withdrawEpoch] = await PublicKey.findProgramAddress(
+		[
+			marketAddress.toBuffer(),
+			new BN(latestWithdrawEpochIdx).toArrayLike(Buffer, "le", 4),
+			Buffer.from(utils.bytes.utf8.encode("withdraw-epoch")),
+		],
+		program.programId
+	);
+
+	const [withdrawRequest] = await PublicKey.findProgramAddress(
+		[
+			marketAddress.toBuffer(),
+			investor.toBuffer(),
+			new BN(latestWithdrawEpochIdx).toArrayLike(Buffer, "le", 4),
+			Buffer.from(utils.bytes.utf8.encode("withdraw-request")),
+		],
+		program.programId
+	);
+
+	const requestAmount = new BN(amount * 10 ** 6);
+
+	return await program.methods
+		.createWithdrawRequest(requestAmount)
+		.accounts({
+			payer: investor,
+			investor: investor,
+			globalMarketState: marketAddress,
+			signingAuthority: signingAuthority,
+			credixPass: credixPass,
+			withdrawEpoch: withdrawEpoch,
+			withdrawRequest: withdrawRequest,
+			investorLpTokenAccount: investorLPTokenAccount,
+			liquidityPoolTokenAccount: liquidityPoolTokenAccount,
+			lpTokenMint: globalMarketAccount.lpTokenMint as PublicKey,
+			systemProgram: SystemProgram.programId,
+		})
+		.instruction();
 };
 
-export const getRedeemRequestIx = async (
+export const getRedeemWithdrawRequestIx = async (
 	program: Program<Idl>,
 	investor: PublicKey,
 	amount: number,
 	marketName: string | undefined = DEFAULT_MARKET_PLACE
 ): Promise<TransactionInstruction> => {
-	const client = createClient(program);
-	const market = await client.fetchMarket(marketName);
+	const marketSeed = Buffer.from(
+		utils.bytes.utf8.encode(marketName || DEFAULT_MARKET_PLACE)
+	);
+	const [marketAddress] = await PublicKey.findProgramAddress(
+		[marketSeed],
+		program.programId
+	);
+	const globalMarketAccount =
+		await program.account.globalMarketState.fetchNullable(marketAddress);
 
-	if (!market) {
+	if (!globalMarketAccount) {
 		throw Error("Market not found.");
 	}
 
-	const latestWithdrawEpoch = await market.fetchLatestWithdrawEpoch();
-	const redeemRequestIx = await latestWithdrawEpoch.redeemRequestIx(
-		amount * 10 ** 6,
-		investor
+	const [signingAuthority] = await PublicKey.findProgramAddress(
+		[marketAddress.toBuffer()],
+		program.programId
 	);
 
-	return redeemRequestIx;
+	const credixSeed = Buffer.from(utils.bytes.utf8.encode("credix-pass"));
+	const credixPassSeeds = [
+		marketAddress.toBuffer(),
+		investor.toBuffer(),
+		credixSeed,
+	];
+	const [credixPass] = await PublicKey.findProgramAddress(
+		credixPassSeeds,
+		program.programId
+	);
+
+	const liquidityPoolTokenAccount = await Token.getAssociatedTokenAddress(
+		ASSOCIATED_TOKEN_PROGRAM_ID,
+		TOKEN_PROGRAM_ID,
+		globalMarketAccount.baseTokenMint as PublicKey,
+		signingAuthority,
+		true
+	);
+
+	const investorLPTokenAccount = await Token.getAssociatedTokenAddress(
+		ASSOCIATED_TOKEN_PROGRAM_ID,
+		TOKEN_PROGRAM_ID,
+		globalMarketAccount.lpTokenMint as PublicKey,
+		investor,
+		true
+	);
+
+	const latestWithdrawEpochIdx =
+		globalMarketAccount.latestWithdrawEpochIdx as number;
+
+	const [withdrawEpoch] = await PublicKey.findProgramAddress(
+		[
+			marketAddress.toBuffer(),
+			new BN(latestWithdrawEpochIdx).toArrayLike(Buffer, "le", 4),
+			Buffer.from(utils.bytes.utf8.encode("withdraw-epoch")),
+		],
+		program.programId
+	);
+
+	const [withdrawRequest] = await PublicKey.findProgramAddress(
+		[
+			marketAddress.toBuffer(),
+			investor.toBuffer(),
+			new BN(latestWithdrawEpochIdx).toArrayLike(Buffer, "le", 4),
+			Buffer.from(utils.bytes.utf8.encode("withdraw-request")),
+		],
+		program.programId
+	);
+
+	const [programStatePda] = await PublicKey.findProgramAddress(
+		[Buffer.from(utils.bytes.utf8.encode("program-state"))],
+		program.programId
+	);
+
+	const programState = await program.account.programState.fetchNullable(
+		programStatePda
+	);
+
+	if (!programState) {
+		throw Error("Program state not found.");
+	}
+
+	const investorTokenAccount = await Token.getAssociatedTokenAddress(
+		ASSOCIATED_TOKEN_PROGRAM_ID,
+		TOKEN_PROGRAM_ID,
+		globalMarketAccount.baseTokenMint as PublicKey,
+		investor,
+		true
+	);
+
+	const credixMultisigTokenAccount = await Token.getAssociatedTokenAddress(
+		ASSOCIATED_TOKEN_PROGRAM_ID,
+		TOKEN_PROGRAM_ID,
+		globalMarketAccount.baseTokenMint as PublicKey,
+		programState.credixMultisigKey as PublicKey,
+		true
+	);
+
+	const redeemAmount = new BN(amount * 10 ** 6);
+
+	return await program.methods
+		.redeemWithdrawRequest(redeemAmount)
+		.accounts({
+			investor: investor,
+			globalMarketState: marketAddress,
+			withdrawEpoch: withdrawEpoch,
+			withdrawRequest: withdrawRequest,
+			programState: programStatePda,
+			signingAuthority: signingAuthority,
+			investorLpTokenAccount: investorLPTokenAccount,
+			investorTokenAccount: investorTokenAccount,
+			liquidityPoolTokenAccount: liquidityPoolTokenAccount,
+			credixMultisigKey: programState.credixMultisigKey as PublicKey,
+			credixMultisigTokenAccount: credixMultisigTokenAccount,
+			treasuryPoolTokenAccount:
+				globalMarketAccount.treasuryPoolTokenAccount as PublicKey,
+			lpTokenMint: globalMarketAccount.lpTokenMint as PublicKey,
+			credixPass: credixPass,
+			baseTokenMint: globalMarketAccount.baseTokenMint as PublicKey,
+			associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
+			tokenProgram: TOKEN_PROGRAM_ID,
+			systemProgram: SystemProgram.programId,
+			rent: SYSVAR_RENT_PUBKEY,
+		})
+		.instruction();
 };
 
 export const getTrancheDepositIx = async (
@@ -238,19 +461,19 @@ export const getTrancheDepositIx = async (
 		.depositTranche(depositAmount, trancheIndex)
 		.accounts({
 			investor: investor,
-			tranchePass: tranchePassPda,
+			globalMarketState: marketAddress,
+			signingAuthority: signingAuthority,
+			investorBaseAccount: investorTokenAccount,
 			deal: deal,
 			dealTranches: tranchesPda,
-			trancheTokenMint: trancheMintPda,
 			repaymentSchedule: repaymentSchedulePda,
 			dealTokenAccount: dealTokenAccount,
-			investorBaseAccount: investorTokenAccount,
+			trancheTokenMint: trancheMintPda,
 			investorTrancheTokenAccount: investorAssociatedTrancheMintAccount,
+			tranchePass: tranchePassPda,
 			baseTokenMint: globalMarketAccount.baseTokenMint as PublicKey,
 			// we pass the credix program ID; which will be perceived by Anchor as an optional account for which the value is null.
 			trancheInfo: credixProgram,
-			signingAuthority: signingAuthority,
-			globalMarketState: marketAddress,
 			associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
 			tokenProgram: TOKEN_PROGRAM_ID,
 			systemProgram: SystemProgram.programId,
@@ -263,7 +486,6 @@ export const getTrancheWithdrawIx = async (
 	program: Program<Idl>,
 	investor: PublicKey,
 	deal: PublicKey,
-	amount: number,
 	trancheIndex: number,
 	marketName: string | undefined = DEFAULT_MARKET_PLACE
 ): Promise<TransactionInstruction> => {
@@ -341,19 +563,6 @@ export const getTrancheWithdrawIx = async (
 		program.programId
 	);
 
-	const [investorTranche] = await PublicKey.findProgramAddress(
-		[
-			marketAddress.toBuffer(),
-			investor.toBuffer(),
-			deal.toBuffer(),
-			new BN(trancheIndex).toArrayLike(Buffer, "le", 1),
-			Buffer.from(utils.bytes.utf8.encode("tranche")),
-		],
-		program.programId
-	);
-
-	const withdrawAmount = new BN(amount * 10 ** 6);
-
 	const investorAssociatedTrancheMintAccount =
 		await Token.getAssociatedTokenAddress(
 			ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -364,27 +573,27 @@ export const getTrancheWithdrawIx = async (
 		);
 
 	return await program.methods
-		.withdrawTranche(trancheIndex, withdrawAmount)
+		.withdrawTranche(trancheIndex)
 		.accounts({
+			payer: investor,
 			investor: investor,
 			tranchePass: tranchePassPda,
-			deal: deal,
-			investorTranche: investorTranche,
-			dealTranches: tranchesPda,
-			trancheTokenMint: trancheMintPda,
-			repaymentSchedule: repaymentSchedulePda,
 			dealTokenAccount: dealTokenAccount,
+			deal: deal,
+			repaymentSchedule: repaymentSchedulePda,
+			globalMarketState: marketAddress,
 			investorBaseAccount: investorTokenAccount,
-			investorTrancheTokenAccount: investorAssociatedTrancheMintAccount,
 			baseTokenMint: globalMarketAccount.baseTokenMint as PublicKey,
+			dealTranches: tranchesPda,
+			signingAuthority: signingAuthority,
+			trancheTokenMint: trancheMintPda,
+			investorTrancheTokenAccount: investorAssociatedTrancheMintAccount,
 			// we pass the credix program ID; which will be perceived by Anchor as an optional account for which the value is null.
 			trancheInfo: credixProgram,
-			signingAuthority: signingAuthority,
-			globalMarketState: marketAddress,
-			associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
 			tokenProgram: TOKEN_PROGRAM_ID,
 			systemProgram: SystemProgram.programId,
 			rent: SYSVAR_RENT_PUBKEY,
+			associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
 		})
 		.instruction();
 };
