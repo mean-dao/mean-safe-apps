@@ -202,16 +202,6 @@ export const getCreateWithdrawRequestIx = async (
 		program.programId
 	);
 
-	const [withdrawRequest] = await PublicKey.findProgramAddress(
-		[
-			marketAddress.toBuffer(),
-			investor.toBuffer(),
-			new BN(latestWithdrawEpochIdx).toArrayLike(Buffer, "le", 4),
-			Buffer.from(utils.bytes.utf8.encode("withdraw-request")),
-		],
-		program.programId
-	);
-
 	const requestAmount = new BN(amount * 10 ** 6);
 
 	return await program.methods
@@ -223,7 +213,6 @@ export const getCreateWithdrawRequestIx = async (
 			signingAuthority: signingAuthority,
 			credixPass: credixPass,
 			withdrawEpoch: withdrawEpoch,
-			withdrawRequest: withdrawRequest,
 			investorLpTokenAccount: investorLPTokenAccount,
 			liquidityPoolTokenAccount: liquidityPoolTokenAccount,
 			lpTokenMint: globalMarketAccount.lpTokenMint as PublicKey,
@@ -296,16 +285,6 @@ export const getRedeemWithdrawRequestIx = async (
 		program.programId
 	);
 
-	const [withdrawRequest] = await PublicKey.findProgramAddress(
-		[
-			marketAddress.toBuffer(),
-			investor.toBuffer(),
-			new BN(latestWithdrawEpochIdx).toArrayLike(Buffer, "le", 4),
-			Buffer.from(utils.bytes.utf8.encode("withdraw-request")),
-		],
-		program.programId
-	);
-
 	const [programStatePda] = await PublicKey.findProgramAddress(
 		[Buffer.from(utils.bytes.utf8.encode("program-state"))],
 		program.programId
@@ -327,11 +306,11 @@ export const getRedeemWithdrawRequestIx = async (
 		true
 	);
 
-	const credixMultisigTokenAccount = await Token.getAssociatedTokenAddress(
+	const credixTreasuryTokenAccount = await Token.getAssociatedTokenAddress(
 		ASSOCIATED_TOKEN_PROGRAM_ID,
 		TOKEN_PROGRAM_ID,
 		globalMarketAccount.baseTokenMint as PublicKey,
-		programState.credixMultisigKey as PublicKey,
+		programState.credixTreasury as PublicKey,
 		true
 	);
 
@@ -343,14 +322,13 @@ export const getRedeemWithdrawRequestIx = async (
 			investor: investor,
 			globalMarketState: marketAddress,
 			withdrawEpoch: withdrawEpoch,
-			withdrawRequest: withdrawRequest,
 			programState: programStatePda,
 			signingAuthority: signingAuthority,
 			investorLpTokenAccount: investorLPTokenAccount,
 			investorTokenAccount: investorTokenAccount,
 			liquidityPoolTokenAccount: liquidityPoolTokenAccount,
-			credixMultisigKey: programState.credixMultisigKey as PublicKey,
-			credixMultisigTokenAccount: credixMultisigTokenAccount,
+			credixTreasury: programState.credixTreasury as PublicKey,
+			credixTreasuryTokenAccount: credixTreasuryTokenAccount,
 			treasuryPoolTokenAccount:
 				globalMarketAccount.treasuryPoolTokenAccount as PublicKey,
 			lpTokenMint: globalMarketAccount.lpTokenMint as PublicKey,
