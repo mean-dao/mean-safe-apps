@@ -6,7 +6,7 @@ import { Idl } from "@coral-xyz/anchor";
 import { IdlAccount } from "@coral-xyz/anchor/dist/cjs/idl";
 
 const NATIVE_LOADER = new PublicKey("NativeLoader1111111111111111111111111111111");
-const BASE_APPS_URL = "https://raw.githubusercontent.com/supermean-org/supersafe-apps/main/src/apps";
+const BASE_APPS_URL = "https://raw.githubusercontent.com/mean-dao/mean-safe-apps/main/src/apps";
 
 export class AppsProvider {
 
