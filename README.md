@@ -1,8 +1,8 @@
-# Mean Multisig Apps
+# Mean Solar Safe (Multisig) Apps
 
-The **Mean Multisig Apps** is an NPM package that keeps track of all protocols in the **Solana** ecosystem that are integrated with the [Mean Multisig](https://github.com/mean-dao/multisig) protocol and allows Web3 apps to query and get information about them.
+The **Solar Safe Apps** is an NPM package that keeps track of all protocols in the **Solana** ecosystem that are integrated with the [Solar Safe](https://github.com/mean-dao/multisig) protocol and allows Web3 apps to query and get information about them.
 
-The **Mean Multisig Apps** repository is maintained by Mean DAO and it will also accept pull requests from anyone who wants to integrate their own `program/protocol` with the [Mean Multisig](https://github.com/mean-dao/multisig). Once the PR is reviewed and merge by the core team the new integration will be available on the multisig section on [MeanFi Web App](https://app.meanfi.com/multisig) and can be use to make proposal for any multisig safe.
+The **Solar Safe Apps** repository is maintained by Mean DAO and it will also accept pull requests from anyone who wants to integrate their own `program/protocol` with the [Solar Safe](https://github.com/mean-dao/multisig). Once the PR is reviewed and merge by the core team the new integration will be available on the multisig section on [MeanFi Web App](https://app.meanfi.com/multisig) and can be use to make proposal for any multisig safe.
 
 # Usage
 
@@ -81,7 +81,7 @@ provider.getAppConfig(
 #
 ## Registering a protocol
 
-To register or integrate a new `protocol/program` in the **Mean Multisig Apps** repository you need to add a new entry with the general protocol information in the [apps.json](https://github.com/mean-dao/mean-multisig-apps/blob/main/src/apps.json) file. Once that general info is added then you can add the protocol folder with the required files that are needed for the integration.
+To register or integrate a new `protocol/program` in the **Solar Safe Apps** repository you need to add a new entry with the general protocol information in the [apps.json](https://github.com/mean-dao/mean-multisig-apps/blob/main/src/apps.json) file. Once that general info is added then you can add the protocol folder with the required files that are needed for the integration.
 
 ### Adding a new protocol entry to apps.json file
 
