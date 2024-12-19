@@ -19,10 +19,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{env.NODE_VERSION}}
-          cache: 'yarn' 
+          # cache: 'yarn' 
       
       - name: Build
-        run: yarn install && yarn build       
+        run: yarn install --frozen-lockfile && yarn build
 
       - name: Meandao Release & Publish Toolkit
         uses: mean-dao/npm-publish-toolkit@v17.1
