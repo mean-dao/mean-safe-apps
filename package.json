@@ -42,6 +42,12 @@
 		"ts-node": "^10.9.2",
 		"typescript": "^5.5"
 	},
+	"resolutions": {
+		"@solana/web3.js": "1.95.2",
+		"cross-spawn": "7.0.6",
+		"micromatch": "4.0.8",
+		"ws": "8.18.0"
+	},
 	"overrides": {
 		"@solana/web3.js": "1.95.2",
 		"cross-spawn": "7.0.6",
